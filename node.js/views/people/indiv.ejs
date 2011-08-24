@@ -10,5 +10,5 @@
 <dt>Last Known Position</dt>
 <dd><% if (indiv.lastKnownPosition) { %>
 <a href="/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> at <%= indiv.lastKnownPosition.time %>
-<% } else %>Unknown<% } %></dd>
+<% } else {%>Unknown<% } %></dd>
 </dl>
