@@ -1,0 +1,31 @@
+<h2>Registrants</h2>
+<% if (typeof additions !== 'undefined') {%>
+<% if (!additions.people.length) {%>
+<p>No new participant to import.</p>
+<%} else {%>
+<p>Added the following registrants from registration list:</p>
+<% for (var p in additions.people) {%>
+<li><a href='/people/<%= additions.people[p].w3cId %>'><%= additions.people[p].given + " " + additions.people[p].family %></a></li>
+<% } %>
+<% } %>
+<% if (additions.orgs.length) {%>
+<p>Added the following organizations from registration list:</p>
+<% for (var o in additions.orgs) {%>
+<li><%= additions.orgs[o].name %></li>
+<% } %>
+
+<% } %>
+<% } %>
+<form action='' method='post'>
+<input type='submit' name='peopleUpdate' value='Update list of registrants' />
+</form>
+
+<h2>Places</h2>
+<% if (typeof placeAddition !== 'undefined') {%>
+<p>New place added: <%= placeAddition.name %></p>
+<% }%>
+<form action='' method='post'>
+<p><label>Shortname: <input placeholder="Shortname used for checkin" pattern="[0-9a-z]+" type='text' name="shortname" > (only letters and numbers, no spaces)</label></p>
+<p><label>Name: <input type="text" placeholder="Human readable name of the place to create" name="name"></label></p>
+<input type='submit' name='placeAdd' value='Add to list of places' />
+</form>

@@ -1,0 +1,10 @@
+<h1>Places</h1>
+<ul>
+<% for (var p  in places) { %>
+  <li style='list-style:none'><a  style='display:block; float:left; width:10em; height:50px; border:thin solid gray; border-radius:10%; margin:2px;' href='/locations/<%= places[p].shortname %>'>
+<% if (places[p].picture_thumb) { %>
+<img style='float:right' src="<%=places[p].picture_thumb%>" alt="Picture of <%= places[p].name %>">
+<%}%>
+<%= places[p].name %></a></li>
+<% } %>
+</ul>

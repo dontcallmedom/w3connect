@@ -1,0 +1,7 @@
+<h1><%= place.name %></h1>
+<form action="" method="post">
+<input type="submit" name="checkin" value="Check in at <%= place.name %>">
+</form>
+
+<h2>People whose last checkin was in <%= place.name %></h2>
+<%- partial('people/list.ejs') %>

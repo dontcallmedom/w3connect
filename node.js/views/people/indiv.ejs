@@ -1,0 +1,11 @@
+<h1><%= indiv.given + ' ' + indiv.family %></h1>
+<% if (indiv.picture) {%>
+<p style='float:right'><img src="<%= indiv.picture %>" alt="Picture of <%= indiv.given + ' ' + indiv.family %>"></p>
+<% } %>
+<dl>
+<dt>Email</dt>
+<dd><a href='mailto:<%=indiv.email %>'><%= indiv.email %></a></dd>
+<dt>Affiliation</dt>
+<dd><% if (org) { %><%= org.name %><% } else {%>Unknown<%}%></dd>
+
+</dl>
