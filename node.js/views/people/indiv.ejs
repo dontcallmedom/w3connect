@@ -7,5 +7,8 @@
 <dd><a href='mailto:<%=indiv.email %>'><%= indiv.email %></a></dd>
 <dt>Affiliation</dt>
 <dd><% if (org) { %><%= org.name %><% } else {%>Unknown<%}%></dd>
-
+<dt>Last Known Position</dt>
+<dd><% if (indiv.lastKnownPosition) { %>
+<a href="/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> at <%= indiv.lastKnownPosition.time %>
+<% } else %>Unknown<% } %></dd>
 </dl>
