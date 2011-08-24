@@ -4,7 +4,7 @@
  */
 
 var express = require('express');
-//var everyauth = require('everyauth');
+var everyauth = require('everyauth');
 
 
 
@@ -233,6 +233,47 @@ app.get('/locations/:id.:format?', function(req, res) {
 
 });
 
+app.post('/locations/:id.:format?', function(req, res) {
+    Place.findOne({shortname: req.params.id}, function(err, place) {
+    if (place) {
+	if (req.body.checkin && req.body.user) {
+	   People.findOne({login: req.body.user}, function (err, indiv) {
+              if (indiv) {
+	        indiv.lastKnownPosition = {};		      
+	        indiv.lastKnownPosition.shortname = place.shortname; 
+	        indiv.lastKnownPosition.name = place.name; 
+	        indiv.lastKnownPosition.time = Date.now();
+		indiv.save(function(err) {
+           	  People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+		    res.render('locations/place.ejs', { locals: { place: place, people: people}});
+	          });
+	        });
+	      } else {
+		  console.log(err);
+	      }
+	   });
+	} else {
+    switch (req.params.format) {
+      // When json, generate suitable data
+      case 'json':
+        res.send(place);
+	break;
+      default:
+	People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+	  res.render('locations/place.ejs', { locals: { place: place, people: people}});
+				 
+        });
+    }
+	    
+	}
+   } else {
+       res.render('locations/unknown.ejs', {locals: { shortname: req.params.id}});
+   }
+  });
+
+});
+
+
 app.get('/people.:format?', function (req, res){
   //res.render('people/index.ejs', { locals: { people: [{given: "Dom"}, {given: "Amy"}]}});
   var people = People.find({}, function (err, people) {
@@ -252,5 +293,5 @@ app.get('/people.:format?', function (req, res){
 });
 
 
-app.listen(80);
+app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
