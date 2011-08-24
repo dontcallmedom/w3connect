@@ -222,6 +222,7 @@ app.get('/locations/:id.:format?', function(req, res) {
 	break;
       default:
 	People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+	  people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
 	  res.render('locations/place.ejs', { locals: { place: place, people: people}});
 				 
         });
