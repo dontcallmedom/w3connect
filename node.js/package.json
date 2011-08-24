@@ -1,9 +1,20 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.4.2"
-    , "jade": ">= 0.0.1"
-  }
+  "name": "w3connect",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "2.4.2",
+    "ejs": ">= 0.4.3",
+    "mongoose": "1.8.4"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "Dominique Hazaël-Massieux <dom@w3.org> (http://www.w3.org/People/Dom/)",
+  "description": "Web application to connect people at W3C meetings",
+  "repository": {
+    "url": ""
+  },
+  "main": "apps.js"
 }
