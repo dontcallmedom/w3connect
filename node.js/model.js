@@ -45,13 +45,19 @@ var Settings = new Schema({
 
 var TaxiFromAirport = new Schema({
   flight: {airline: String, code: String, eta: Date, airport: enum['San Jose', 'San Francisco', 'Oakland'], terminal: String},
-  maxTime: Date
+  maxTime: Date,
+  requester: w3cId,
+  sharingOffers: [w3cId],
+  sharing: [w3cId]
 });
 
 var TaxiToAirport = new Schema({
   minTime: Date,
   maxTime: Date,
-  airport: enum['San Jose', 'San Francisco', 'Oakland']
+  airport: enum['San Jose', 'San Francisco', 'Oakland'],
+  requester: w3cId,
+  sharingOffers: [w3cId],
+  sharing: [w3cId]
 });
 
 mongoose.model('People', People);
