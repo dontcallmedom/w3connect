@@ -18,10 +18,10 @@
 <%}%>
 
 <h2>Current requests</h2>
-<% if ("undefined" !== typeof taxi && taxi.length) { %>
+<% if (taxi && taxi.length) { %>
 <ul>
 <% for (i in taxi) {%>
-<li><%= taxi[i].requester%> arrives in <%= taxi[i].flight.airport %> airport, terminal <%= taxi[i].flight.terminal %>, flight <% if (taxi[i].flight.airline && taxi[i].flight.code) { %><%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %><%}%> arriving at <%= taxi[i].flight.eta %> </li>
+<li><%= taxi[i].requester %> arrives in <%= taxi[i].flight.airport %> airport, terminal <%= taxi[i].flight.terminal %>, flight <% if (taxi[i].flight.airline && taxi[i].flight.code) { %><%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %><%}%> arriving at <%= taxi[i].flight.eta %> </li>
 <% } %>
 </ul>
 <% } else {%>

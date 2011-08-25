@@ -16,6 +16,7 @@ var mongoose = require('mongoose'),
 db = mongoose.connect('mongodb://localhost/tpac');
 
 var People = require('./model.js').People(db);
+
 var Organization = require('./model.js').Organization(db);
 var Place = require('./model.js').Place(db);
 var Settings = require('./model.js').Settings(db);
@@ -67,12 +68,13 @@ everyauth.password
   .postLoginPath('/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
   .registerView('index.ejs')
-  .respondToLoginSucceed( function (res, user, data) {
+  .loginSuccessRedirect('/')
+  /*.respondToLoginSucceed( function (res, user, data) {
     if (user) {
       res.writeHead(303, {'Location': data.session.redirectTo});
       res.end();
     }   
-  })
+  })*/
   .authenticate( function (login, password) {
     var promise = this.Promise();  
     var errors = [];
@@ -175,6 +177,8 @@ app.post('/admin/', function(req, res){
         var counter = 0;
         function addOrg(org, people) {
 	    return function (err) {
+		people.affiliation = org._id;
+
 	        if (err) {
 		    console.log(err);
 		} else {
@@ -211,7 +215,6 @@ app.post('/admin/', function(req, res){
 	    people.w3cId = peopleData.w3cId;
 	    loadPeopleData(people.w3cId);
 	    if (peopleData.organization && peopleData.organization.w3cId) {
-		people.affiliation = peopleData.organization.w3cId;
 		var org = new Organization();
 		org.w3cId = peopleData.organization.w3cId;
 		org.name = peopleData.organization.name;
@@ -245,17 +248,14 @@ app.post('/admin/', function(req, res){
 
 
 app.get('/people/:id.:format?', function(req, res){
-    People.findOne({w3cId: req.params.id}, function(err, indiv) {
+    People.findOne({w3cId: req.params.id}).populate('affiliation').run( function(err, indiv) {
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
         res.send(indiv);
 	break;
       default:
-	Organization.findOne({w3cId: indiv.affiliation}, function(err, org) {
-	  res.render('people/indiv.ejs', { locals: { indiv: indiv, org: org}});
-				 
-        });
+	res.render('people/indiv.ejs', { locals: { indiv: indiv}});
     }
   });  
 });
@@ -364,17 +364,11 @@ app.get('/taxi/', function (req, res) {
 });
 
 app.get('/taxi/from', function (req, res) {
-  TaxiFromAirport.find({}, function (err, taxi) {
-
+  TaxiFromAirport.find({}).populate('requester').run (function (err, taxi) {
      if (err) {
 	console.log(err);
      } else {
-        var taxiRequesters = taxi.map(function (t) { return t.requester;});
-	var people = [];
-        var peopleQuery = People.find({});
-        peopleQuery.where('w3cId').in(taxiRequesters).run ( function (err, people) {
-	 res.render('taxi/from.ejs', {locals: {taxi: taxi, people: people}});
-     });
+	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
   }
 });
 });
@@ -394,7 +388,8 @@ app.post('/taxi/from',
      res.render('taxi/from.ejs');
   } else {
      console.log(req.form);
-     var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user.w3cId});
+
+     var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user._id});
     console.log(taxi);
      taxi.save(function (err) {
        if (err) {

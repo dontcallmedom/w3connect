@@ -8,29 +8,32 @@ var People = new Schema({
   family: String,
   email: {type: String, unique: true},
   login: {type: String, unique: true},
-  affiliation: Number,
+  affiliation: {type: Schema.ObjectId, ref: 'Organization'},
   picture: String,
   picture_thumb: String,
-  groups: [Number],
+  groups: [{type: Schema.ObjectId, ref: 'Group'}],
   tags: [String],
   lastKnownPosition: { shortname: {type: String, index: true}, 
 		       name: String,
 		       time: Date}
 });
 
+mongoose.model('People', People);
+
+
 var Organization = new Schema({
   w3cId: {type: Number, unique: true},
   name: {type: String, unique: true},
   url: {type: String},
-  groups: [Number],
-  employees: [Number]
+  groups: [{type: Schema.ObjectId, ref: 'Group'}],
+  employees: [{type: Schema.ObjectId, ref: 'People'}]
 });
 
 var Group = new Schema({
   w3cId: {type: Number, unique: true},
   name: {type: String, unique: true},
   url: {type: String, unique: true},
-  participants: [Number]
+  participants: [{type: Schema.ObjectId, ref: 'People'}]
 });
 
 var Place = new Schema({
@@ -45,27 +48,27 @@ var Settings = new Schema({
 
 var TaxiFromAirport = new Schema({
   flight: {airline: String, code: String, eta: Date, airport: {type: String, enum:['San Jose', 'San Francisco', 'Oakland']}, terminal: String},
-  requester: Number,
+  requester: {type: Schema.ObjectId, ref: 'People'},
   sharingOffers: [Number],
   sharing: [Number]
 });
+
+mongoose.model('TaxiFromAirport', TaxiFromAirport);
 
 var TaxiToAirport = new Schema({
   minTime: Date,
   maxTime: Date,
   airport: {type: String, enum:['San Jose', 'San Francisco', 'Oakland']},
-  requester: Number,
+  requester: {type: Schema.ObjectId, ref: 'Group'},
   sharingOffers: [Number],
   sharing: [Number]
 });
 
-mongoose.model('People', People);
 mongoose.model('Organization', Organization);
 mongoose.model('Group', Group);
 mongoose.model('Place', Place);
 mongoose.model('Settings', Settings);
 mongoose.model('TaxiToAirport', TaxiToAirport);
-mongoose.model('TaxiFromAirport', TaxiFromAirport);
 exports.People = function(db) {
   return db.model('People');
 };
