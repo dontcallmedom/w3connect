@@ -47,6 +47,13 @@ function loadPeopleData(id) {
 
 
 // Authentication 
+// Session Store
+var SessionMongoose = require("session-mongoose");
+var mongooseSessionStore = new SessionMongoose({
+    url: "mongodb://localhost/session",
+    interval: 120000 // expiration check worker run interval in millisec (default: 60000)
+});
+
 everyauth.everymodule.findUserById( function (userId, callback) {
   People.findOne({login: userId}, callback);
 });
@@ -104,7 +111,7 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
   app.use(express.methodOverride());
  app.use(express.cookieParser()); 
-  app.use(express.session({secret:'abc'}));
+  app.use(express.session({store: mongooseSessionStore, secret:'abc'}));
   app.use(everyauth.middleware());
 });
 
