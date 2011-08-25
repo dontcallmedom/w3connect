@@ -388,7 +388,7 @@ app.post('/taxi/from',
        req.flash('error',err);
        TaxiFromAirport.find({}).populate('requester').run( function (err, taxi) {
 	 req.flash('error',err);
- 	 res.render('taxi/from.ejs', {locals: {taxi: taxi, people: people}});
+ 	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
         });
       });
   }
