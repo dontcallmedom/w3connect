@@ -26,7 +26,7 @@
     <header>
 <h1><a href="/">W3Connect</a></h1>
 <p style='float:right'><% if (everyauth.loggedIn) {%>Logged in as <%=user.given + ' ' + user.family%><%} else { %>Not logged in. <a href="/login">Log in</a>?<%}%></p>
-<a href="/people/">People</a> | <a href="/locations/">Places</a>
+<a href="/people/">People</a> | <a href="/locations/">Places</a> | <a href="/orgs/">Organization</a>
     </header>
     <div id="main" role="main">
   <%- body %>       
