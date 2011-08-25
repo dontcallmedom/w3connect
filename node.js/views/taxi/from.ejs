@@ -5,12 +5,13 @@
 <form action='' method='post'>
 <p><label>Airport: <select name='airport'><option>San Jose</option><option>San Francisco</option><option>Oakland</option></select></label></p>
 <fieldset><legend>Flight information</legend>
-<p><label>Airline code: <input type='text' name='airline' pattern='[a-z]*'></label>
-<label>Flight number: <input type='text' name='code' pattern='[0-9]*'></label><br>
-<label>Terminal of arrival: <input type='text' name='terminal'></label><br>
-<label>Date and time of arrival (local time): <input type='datetime' name='date' hint='YYYY-MM-DDTHH:MM:ss'></label></p>
+<p><label>Airline code: <input size="2" type='text' name='airline' pattern='[a-z]*'></label>
+<label>Flight number: <input size="4" type='text' name='code' pattern='[0-9]*'></label><br>
+<label>Terminal of arrival: <input size="2" type='text' name='terminal'></label><br>
+<label>Date and time of arrival (local time): <input type='datetime-local' name='date' placeholder='YYYY-MM-DDTHH:MM:ss'></label></p></fieldset>
 </fieldset>
-<p><label>Willing to wait for a shared cab until <input type='datetime' name='maxTime' hint='YYYY-MM-DDTHH:MM:ss'></label></p><!-- set min to value of date -->
+<p><label>Willing to wait for a shared cab until <input type='datetime-local' name='maxTime' placeholder='YYYY-MM-DDTHH:MM:ss'></label></p><!-- set min to value of date -->
+<input type="submit" name="request" value="File a request">
 </form>
 <% } else {%>
 <p><a href='/login'>Log in</a> to file a request for sharing a taxi.</p>
