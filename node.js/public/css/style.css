@@ -120,6 +120,9 @@ body{
     background-repeat: no-repeat;
     background-position: 10px center;
 }
+
+.info li, .success li, .warning li, .error li, .validation li { list-style: none;} 
+
 .info {
     color: #00529B;
     background-color: #BDE5F8;
