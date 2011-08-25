@@ -174,7 +174,7 @@ app.post('/admin/', function(req, res){
      response.on('end', function () {
         registrantsData = JSON.parse(registrantsJSON);
         var additions = {orgs:[],people:[]}, errors;
-        var counter = 0;
+        var counter = 0, counterAdded = 0;
         function addOrg(org, people) {
 	    return function (err) {
 		people.affiliation = org._id;
@@ -190,9 +190,13 @@ app.post('/admin/', function(req, res){
                counter++;
 		// We ignore duplicate key errors
 	       if (!err) {
+                 counterAdded++;
                  req.flash('info', people.given + ' ' + people.family + ' added');
 	       }		
        	       if (counter == registrantsData.registrants.length) {
+		if (!counterAdded) {
+		    req.flash('info', 'No new data to import');
+		}
                 res.render('admin/index');
 	       }
 	     };
