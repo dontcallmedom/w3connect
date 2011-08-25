@@ -6,7 +6,7 @@
 <form action='' method='post'>
 <p><label>Airport: <select name='airport' required><option>San Jose</option><option>San Francisco</option><option>Oakland</option></select></label></p>
 <fieldset><legend>Flight information</legend>
-<p><label>Airline code: <input value="" size="2" type='text' name='airline' pattern='[a-z]*'></label>
+<p><label>Airline code: <input value="" size="2" type='text' name='airline' pattern='[a-zA-Z]*'></label>
 <label>Flight number: <input size="4" type='text' name='code' pattern='[0-9]*'></label><br>
 <label>Terminal of arrival: <input required size="2" type='text' name='terminal'></label><br>
 <label>Date and time of arrival (local time): <input required type='datetime-local' name='arrival' placeholder='YYYY-MM-DDTHH:MM:ss'></label></p></fieldset>
