@@ -1,21 +1,5 @@
 <h2>Registrants</h2>
-<% if (typeof additions !== 'undefined') {%>
-<% if (!additions.people.length) {%>
-<p>No new participant to import.</p>
-<%} else {%>
-<p>Added the following registrants from registration list:</p>
-<% for (var p in additions.people) {%>
-<li><a href='/people/<%= additions.people[p].w3cId %>'><%= additions.people[p].given + " " + additions.people[p].family %></a></li>
-<% } %>
-<% } %>
-<% if (additions.orgs.length) {%>
-<p>Added the following organizations from registration list:</p>
-<% for (var o in additions.orgs) {%>
-<li><%= additions.orgs[o].name %></li>
-<% } %>
-
-<% } %>
-<% } %>
+<%- messages()%>
 <form action='' method='post'>
 <input type='submit' name='peopleUpdate' value='Update list of registrants' />
 </form>

@@ -21,7 +21,7 @@
 <% if (taxi && taxi.length) { %>
 <ul>
 <% for (i in taxi) {%>
-<li><%= taxi[i].requester %> arrives in <%= taxi[i].flight.airport %> airport, terminal <%= taxi[i].flight.terminal %>, flight <% if (taxi[i].flight.airline && taxi[i].flight.code) { %><%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %><%}%> arriving at <%= taxi[i].flight.eta %> </li>
+<li><a href="/people/<%= taxi[i].requester.w3cId %>"><% if (taxi[i].requester.picture_thumb) {%><img src='<%= taxi[i].requester.picture_thumb%>' alt="Picture of <%= taxi[i].requester.given + ' ' + taxi[i].requester.family%>"><%}%><%= taxi[i].requester.given + ' ' + taxi[i].requester.family%></a> arrives in <%= taxi[i].flight.airport %> airport, terminal <%= taxi[i].flight.terminal %>, flight <% if (taxi[i].flight.airline && taxi[i].flight.code) { %><%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %><%}%> arriving at <%= taxi[i].flight.eta %> </li>
 <% } %>
 </ul>
 <% } else {%>

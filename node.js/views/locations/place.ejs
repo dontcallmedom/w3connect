@@ -1,5 +1,6 @@
 <h1><%= place.name %></h1>
 <h2>Check in</h2>
+<%- messages()%>
 <% if (everyauth.loggedIn) {%>
 <form action="" method="post">
 <input type="submit" name="checkin" value="Check in at <%= place.name %>">

@@ -178,11 +178,9 @@ app.post('/admin/', function(req, res){
         function addOrg(org, people) {
 	    return function (err) {
 		people.affiliation = org._id;
-
-	        if (err) {
-		    console.log(err);
-		} else {
-		    additions.orgs.push(org);
+		// We ignore duplicate key errors
+	        if (!err) {
+                    req.flash('info', org.name + ' added');
 		}
      	        people.save(addPeople(people));		      
 	    };
@@ -191,17 +189,12 @@ app.post('/admin/', function(req, res){
   	  return function (err) {
                counter++;
 	       if (err) {
-                 console.log(err);		   
+		 req.flash('error', err);
 	       } else {
-                  additions.people.push(people);  
+                 req.flash('info', people.given + ' ' + people.family + ' added');
 	       }		
        	       if (counter == registrantsData.registrants.length) {
-                res.render('admin/index', {
-                  locals: {
-	            additions : additions
-	          },
-                  title: 'TPAC Web App Administration'
-                 });
+                res.render('admin/index');
 	       }
 	     };
         }
@@ -280,7 +273,6 @@ app.get('/locations.:format?', function(req, res) {
 app.get('/locations/:id.:format?', function(req, res) {
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
-	   console.log("**** " + req.user);
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
@@ -315,6 +307,8 @@ app.post('/locations/:id.:format?', function(req, res) {
 	   indiv.lastKnownPosition.name = place.name; 
 	   indiv.lastKnownPosition.time = Date.now();
 	   indiv.save(function(err) {
+             req.flash('error',err);
+	     if (!err) req.flash('info', 'Checked in at '  + place.name);
              People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
 		res.render('locations/place.ejs', { locals: { place: place, people: people}});
 	     });
@@ -365,11 +359,8 @@ app.get('/taxi/', function (req, res) {
 
 app.get('/taxi/from', function (req, res) {
   TaxiFromAirport.find({}).populate('requester').run (function (err, taxi) {
-     if (err) {
-	console.log(err);
-     } else {
-	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
-  }
+     req.flash('error',err);
+     res.render('taxi/from.ejs', {locals: {taxi: taxi}});
 });
 });
 
@@ -390,23 +381,11 @@ app.post('/taxi/from',
      console.log(req.form);
 
      var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user._id});
-    console.log(taxi);
      taxi.save(function (err) {
-       if (err) {
-	   console.log(err);
-       }
-       TaxiFromAirport.find({}, function (err, taxi) {
-
-         if (err) {
-	   console.log(err);
-         } else {
-           var taxiRequesters = taxi.map(function (t) { return t.requester;});
-   	   var people = [];
-           var peopleQuery = People.find({});
-           peopleQuery.where('w3cId').in(taxiRequesters).run ( function (err, people) {
-	     res.render('taxi/from.ejs', {locals: {taxi: taxi, people: people}});
-            });
-          }
+       req.flash('error',err);
+       TaxiFromAirport.find({}).populate('requester').run( function (err, taxi) {
+	 req.flash('error',err);
+ 	 res.render('taxi/from.ejs', {locals: {taxi: taxi, people: people}});
         });
       });
   }
@@ -416,13 +395,9 @@ app.post('/taxi/from',
 
 app.get('/taxi/to', function (req, res) {
   TaxiToAirport.find({}, function (err, taxi) {
-     if (err) {
-        console.log(err);
-     } else {
-        res.render('taxi/to.ejs', {locals: {taxi: taxi}});
-     }
-  
-});
+     req.flash('error',err);
+     res.render('taxi/to.ejs', {locals: {taxi: taxi}});
+  });
 });
 
 everyauth.helpExpress(app);
