@@ -1,4 +1,5 @@
 <h1>Taxi pooling request from the airport</h1>
+<% if (everyauth.loggedIn) {%>
 
 <!-- @@@ only if no request given yet -->
 <form action='' method='post'>
@@ -11,14 +12,17 @@
 </fieldset>
 <p><label>Willing to wait for a shared cab until <input type='datetime' name='maxTime' hint='YYYY-MM-DDTHH:MM:ss'></label></p><!-- set min to value of date -->
 </form>
+<% } else {%>
+<p><a href='/login'>Log in</a> to file a request for sharing a taxi.</p>
+<%}%>
 
 <h2>Current requests</h2>
 <% if ("undefined" !== typeof taxi && taxi.length) { %>
 <ul>
 <% for (i in taxi) {%>
-<li><%=taxi[i].requester%> arrives in <%= taxi[i].flight.airport %> airport, terminal <% =taxi[i].flight.terminal %>, flight <%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %> arriving at <%= taxi[i].flight.eta %> and is willing to wait until <%= taxi[i].flight.maxTime %> to share a cab</li>
+<li><%= taxi[i].requester%> arrives in <%= taxi[i].flight.airport %> airport, terminal <%= taxi[i].flight.terminal %>, flight <%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %> arriving at <%= taxi[i].flight.eta %> and is willing to wait until <%= taxi[i].flight.maxTime %> to share a cab</li>
 <% } %>
 </ul>
 <% } else {%>
 <p>No request yet.</p>
-<%}
+<%}%>
