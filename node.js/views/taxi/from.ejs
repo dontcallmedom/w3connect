@@ -1,16 +1,16 @@
 <h1>Taxi pooling request from the airport</h1>
+<%- messages() %>
 <% if (everyauth.loggedIn) {%>
 
 <!-- @@@ only if no request given yet -->
 <form action='' method='post'>
-<p><label>Airport: <select name='airport'><option>San Jose</option><option>San Francisco</option><option>Oakland</option></select></label></p>
+<p><label>Airport: <select name='airport' required><option>San Jose</option><option>San Francisco</option><option>Oakland</option></select></label></p>
 <fieldset><legend>Flight information</legend>
-<p><label>Airline code: <input size="2" type='text' name='airline' pattern='[a-z]*'></label>
+<p><label>Airline code: <input value="" size="2" type='text' name='airline' pattern='[a-z]*'></label>
 <label>Flight number: <input size="4" type='text' name='code' pattern='[0-9]*'></label><br>
-<label>Terminal of arrival: <input size="2" type='text' name='terminal'></label><br>
-<label>Date and time of arrival (local time): <input type='datetime-local' name='date' placeholder='YYYY-MM-DDTHH:MM:ss'></label></p></fieldset>
+<label>Terminal of arrival: <input required size="2" type='text' name='terminal'></label><br>
+<label>Date and time of arrival (local time): <input required type='datetime-local' name='arrival' placeholder='YYYY-MM-DDTHH:MM:ss'></label></p></fieldset>
 </fieldset>
-<p><label>Willing to wait for a shared cab until <input type='datetime-local' name='maxTime' placeholder='YYYY-MM-DDTHH:MM:ss'></label></p><!-- set min to value of date -->
 <input type="submit" name="request" value="File a request">
 </form>
 <% } else {%>
@@ -21,7 +21,7 @@
 <% if ("undefined" !== typeof taxi && taxi.length) { %>
 <ul>
 <% for (i in taxi) {%>
-<li><%= taxi[i].requester%> arrives in <%= taxi[i].flight.airport %> airport, terminal <%= taxi[i].flight.terminal %>, flight <%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %> arriving at <%= taxi[i].flight.eta %> and is willing to wait until <%= taxi[i].flight.maxTime %> to share a cab</li>
+<li><%= taxi[i].requester%> arrives in <%= taxi[i].flight.airport %> airport, terminal <%= taxi[i].flight.terminal %>, flight <% if (taxi[i].flight.airline && taxi[i].flight.code) { %><%= taxi[i].flight.airline + ' ' + taxi[i].flight.code %><%}%> arriving at <%= taxi[i].flight.eta %> </li>
 <% } %>
 </ul>
 <% } else {%>

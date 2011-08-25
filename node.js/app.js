@@ -4,7 +4,10 @@
  */
 
 var express = require('express');
-var everyauth = require('everyauth');
+var everyauth = require('everyauth'),
+form = require("express-form"),
+filter = form.filter,
+validate = form.validate;
 
 
 var app = module.exports = express.createServer();
@@ -64,7 +67,12 @@ everyauth.password
   .postLoginPath('/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
   .registerView('index.ejs')
-  .loginSuccessRedirect('/')
+  .respondToLoginSucceed( function (res, user, data) {
+    if (user) {
+      res.writeHead(303, {'Location': data.session.redirectTo});
+      res.end();
+    }   
+  })
   .authenticate( function (login, password) {
     var promise = this.Promise();  
     var errors = [];
@@ -72,6 +80,7 @@ everyauth.password
       if (!password) errors.push('Missing password');
       if (errors.length) return errors;
       var ldap = require('./ldapauth');
+      // modified version of ldapauth that takes an additional scheme parameter available from https://github.com/dontcallmedom/node-ldapauth
       ldap.authenticate('ldaps','directory.w3.org',636,'uid=' + login + ',ou=people,dc=w3,dc=org', password, function(err, result) {
         if (err) {
           return promise.fail(err);
@@ -292,6 +301,11 @@ app.get('/locations/:id.:format?', function(req, res) {
 });
 
 app.post('/locations/:id.:format?', function(req, res) {
+  if (! req.loggedIn) {
+    req.session.redirectTo = '/locations/' + req.params.id;
+    return res.redirect(everyauth.password.getLoginPath());
+  }
+
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
 	if (req.body.checkin && req.user) {
@@ -351,16 +365,59 @@ app.get('/taxi/', function (req, res) {
 
 app.get('/taxi/from', function (req, res) {
   TaxiFromAirport.find({}, function (err, taxi) {
+
      if (err) {
 	console.log(err);
      } else {
+        var taxiRequesters = taxi.map(function (t) { return t.requester;});
+	var people = [];
         var peopleQuery = People.find({});
-        peopleQuery.where('w3cId').in(taxi.map(function (t) { return t.requester;})).run ( function (err, people) {
+        peopleQuery.where('w3cId').in(taxiRequesters).run ( function (err, people) {
 	 res.render('taxi/from.ejs', {locals: {taxi: taxi, people: people}});
      });
   }
 });
 });
+
+app.post('/taxi/from',
+  form(
+	 validate("airport").required().custom(function(n) { if (!( n in {'San Jose':1, 'San Francisco':1, 'Oakland':1})) throw new Error('%s is not valid airport');}),
+	 validate("terminal").required(),
+	 validate("arrival").required().regex("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}?(\.[0-9]*)?)", "%s must match YYYY-MM-DDTHH:mm(:ss)?")
+  ),
+  function (req, res) {
+  if (! req.loggedIn) {
+    req.session.redirectTo = '/taxi/from';
+    return res.redirect(everyauth.password.getLoginPath());
+  }
+  if (!req.form.isValid) {
+     res.render('taxi/from.ejs');
+  } else {
+     console.log(req.form);
+     var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user.w3cId});
+    console.log(taxi);
+     taxi.save(function (err) {
+       if (err) {
+	   console.log(err);
+       }
+       TaxiFromAirport.find({}, function (err, taxi) {
+
+         if (err) {
+	   console.log(err);
+         } else {
+           var taxiRequesters = taxi.map(function (t) { return t.requester;});
+   	   var people = [];
+           var peopleQuery = People.find({});
+           peopleQuery.where('w3cId').in(taxiRequesters).run ( function (err, people) {
+	     res.render('taxi/from.ejs', {locals: {taxi: taxi, people: people}});
+            });
+          }
+        });
+      });
+  }
+});
+
+
 
 app.get('/taxi/to', function (req, res) {
   TaxiToAirport.find({}, function (err, taxi) {
@@ -374,6 +431,6 @@ app.get('/taxi/to', function (req, res) {
 });
 
 everyauth.helpExpress(app);
-
+app.dynamicHelpers({ messages: require('express-messages') });
 app.listen(  app.set('port'));
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
