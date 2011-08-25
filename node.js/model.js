@@ -59,7 +59,7 @@ var TaxiToAirport = new Schema({
   minTime: Date,
   maxTime: Date,
   airport: {type: String, enum:['San Jose', 'San Francisco', 'Oakland']},
-  requester: {type: Schema.ObjectId, ref: 'Group'},
+  requester: {type: Schema.ObjectId, ref: 'People'},
   sharingOffers: [Number],
   sharing: [Number]
 });
