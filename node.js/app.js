@@ -371,7 +371,7 @@ app.post('/taxi/from',
   form(
 	 validate("airport").required().custom(function(n) { if (!( n in {'San Jose':1, 'San Francisco':1, 'Oakland':1})) throw new Error('%s is not valid airport');}),
 	 validate("terminal").required(),
-	 validate("arrival").required().regex("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}?(\.[0-9]*)?)", "%s must match YYYY-MM-DDTHH:mm(:ss)?")
+	 validate("arrival").required().regex("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]*)?)?", "%s must match YYYY-MM-DDTHH:mm(:ss)?")
   ),
   function (req, res) {
   if (! req.loggedIn) {
@@ -381,8 +381,6 @@ app.post('/taxi/from',
   if (!req.form.isValid) {
      res.render('taxi/from.ejs');
   } else {
-     console.log(req.form);
-
      var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user._id});
      taxi.save(function (err) {
        req.flash('error',err);
@@ -397,10 +395,37 @@ app.post('/taxi/from',
 
 
 app.get('/taxi/to', function (req, res) {
-  TaxiToAirport.find({}, function (err, taxi) {
+  TaxiToAirport.find({}).populate('requester').run( function (err, taxi) {
      req.flash('error',err);
      res.render('taxi/to.ejs', {locals: {taxi: taxi}});
   });
+});
+
+app.post('/taxi/to',
+  form(
+	 validate("airport").required().custom(function(n) { if (!( n in {'San Jose':1, 'San Francisco':1, 'Oakland':1})) throw new Error('%s is not valid airport');}),
+	 validate("departureDate").required().regex("[0-9]{4}-[0-9]{2}-[0-9]{2}", "%s must match YYYY-MM-DD"),
+	 validate("minDepartureTime").required().regex("[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]*)?)?", "%s must match HH:mm"),
+	 validate("maxDepartureTime").required().regex("[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]*)?)?", "%s must match HH:mm")
+  ),
+  function (req, res) {
+  if (! req.loggedIn) {
+    req.session.redirectTo = '/taxi/from';
+    return res.redirect(everyauth.password.getLoginPath());
+  }
+  if (!req.form.isValid) {
+     res.render('taxi/to.ejs');
+  } else {
+     var taxi = new TaxiToAirport({airport: req.form.airport, minTime: req.form.departureDate + 'T' + req.form.minDepartureTime + 'Z', maxTime: req.form.departureDate + 'T' + req.form.maxDepartureTime + 'Z', requester: req.user._id});
+     taxi.save(function (err) {
+       req.flash('error',err);
+       TaxiToAirport.find({}).populate('requester').run( function (err, taxi) {
+	 req.flash('error',err);
+ 	 res.render('taxi/to.ejs', {locals: {taxi: taxi}});
+        });
+      });
+  }
+
 });
 
 everyauth.helpExpress(app);
