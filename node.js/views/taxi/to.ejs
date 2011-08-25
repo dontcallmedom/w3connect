@@ -13,7 +13,7 @@
 <%}%>
 
 <h2>Current requests</h2>
-<% if ("undefined" !== typeof taxi && taxi.length) { %>
+<% if (taxi && taxi.length) { %>
 <ul>
 <% for (i in taxi) {%>
 <li><%= taxi[i].requester.given + ' ' + taxi[i].requester.family %> wants to leave for  <%= taxi[i].airport %> airport between <%= taxi[i].minTime%> and <%= taxi[i].maxTime%></li>
