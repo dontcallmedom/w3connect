@@ -1,0 +1,9 @@
+<h1><%= org.name %></h1>
+
+<h2>Employees on site</h2>
+<ul>
+<% if (employees) {
+for (e in employees) {
+%>
+<li><a href="/people/<%= employees[e].w3cId%>"><%= employees[e].given + " " + employees[e].family %></li>
+</ul>
