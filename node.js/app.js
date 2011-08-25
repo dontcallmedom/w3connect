@@ -180,7 +180,7 @@ app.post('/admin/', function(req, res){
 		// We ignore duplicate key errors
 	        if (!err) {
                     req.flash('info', org.name + ' added');
-		}
+		}		
      	        people.save(addPeople(people));		      
 	    };
 	}
@@ -191,7 +191,16 @@ app.post('/admin/', function(req, res){
 	       if (!err) {
                  counterAdded++;
                  req.flash('info', people.given + ' ' + people.family + ' added');
-	       }		
+	       }
+	      // update list of employees
+	      Organization.findById(people.affiliation
+                     // closure to add employee to org record
+				    , (function (p) {
+					return function (err, org) {
+					if (org) {
+					    org.employees.push(people._id);
+					    org.save();
+					}};})(people) );
        	       if (counter == registrantsData.registrants.length) {
 		if (!counterAdded) {
 		    req.flash('info', 'No new data to import');
@@ -372,7 +381,7 @@ app.get('/orgs.:format?', function (req, res){
 
 app.get('/orgs/:id.:format?', function(req, res){
     Organization.findOne({w3cId: req.params.id})
-        // .populate('employees')
+        .populate('employees')
 	.run( function(err, org) {
     switch (req.params.format) {
       // When json, generate suitable data
