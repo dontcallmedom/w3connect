@@ -6,7 +6,6 @@
 var express = require('express');
 var everyauth = require('everyauth');
 
-everyauth.debug = true;
 
 var app = module.exports = express.createServer();
 
@@ -100,6 +99,7 @@ app.configure(function(){
   app.use(express.logger());
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
+  app.set('port', 3000);
   app.use(express.bodyParser());
   app.use(express.static(__dirname + '/public'));
   app.use(express.methodOverride());
@@ -115,6 +115,7 @@ app.configure('test', function(){
 
 
 app.configure('development', function(){
+  everyauth.debug = true;
   app.use(express.logger());
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
@@ -122,6 +123,7 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.logger());
   app.use(express.errorHandler()); 
+  app.set('port', 80);
 });
 
 
@@ -370,5 +372,5 @@ app.get('/taxi/to', function (req, res) {
 
 everyauth.helpExpress(app);
 
-app.listen(3000);
+app.listen(  app.set('port'));
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
