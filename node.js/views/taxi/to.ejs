@@ -1,0 +1,24 @@
+<h1>Taxi pooling request from the hotel to the airport</h1>
+<%- messages() %>
+<% if (everyauth.loggedIn) {%>
+
+<form action='' method='post'>
+<p><label>Airport: <select name='airport' required><option>San Jose</option><option>San Francisco</option><option>Oakland</option></select></label></p>
+<p><label>Date of departure: <input required type="date" name="departureDate" placeholder="YYYY-MM-DD"</label></p>
+<p>Want to leave between: <label title="Earliest you’re ready to take a taxi" ><input required type="time" name="minDepartureTime" placeholder="HH:MM:ss"></label> and <label title="Latest you’re ready to take a taxi"><input required type="time" name="maxDepartureTime" placeholder="HH:MM:ss"></label></p>
+<input type="submit" name="request" value="File a request">
+</form>
+<% } else {%>
+<p><a href='/login'>Log in</a> to file a request for sharing a taxi.</p>
+<%}%>
+
+<h2>Current requests</h2>
+<% if ("undefined" !== typeof taxi && taxi.length) { %>
+<ul>
+<% for (i in taxi) {%>
+<li><%= taxi[i].requester%> wants to leave for  <%= taxi[i].airport %> airport between <%= taxi[i].minTime%> and <%= taxi[i].maxTime%></li>
+<% } %>
+</ul>
+<% } else {%>
+<p>No request yet.</p>
+<%}%>
