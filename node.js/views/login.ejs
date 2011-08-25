@@ -9,6 +9,7 @@
 Logged in as <%=JSON.stringify(everyauth)%>
 <% } else {%>
 <form action='/login' method='post'>
+<p>Please use your W3C account to log in:</p>
 <p id='login'>
 <label for='<%=everyauth.password.loginFormFieldName%>'>Login
 <input type="text" name="<%=everyauth.password.loginFormFieldName%>"></label>
