@@ -375,7 +375,7 @@ app.post('/taxi/from',
   ),
   function (req, res) {
   if (! req.loggedIn) {
-    req.session.redirectTo = '/taxi/from';
+    req.session.redirectTo = '/taxi/to';
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
