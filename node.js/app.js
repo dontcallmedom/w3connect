@@ -379,7 +379,10 @@ app.post('/taxi/from',
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
-     res.render('taxi/from.ejs');
+       TaxiFromAirport.find({}).populate('requester').run( function (err, taxi) {
+	 req.flash('error',err);
+ 	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
+        });
   } else {
      var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user._id});
      taxi.save(function (err) {
@@ -414,7 +417,10 @@ app.post('/taxi/to',
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
-     res.render('taxi/to.ejs');
+       TaxiToAirport.find({}).populate('requester').run( function (err, taxi) {
+	 req.flash('error',err);
+ 	 res.render('taxi/to.ejs', {locals: {taxi: taxi}});
+        });
   } else {
      var taxi = new TaxiToAirport({airport: req.form.airport, minTime: req.form.departureDate + 'T' + req.form.minDepartureTime + 'Z', maxTime: req.form.departureDate + 'T' + req.form.maxDepartureTime + 'Z', requester: req.user._id});
      taxi.save(function (err) {
