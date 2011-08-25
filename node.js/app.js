@@ -163,7 +163,6 @@ app.get('/admin/', function(req, res){
 app.post('/admin/', function(req, res){
   if (req.body.peopleUpdate) {
    var https = require('https');
-   console.log(app.set('w3c_auth'));
 
    var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-json.php?wgid=35125&qaireno=TPAC2011', headers: {Authorization: 'Basic ' + app.set('w3c_auth')}}, function (response) {
      response.setEncoding('utf8');
