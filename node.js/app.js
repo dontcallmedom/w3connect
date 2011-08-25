@@ -4,9 +4,9 @@
  */
 
 var express = require('express');
-//var everyauth = require('everyauth');
+var everyauth = require('everyauth');
 
-
+everyauth.debug = true;
 
 var app = module.exports = express.createServer();
 
@@ -46,6 +46,47 @@ function loadPeopleData(id) {
 }
 
 
+
+// Authentication 
+everyauth.everymodule.findUserById( function (userId, callback) {
+  People.findOne({login: userId}, callback);
+});
+
+// Adapted from everyauth ldap module
+everyauth.password
+  .getLoginPath('/login')
+  .postLoginPath('/login') // Uri path that your login form POSTs to
+  .loginView('login.ejs')
+  .registerView('index.ejs')
+  .loginSuccessRedirect('/')
+  .authenticate( function (login, password) {
+    var promise = this.Promise();  
+    var errors = [];
+      if (!login) errors.push('Missing login');
+      if (!password) errors.push('Missing password');
+      if (errors.length) return errors;
+      var ldap = require('./ldapauth');
+      ldap.authenticate('ldaps','directory.w3.org',636,'uid=' + login + ',ou=people,dc=w3,dc=org', password, function(err, result) {
+        if (err) {
+          return promise.fail(err);
+        }
+	if (result === false) {
+          errors = ['Login failed.'];
+          return promise.fulfill(errors);
+	} else {
+          var user = {id: login};
+          return promise.fulfill(user);	    
+	}
+      });
+      return promise;
+  })
+  .getRegisterPath('/')
+  .postRegisterPath('/')
+  .registerUser(function() {
+      return null;
+   });
+
+
 // Configuration
 
 app.configure(function(){
@@ -60,9 +101,11 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(express.methodOverride());
+ app.use(express.cookieParser()); 
+  app.use(express.session({secret:'abc'}));
+  app.use(everyauth.middleware());
 });
 
 app.configure('test', function(){
@@ -80,6 +123,8 @@ app.configure('production', function(){
   app.use(express.logger());
   app.use(express.errorHandler()); 
 });
+
+
 
 // Routes
 
@@ -322,6 +367,8 @@ app.get('/taxi/to', function (req, res) {
   
 });
 });
+
+everyauth.helpExpress(app);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
