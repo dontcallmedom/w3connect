@@ -17,6 +17,8 @@ var People = require('./model.js').People(db);
 var Organization = require('./model.js').Organization(db);
 var Place = require('./model.js').Place(db);
 var Settings = require('./model.js').Settings(db);
+var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
+var TaxiToAirport = require('./model.js').TaxiToAirport(db);
 
 function loadPeopleData(id) {
    var http = require('http');
@@ -293,6 +295,33 @@ app.get('/people.:format?', function (req, res){
   
 });
 
+app.get('/taxi/', function (req, res) {
+  res.render('taxi/index.ejs');
+});
+
+app.get('/taxi/from', function (req, res) {
+  TaxiFromAirport.find({}, function (err, taxi) {
+     if (err) {
+	console.log(err);
+     } else {
+        var peopleQuery = People.find({});
+        peopleQuery.where('w3cId').in(taxi.map(function (t) { return t.requester;})).run ( function (err, people) {
+	 res.render('taxi/from.ejs', {locals: {taxi: taxi, people: people}});
+     });
+  }
+});
+});
+
+app.get('/taxi/to', function (req, res) {
+  TaxiToAirport.find({}, function (err, taxi) {
+     if (err) {
+        console.log(err);
+     } else {
+        res.render('taxi/to.ejs', {locals: {taxi: taxi}});
+     }
+  
+});
+});
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
