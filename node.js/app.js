@@ -371,6 +371,22 @@ app.get('/orgs.:format?', function (req, res){
   });  
 });
 
+app.get('/orgs/:id.:format?', function(req, res){
+    Organization.findOne({w3cId: req.params.id})
+        // .populate('employees')
+	.run( function(err, org) {
+    switch (req.params.format) {
+      // When json, generate suitable data
+      case 'json':
+        res.send(org);
+	break;
+      default:
+	res.render('orgs/org.ejs', { locals: { org: org}});
+    }
+  });  
+});
+
+
 
 app.get('/taxi/', function (req, res) {
   res.render('taxi/index.ejs');
