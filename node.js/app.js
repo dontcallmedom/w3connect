@@ -188,9 +188,8 @@ app.post('/admin/', function(req, res){
         function addPeople(people) {
   	  return function (err) {
                counter++;
-	       if (err) {
-		 req.flash('error', err);
-	       } else {
+		// We ignore duplicate key errors
+	       if (!err) {
                  req.flash('info', people.given + ' ' + people.family + ' added');
 	       }		
        	       if (counter == registrantsData.registrants.length) {
