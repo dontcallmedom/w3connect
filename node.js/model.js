@@ -43,12 +43,24 @@ var Settings = new Schema({
   w3c_admin_password: String
 });
 
+var TaxiFromAirport = new Schema({
+  flight: {airline: String, code: String, eta: Date, airport: enum['San Jose', 'San Francisco', 'Oakland'], terminal: String},
+  maxTime: Date
+});
+
+var TaxiToAirport = new Schema({
+  minTime: Date,
+  maxTime: Date,
+  airport: enum['San Jose', 'San Francisco', 'Oakland']
+});
+
 mongoose.model('People', People);
 mongoose.model('Organization', Organization);
 mongoose.model('Group', Group);
 mongoose.model('Place', Place);
 mongoose.model('Settings', Settings);
-
+mongoose.model('TaxiToAirport', TaxiToAirport);
+mongoose.model('TaxiFromAirport', TaxiFromAirport);
 exports.People = function(db) {
   return db.model('People');
 };
@@ -70,3 +82,10 @@ exports.Settings = function(db) {
 };
 
 
+exports.TaxiToAirport = function(db) {
+  return db.model('TaxiToAirport');
+};
+
+exports.TaxiFromAirport = function(db) {
+  return db.model('TaxiFromAirport');
+};
