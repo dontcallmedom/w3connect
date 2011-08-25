@@ -339,7 +339,6 @@ app.post('/locations/:id.:format?', function(req, res) {
 
 
 app.get('/people.:format?', function (req, res){
-  //res.render('people/index.ejs', { locals: { people: [{given: "Dom"}, {given: "Amy"}]}});
   var people = People.find({}, function (err, people) {
     people.sort(function (a,b) { return (a.family > b.family ? 1 : (b.family > a.family ? -1 : 0));});
     switch (req.params.format) {
@@ -355,6 +354,23 @@ app.get('/people.:format?', function (req, res){
   });
   
 });
+
+app.get('/orgs.:format?', function (req, res){
+  var orgs = Organization.find({}, function (err, orgs) {
+    orgs.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
+    switch (req.params.format) {
+      // When json, generate suitable data
+      case 'json':
+        res.send(org.map(function (p) {
+          return p.__doc;
+        }));
+	break;
+      default:
+        res.render('orgs/index.ejs', { locals: { orgs: orgs}});
+    }
+  });  
+});
+
 
 app.get('/taxi/', function (req, res) {
   res.render('taxi/index.ejs');
