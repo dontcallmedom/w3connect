@@ -1,8 +1,11 @@
 <h1><%= place.name %></h1>
+<h2>Check in</h2>
+<% if (everyauth.loggedIn) {%>
 <form action="" method="post">
-<p><label>W3C username: <input type="text" pattern="[0-9a-z]*" name="user"></label> (<em>this will be removed once we have proper authentication)</p>
 <input type="submit" name="checkin" value="Check in at <%= place.name %>">
 </form>
-
+<% } else {%>
+<p><a href='/login'>Log in</a> to check in at <%= place.name %>.</p>
+<%}%>
 <h2>People whose last checkin was in <%= place.name %></h2>
 <%- partial('people/list.ejs') %>

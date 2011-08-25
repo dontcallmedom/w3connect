@@ -264,6 +264,7 @@ app.get('/locations.:format?', function(req, res) {
 app.get('/locations/:id.:format?', function(req, res) {
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
+	   console.log("**** " + req.user);
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
@@ -286,21 +287,16 @@ app.get('/locations/:id.:format?', function(req, res) {
 app.post('/locations/:id.:format?', function(req, res) {
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
-	if (req.body.checkin && req.body.user) {
-	   People.findOne({login: req.body.user}, function (err, indiv) {
-              if (indiv) {
-	        indiv.lastKnownPosition = {};		      
-	        indiv.lastKnownPosition.shortname = place.shortname; 
-	        indiv.lastKnownPosition.name = place.name; 
-	        indiv.lastKnownPosition.time = Date.now();
-		indiv.save(function(err) {
-           	  People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
-		    res.render('locations/place.ejs', { locals: { place: place, people: people}});
-	          });
-	        });
-	      } else {
-		  console.log(err);
-	      }
+	if (req.body.checkin && req.user) {
+	   var indiv = req.user ;
+	   indiv.lastKnownPosition = {};		      
+	   indiv.lastKnownPosition.shortname = place.shortname; 
+	   indiv.lastKnownPosition.name = place.name; 
+	   indiv.lastKnownPosition.time = Date.now();
+	   indiv.save(function(err) {
+             People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+		res.render('locations/place.ejs', { locals: { place: place, people: people}});
+	     });
 	   });
 	} else {
     switch (req.params.format) {
