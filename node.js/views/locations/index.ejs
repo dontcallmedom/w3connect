@@ -8,4 +8,19 @@
 <% } %>
 </ul>
 <img src="/maps/main.png" alt="Floor plan">
-</object></p>
+</object>
+</p>
+<div id="messages">
+</div>
+<script>
+if (window.EventSource) {
+	  var evtSrc = new EventSource( "/locations/stream" );
+	  evtSrc.onmessage = function( e ) {
+	    var data = JSON.parse(e.data);
+	    var info = document.createElement("p");
+	    info.setAttribute("class",info);
+	    info.appendChild(document.createTextNode(data.user.given + ' ' + data.user.family + ' left ' + data.left.name + ' and has checked in at ' + data.entered.name));
+	    document.getElementById("messages").appendChild(info);
+          };
+}
+</script>
