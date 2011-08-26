@@ -458,9 +458,9 @@
   </g>
   <script><![CDATA[ 
   var svgns = "http://www.w3.org/2000/svg";
-
+  var id;
   if (window.location.hash) {
-    var id = window.location.hash.substring(1).split(',')[0];
+    id = window.location.hash.substring(1).split(',')[0];
     var youarehere = window.location.hash.substring(1).split(',')[1];
     var room = document.getElementById(id);
     if (room) {
@@ -514,17 +514,20 @@
               updateCounter( json[i].shortname, json[i].checkedin.length );
             } 
           }
-	  if (window.EventSource) {
-	  // Live update!
-	  var evtSrc = new EventSource( "/locations/stream" );
-	  evtSrc.onmessage(function( e ) {
-	    updateCounter(e.left.shortname, -1);
-	    updateCounter(e.entered.shortname, +1);
-	    }, false);
-	  }
         }
    }
    xhr.send();   
+
+	  if (window.EventSource && !id) {
+	  // Live update!
+	  var evtSrc = new EventSource( "/locations/stream" );
+	  evtSrc.onmessage = function( e ) {
+	    data = JSON.parse(e.data);
+	    updateCounter(data.left.shortname, -1);
+	    updateCounter(data.entered.shortname, +1);
+	    };
+	  }
+
 
    function updateCounter(roomid, counterIncrement) {       
        var room = document.getElementById( roomid);
