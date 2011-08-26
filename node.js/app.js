@@ -308,9 +308,7 @@ app.get('/locations.:format?', function(req, res) {
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
-        res.send(places.map(function (p) {
-          return p.__doc;
-        }));
+        res.send(places);
 	break;
       default:
         res.render('locations/index.ejs', { locals: { places: places}});
@@ -328,9 +326,7 @@ app.get('/locations/:id.:format?', function(req, res) {
 	    // When json, generate suitable data
 	case 'json':
 	    place.checkedin = people;
-            res.send(places.map(function (p) {
-	      return p.__doc;
-	    }));
+            res.send(place);
 	    break;
 	default:
 	    res.render('locations/place.ejs', { locals: { place: place, people: people}});
@@ -392,9 +388,7 @@ app.get('/people.:format?', function (req, res){
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
-        res.send(people.map(function (p) {
-          return p.__doc;
-        }));
+        res.send(people);
 	break;
       default:
         res.render('people/index.ejs', { locals: { people: people}});
@@ -409,9 +403,7 @@ app.get('/orgs.:format?', function (req, res){
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
-        res.send(org.map(function (p) {
-          return p.__doc;
-        }));
+        res.send(org);
 	break;
       default:
         res.render('orgs/index.ejs', { locals: { orgs: orgs}});
