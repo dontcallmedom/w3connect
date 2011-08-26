@@ -328,7 +328,9 @@ app.get('/locations/:id.:format?', function(req, res) {
 	    // When json, generate suitable data
 	case 'json':
 	    place.checkedin = people;
-            res.send(place);
+            res.send(places.map(function (p) {
+	      return p.__doc;
+	    }));
 	    break;
 	default:
 	    res.render('locations/place.ejs', { locals: { place: place, people: people}});
