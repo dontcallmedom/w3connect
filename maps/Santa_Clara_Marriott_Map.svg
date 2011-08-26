@@ -532,7 +532,6 @@
        var counterBackdrop = document.getElementById( roomid +  "-counter-backdrop");
        var counter = (counterText.textContent ? parseInt(counterText.textContent) : 0);
        var newCounter = counter + counterIncrement;
-       alert(newCounter);
        if (room) {
          var roomTitle = room.parentNode.getAttribute("title");
 	 if (roomTitle.indexOf('(')) {
