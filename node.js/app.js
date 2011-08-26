@@ -176,12 +176,19 @@ app.post('/admin/', function(req, res){
         var counter = 0, counterAdded = 0;
         function addOrg(org, people) {
 	    return function (err) {
-		people.affiliation = org._id;
-		// We ignore duplicate key errors
-	        if (!err) {
+		// assume duplicate key errors
+	        if (err) {
+		    Organization.findOne({w3cId: people.affiliationId}, ["_id", "name"], function(err, org) {
+		    if (org) {
+			people.affiliation = org._id;
+		    }
+     	            people.save(addPeople(people));		    
+		    });
+		} else {
                     req.flash('info', org.name + ' added');
-		}		
-     	        people.save(addPeople(people));		      
+		    people.affiliation = org._id;
+     	            people.save(addPeople(people));		      
+		}
 	    };
 	}
         function addPeople(people) {
@@ -219,10 +226,11 @@ app.post('/admin/', function(req, res){
 	    people.w3cId = peopleData.w3cId;
 	    loadPeopleData(people.w3cId);
 	    if (peopleData.organization && peopleData.organization.w3cId) {
-		var org = new Organization();
-		org.w3cId = peopleData.organization.w3cId;
-		org.name = peopleData.organization.name;
-		org.save(addOrg(org, people));
+		     people.affiliationId = peopleData.organization.w3cId;
+  		     org = new Organization();
+		     org.w3cId = peopleData.organization.w3cId;
+		     org.name = peopleData.organization.name;
+		     org.save(addOrg(org, people));		       
 	    } else {
   	      people.save(addPeople(people));		
 	    }
