@@ -5,12 +5,15 @@
 
 var express = require('express');
 var everyauth = require('everyauth'),
+    EventEmitter = require('events').EventEmitter;
+
 form = require("express-form"),
 filter = form.filter,
 validate = form.validate;
 
 
 var app = module.exports = express.createServer();
+var emitter = new EventEmitter();
 
 var mongoose = require('mongoose'),
 db = mongoose.connect('mongodb://localhost/tpac');
@@ -326,6 +329,16 @@ app.get('/locations.:format?', function(req, res) {
 
 });
 
+app.get('/locations/stream', function(req, res) {
+    res.setHeader("Content-Type", 'text/event-stream');
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+    res.writeHead(200);
+    emitter.on("checkin", function(user, left, entered) {
+	res.write("data: " + JSON.stringify({"user": user, "left": left, "entered": entered}) + "\n\n");
+    });
+});
+
 app.get('/locations/:id.:format?', function(req, res) {
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
@@ -358,13 +371,17 @@ app.post('/locations/:id.:format?', function(req, res) {
     if (place) {
 	if (req.body.checkin && req.user) {
 	   var indiv = req.user ;
+	    var prevPosition = indiv.lastKnownPosition;
 	   indiv.lastKnownPosition = {};		      
 	   indiv.lastKnownPosition.shortname = place.shortname; 
 	   indiv.lastKnownPosition.name = place.name; 
 	   indiv.lastKnownPosition.time = Date.now();
 	   indiv.save(function(err) {
              req.flash('error',err);
-	     if (!err) req.flash('info', 'Checked in at '  + place.name);
+	       if (!err) {
+		   req.flash('info', 'Checked in at '  + place.name);
+		   emitter.emit("checkin", req.user, prevPosition, place);
+	       }
              People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
 		res.render('locations/place.ejs', { locals: { place: place, people: people}});
 	     });
