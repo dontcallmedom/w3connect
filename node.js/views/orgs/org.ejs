@@ -3,9 +3,9 @@
 <h2>Employees on site</h2>
 <ul>
 <% if ("undefined" !== typeof org.employees) {
-for (e in org.employees) {
+while(e=org.employees.shift()) {
 %>
-<li><a href="/people/<%= org.employees[e].w3cId%>"><%= org.employees[e].given + " " + org.employees[e].family %></li>
+<li><a href="/people/<%= e.w3cId%>"><%= e.given + " " + e.family %></li>
 <%}
 }%>
 </ul>
