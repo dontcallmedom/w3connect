@@ -18,7 +18,7 @@
   		pointer-events: all;
   	}
 
-    .room rect:hover, .room circle:hover,     .room rect:focus, .room circle:focus {
+    .room rect:hover, .room circle:hover,     .room a:focus rect, .room a:focus circle {
   		fill: cornflowerblue;
   	}
 
