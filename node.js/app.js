@@ -119,7 +119,7 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.set('port', 3000);
   app.use(express.bodyParser());
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/public', { maxAge: 86400}));
   app.use(express.methodOverride());
  app.use(express.cookieParser()); 
   app.use(express.session({store: mongooseSessionStore, secret:'abc'}));
