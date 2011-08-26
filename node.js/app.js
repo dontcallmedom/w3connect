@@ -243,6 +243,36 @@ app.post('/admin/', function(req, res){
 	       };
       };
       place.save(addPlace(place));
+  } else if (req.body.placesUpdate) {
+   var https = require('https');
+
+   var request = https.get({host: 'dvcs.w3.org', path:'/hg/tpac-web/raw-file/tip/maps/rooms.json'}, function (response) {
+     response.setEncoding('utf8');
+     var placesJSON = "", placesData;
+     response.on('data', function (chunk) {
+       placesJSON = placesJSON + chunk;
+     });
+     response.on('end', function () {
+	 Place.find({}).remove();
+        placesData = JSON.parse(placesJSON);
+	 for (i in placesData) {
+	     var p = new Place(placesData[i]);
+	     var counter = 0;
+	     var addCounter = 0;
+	     p.save(function (err) {
+		 counter++;
+		 if (err) {
+		     req.flash('error',err);
+		 } else {
+		     addCounter++;
+		 }
+		 if (counter == placesData.length) {
+		     res.render('admin/index');
+		 }
+	     });
+	 }
+     });
+   });
   } else {
     res.render('admin/index', {
       title: 'TPAC Web App Administration'

@@ -1,10 +1,15 @@
-<h2>Registrants</h2>
 <%- messages()%>
+
+<h2>Registrants</h2>
 <form action='' method='post'>
 <input type='submit' name='peopleUpdate' value='Update list of registrants' />
 </form>
 
 <h2>Places</h2>
+<form action='' method='post'>
+<input type='submit' name='placesUpdate' value='Update list of pre-defined rooms'>
+</form>
+
 <% if (typeof placeAddition !== 'undefined') {%>
 <p>New place added: <%= placeAddition.name %></p>
 <% }%>
