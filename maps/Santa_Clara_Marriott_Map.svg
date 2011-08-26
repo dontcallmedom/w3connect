@@ -104,36 +104,36 @@
     <rect id="courtyard-wing-north" x="100.761" y="204.535" width="120.598" height="50.416"/>
     <rect id="courtyard" x="83.173" y="254.951" width="98.321" height="62.643"/>
     <a xlink:href="/locations/monterey"><rect id="monterey" x="221.693" y="203.027" width="20.434" height="22.278"/></a>
-    <a xlink:href="/locations/sequoia"><rect id="sequoia" x="242.127" y="202.861" width="20.77" height="22.444"/></a>
-    <a xlink:href="/locations/sierra"><rect id="sierra" x="242.127" y="232.506" width="20.435" height="22.108"/></a>
-    <a xlink:href="/locations/ponderosa"><rect id="ponderosa" x="221.358" y="232.506" width="20.769" height="22.108"/></a>
-    <a xlink:href="/locations/seattle"><rect id="seattle" x="289.362" y="311.899" width="39.862" height="23.784"/></a>
-    <a xlink:href="/locations/portland"><rect id="portland" x="289.695" y="335.684" width="39.529" height="23.784"/></a>
-    <a xlink:href="/locations/santa-barbara"><rect id="santa-barbara" x="289.695" y="359.468" width="39.529" height="22.445"/></a>
-    <a xlink:href="/locations/newport-beach"><rect id="newport-beach" x="289.362" y="381.913" width="40.198" height="24.119"/></a>
-    <a xlink:href="/locations/prospector-suite-a"><rect id="prospector-suite-a" x="356.359" y="391.628" width="19.764" height="23.95"/></a>
-    <a xlink:href="/locations/prospector-suite-b"><rect id="prospector-suite-b" x="376.123" y="391.084" width="20.102" height="24.662"/></a>
-    <a xlink:href="/locations/grand-ballroom-e"><rect id="grand-ballroom-e" x="356.359" y="358.129" width="39.865" height="22.443"/></a>
-    <a xlink:href="/locations/grand-ballroom-d"><rect id="grand-ballroom-d" x="356.359" y="334.68" width="38.775" height="23.449"/></a>
-    <a xlink:href="/locations/grand-ballroom-c"><rect id="grand-ballroom-c" x="356.861" y="311.899" width="38.273" height="22.78"/></a>
-    <a xlink:href="/locations/grand-ballroom-b"><rect id="grand-ballroom-b" x="356.191" y="288.115" width="38.943" height="23.784"/></a>
-    <a xlink:href="/locations/grand-ballroom-a"><rect id="grand-ballroom-a" x="356.023" y="265.336" width="39.781" height="22.779"/></a>
+    <a target="_parent" xlink:href="/locations/sequoia"><rect id="sequoia" x="242.127" y="202.861" width="20.77" height="22.444"/></a>
+    <a target="_parent" xlink:href="/locations/sierra"><rect id="sierra" x="242.127" y="232.506" width="20.435" height="22.108"/></a>
+    <a target="_parent" xlink:href="/locations/ponderosa"><rect id="ponderosa" x="221.358" y="232.506" width="20.769" height="22.108"/></a>
+    <a target="_parent" xlink:href="/locations/seattle"><rect id="seattle" x="289.362" y="311.899" width="39.862" height="23.784"/></a>
+    <a target="_parent" xlink:href="/locations/portland"><rect id="portland" x="289.695" y="335.684" width="39.529" height="23.784"/></a>
+    <a target="_parent" xlink:href="/locations/santa-barbara"><rect id="santa-barbara" x="289.695" y="359.468" width="39.529" height="22.445"/></a>
+    <a target="_parent" xlink:href="/locations/newport-beach"><rect id="newport-beach" x="289.362" y="381.913" width="40.198" height="24.119"/></a>
+    <a target="_parent" xlink:href="/locations/prospector-suite-a"><rect id="prospector-suite-a" x="356.359" y="391.628" width="19.764" height="23.95"/></a>
+    <a target="_parent" xlink:href="/locations/prospector-suite-b"><rect id="prospector-suite-b" x="376.123" y="391.084" width="20.102" height="24.662"/></a>
+    <a target="_parent" xlink:href="/locations/grand-ballroom-e"><rect id="grand-ballroom-e" x="356.359" y="358.129" width="39.865" height="22.443"/></a>
+    <a target="_parent" xlink:href="/locations/grand-ballroom-d"><rect id="grand-ballroom-d" x="356.359" y="334.68" width="38.775" height="23.449"/></a>
+    <a target="_parent" xlink:href="/locations/grand-ballroom-c"><rect id="grand-ballroom-c" x="356.861" y="311.899" width="38.273" height="22.78"/></a>
+    <a target="_parent" xlink:href="/locations/grand-ballroom-b"><rect id="grand-ballroom-b" x="356.191" y="288.115" width="38.943" height="23.784"/></a>
+    <a target="_parent" xlink:href="/locations/grand-ballroom-a"><rect id="grand-ballroom-a" x="356.023" y="265.336" width="39.781" height="22.779"/></a>
     <rect id="marquis-tower" x="357.365" y="200.349" width="58.957" height="46.897"/>
-    <a xlink:href="/locations/chracters-sports-bar-and-grill"><rect id="chracters-sports-bar-and-grill" x="416.322" y="201.395" width="33.834" height="45.852"/></a>
-    <a xlink:href="/locations/parcel-104-restaurant"><rect id="parcel-104-restaurant" x="450.156" y="200.349" width="98.154" height="75.372"/></a>
+    <a target="_parent" xlink:href="/locations/chracters-sports-bar-and-grill"><rect id="chracters-sports-bar-and-grill" x="416.322" y="201.395" width="33.834" height="45.852"/></a>
+    <a target="_parent" xlink:href="/locations/parcel-104-restaurant"><rect id="parcel-104-restaurant" x="450.156" y="200.349" width="98.154" height="75.372"/></a>
     <rect id="receiving" x="484.66" y="346.068" width="21.773" height="46.563"/>
     <rect id="human-resources" x="518.16" y="349.419" width="13.734" height="38.523"/>
     <rect id="sales-catering-office" x="548.309" y="359.134" width="101.166" height="18.088"/>
-    <a xlink:href="/locations/california-ballroom-9"><rect id="california-ballroom-9" x="548.645" y="318.599" width="25.793" height="25.46"/></a>
-    <a xlink:href="/locations/california-ballroom-8"><rect id="california-ballroom-8" x="574.438" y="318.599" width="29.145" height="26.13"/></a>
-    <a xlink:href="/locations/california-ballroom-7"><rect id="california-ballroom-7" x="603.582" y="318.599" width="29.479" height="26.466"/></a>
-    <a xlink:href="/locations/california-ballroom-6"><rect id="california-ballroom-6" x="548.311" y="280.41" width="84.416" height="38.188"/></a>
-    <a xlink:href="/locations/california-ballroom-5"><rect id="california-ballroom-5" x="548.645" y="259.306" width="84.082" height="21.104"/></a>
-    <a xlink:href="/locations/california-ballroom-4"><rect id="california-ballroom-4" x="548.311" y="239.541" width="84.75" height="19.765"/></a>
-    <a xlink:href="/locations/california-ballroom-3"><rect id="california-ballroom-3" x="604.924" y="214.417" width="27.803" height="25.124"/></a>
-    <a xlink:href="/locations/california-ballroom-2"><rect id="california-ballroom-2" x="575.779" y="214.417" width="29.145" height="24.454"/></a>
-    <a xlink:href="/locations/california-ballroom-1"><rect id="california-ballroom-1" x="549.982" y="213.412" width="25.797" height="25.459"/></a>
-    <a xlink:href="/locations/california-ballroom-registration-desk"><rect id="california-ballroom-registration-desk" x="567.402" y="178.405" width="82.072" height="21.271"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-9"><rect id="california-ballroom-9" x="548.645" y="318.599" width="25.793" height="25.46"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-8"><rect id="california-ballroom-8" x="574.438" y="318.599" width="29.145" height="26.13"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-7"><rect id="california-ballroom-7" x="603.582" y="318.599" width="29.479" height="26.466"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-6"><rect id="california-ballroom-6" x="548.311" y="280.41" width="84.416" height="38.188"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-5"><rect id="california-ballroom-5" x="548.645" y="259.306" width="84.082" height="21.104"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-4"><rect id="california-ballroom-4" x="548.311" y="239.541" width="84.75" height="19.765"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-3"><rect id="california-ballroom-3" x="604.924" y="214.417" width="27.803" height="25.124"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-2"><rect id="california-ballroom-2" x="575.779" y="214.417" width="29.145" height="24.454"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-1"><rect id="california-ballroom-1" x="549.982" y="213.412" width="25.797" height="25.459"/></a>
+    <a target="_parent" xlink:href="/locations/california-ballroom-registration-desk"><rect id="california-ballroom-registration-desk" x="567.402" y="178.405" width="82.072" height="21.271"/></a>
     <rect id="executive-tower" x="410.961" y="27.827" width="40.201" height="91.451"/>
     <rect id="starbucks" x="266.582" y="179.242" width="51.924" height="13.735"/>
     <rect id="lobby" x="318.339" y="156.464" width="120.091" height="43.213"/>
