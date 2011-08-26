@@ -516,7 +516,7 @@
           }
 	  if (window.EventSource) {
 	  // Live update!
-	  var evtSrc = new EventSource( "http://localhost:3000/locations/stream" );
+	  var evtSrc = new EventSource( "/locations/stream" );
 	  evtSrc.onmessage(function( e ) {
 	    updateCounter(e.left.shortname, -1);
 	    updateCounter(e.entered.shortname, +1);
