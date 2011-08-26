@@ -18,6 +18,10 @@
   		pointer-events: all;
   	}
 
+	.room a:hover text, .room a:hover text { 
+	   font-weight: bold;
+	}
+
     .room rect:hover, .room circle:hover,     .room a:focus rect, .room a:focus circle {
   		fill: cornflowerblue;
   	}
