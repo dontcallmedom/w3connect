@@ -163,7 +163,6 @@ app.get('/admin/', function(req, res){
 app.post('/admin/', function(req, res){
   if (req.body.peopleUpdate) {
    var https = require('https');
-   console.log(app.set('w3c_auth'));
 
    var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-json.php?wgid=35125&qaireno=TPAC2011', headers: {Authorization: 'Basic ' + app.set('w3c_auth')}}, function (response) {
      response.setEncoding('utf8');
@@ -181,7 +180,7 @@ app.post('/admin/', function(req, res){
 		// We ignore duplicate key errors
 	        if (!err) {
                     req.flash('info', org.name + ' added');
-		}
+		}		
      	        people.save(addPeople(people));		      
 	    };
 	}
@@ -192,7 +191,16 @@ app.post('/admin/', function(req, res){
 	       if (!err) {
                  counterAdded++;
                  req.flash('info', people.given + ' ' + people.family + ' added');
-	       }		
+	       }
+	      // update list of employees
+	      Organization.findById(people.affiliation
+                     // closure to add employee to org record
+				    , (function (p) {
+					return function (err, org) {
+					if (org) {
+					    org.employees.push(people._id);
+					    org.save();
+					}};})(people) );
        	       if (counter == registrantsData.registrants.length) {
 		if (!counterAdded) {
 		    req.flash('info', 'No new data to import');
@@ -339,7 +347,6 @@ app.post('/locations/:id.:format?', function(req, res) {
 
 
 app.get('/people.:format?', function (req, res){
-  //res.render('people/index.ejs', { locals: { people: [{given: "Dom"}, {given: "Amy"}]}});
   var people = People.find({}, function (err, people) {
     people.sort(function (a,b) { return (a.family > b.family ? 1 : (b.family > a.family ? -1 : 0));});
     switch (req.params.format) {
@@ -355,6 +362,39 @@ app.get('/people.:format?', function (req, res){
   });
   
 });
+
+app.get('/orgs.:format?', function (req, res){
+  var orgs = Organization.find({}, function (err, orgs) {
+    orgs.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
+    switch (req.params.format) {
+      // When json, generate suitable data
+      case 'json':
+        res.send(org.map(function (p) {
+          return p.__doc;
+        }));
+	break;
+      default:
+        res.render('orgs/index.ejs', { locals: { orgs: orgs}});
+    }
+  });  
+});
+
+app.get('/orgs/:id.:format?', function(req, res){
+    Organization.findOne({w3cId: req.params.id})
+        .populate('employees')
+	.run( function(err, org) {
+    switch (req.params.format) {
+      // When json, generate suitable data
+      case 'json':
+        res.send(org);
+	break;
+      default:
+	res.render('orgs/org.ejs', { locals: { org: org}});
+    }
+  });  
+});
+
+
 
 app.get('/taxi/', function (req, res) {
   res.render('taxi/index.ejs');
@@ -375,7 +415,7 @@ app.post('/taxi/from',
   ),
   function (req, res) {
   if (! req.loggedIn) {
-    req.session.redirectTo = '/taxi/to';
+    req.session.redirectTo = '/taxi/from';
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
@@ -413,7 +453,7 @@ app.post('/taxi/to',
   ),
   function (req, res) {
   if (! req.loggedIn) {
-    req.session.redirectTo = '/taxi/from';
+    req.session.redirectTo = '/taxi/to';
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {

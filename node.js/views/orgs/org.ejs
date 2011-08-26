@@ -1,0 +1,11 @@
+<h1><%= org.name %></h1>
+
+<h2>Employees on site</h2>
+<ul>
+<% if ("undefined" !== typeof org.employees) {
+for (e in org.employees) {
+%>
+<li><a href="/people/<%= org.employees[e].w3cId%>"><%= org.employees[e].given + " " + org.employees[e].family %></li>
+<%}
+}%>
+</ul>

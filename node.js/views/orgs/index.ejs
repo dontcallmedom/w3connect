@@ -1,0 +1,7 @@
+<h1>Organizations</h1>
+<ul>
+<% for (var o  in orgs) { %>
+  <li><a <% if(everyauth.user && everyauth.user.affiliation._id == orgs[o]._id) {%>class='self'<%}%> href='/orgs/<%= orgs[o].w3cId %>'>
+<%= orgs[o].name %></a></li>
+<% } %>
+</ul>
