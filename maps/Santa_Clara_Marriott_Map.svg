@@ -106,7 +106,7 @@
     <rect id="courtyard-wing-west" x="29.661" y="202.744" width="53.512" height="100.278"/>
     <rect id="courtyard-wing-north" x="100.761" y="204.535" width="120.598" height="50.416"/>
     <rect id="courtyard" x="83.173" y="254.951" width="98.321" height="62.643"/>
-    <a xlink:href="/locations/monterey"><rect id="monterey" x="221.693" y="203.027" width="20.434" height="22.278"/></a>
+    <a target="_parent" xlink:href="/locations/monterey"><rect id="monterey" x="221.693" y="203.027" width="20.434" height="22.278"/></a>
     <a target="_parent" xlink:href="/locations/sequoia"><rect id="sequoia" x="242.127" y="202.861" width="20.77" height="22.444"/></a>
     <a target="_parent" xlink:href="/locations/sierra"><rect id="sierra" x="242.127" y="232.506" width="20.435" height="22.108"/></a>
     <a target="_parent" xlink:href="/locations/ponderosa"><rect id="ponderosa" x="221.358" y="232.506" width="20.769" height="22.108"/></a>
