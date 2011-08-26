@@ -38,7 +38,8 @@ var Group = new Schema({
 
 var Place = new Schema({
   shortname: {type: String, unique: true},
-  name: {type: String, unique: true}
+  name: {type: String, unique: true},
+  checkedin: [{type: Schema.ObjectId, ref: 'People'}]
 });
 
 var Settings = new Schema({
