@@ -371,7 +371,9 @@ app.post('/locations/:id.:format?', function(req, res) {
     if (place) {
 	if (req.body.checkin && req.user) {
 	   var indiv = req.user ;
-	    var prevPosition = indiv.lastKnownPosition;
+	    var prevPosition = {shortname: indiv.lastKnownPosition.shortname,
+				name: indiv.lastKnownPosition.name,
+				time: indiv.lastKnownPosition.time};
 	   indiv.lastKnownPosition = {};		      
 	   indiv.lastKnownPosition.shortname = place.shortname; 
 	   indiv.lastKnownPosition.name = place.name; 
