@@ -403,7 +403,7 @@
     var id = window.location.hash.substring(1).split(',')[0];
     var youarehere = window.location.hash.substring(1).split(',')[1];
     var room = document.getElementById(id);
-    room.parent.disabled = true;
+    room.parentNode.removeAttribute("xlink:href");
     room.style.fill = "yellow";
     if (youarehere) {
       var here = document.getElementById(youarehere);
