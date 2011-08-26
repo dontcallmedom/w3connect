@@ -495,13 +495,20 @@
           var bbox = room.getBBox();
        
           var svgns = "http://www.w3.org/2000/svg";
+	  var backdrop = document.createElementNS(svgns, "rect");
+	  backdrop.setAttribute("x", bbox.x + bbox.width - 8);
+	  backdrop.setAttribute("width", 6);
+	  backdrop.setAttribute("y", bbox.y + bbox.height - 9);
+	  backdrop.setAttribute("height", 7);
+	  backdrop.setAttribute( "fill", "white");
           var t = document.createElementNS(svgns, "text");
           t.setAttribute( "x", bbox.x + bbox.width - 6);
-          t.setAttribute( "y", bbox.y + bbox.height - 2 );
+          t.setAttribute( "y", bbox.y + bbox.height - 3 );
           t.setAttribute( "font-size", "6px");
-	  t.setAttribute( "fill", "green");
+	  t.setAttribute( "background", "white");
           t.setAttribute( "text-anchor", "right");
           t.textContent = data.checkedin.length;
+          document.documentElement.appendChild(backdrop);
           document.documentElement.appendChild(t);
         }
       }
