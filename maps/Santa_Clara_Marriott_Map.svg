@@ -402,12 +402,14 @@
   if (window.location.hash) {
     var id = window.location.hash.substring(1).split(',')[0];
     var youarehere = window.location.hash.substring(1).split(',')[1];
-    document.getElementById(id).style.fill = "yellow";
+    var room = document.getElementById(id);
+    room.parent.disabled = true;
+    room.style.fill = "yellow";
     if (youarehere) {
-      var room = document.getElementById(youarehere);
-      room.setAttribute("stroke", "red");
-      room.setAttribute("stroke-width", "4px");
-      var bbox = room.getBBox();
+      var here = document.getElementById(youarehere);
+      here.setAttribute("stroke", "red");
+      here.setAttribute("stroke-width", "4px");
+      var bbox = here.getBBox();
       
       var svgns = "http://www.w3.org/2000/svg";
       var c = document.createElementNS(svgns, "circle");
