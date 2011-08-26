@@ -1,10 +1,10 @@
 <h1>Places</h1>
 <ul>
+<p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="/maps/main.svg#,<% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
 <% for (var p  in places) { %>
   <li style='list-style:none'><a  style='display:block; float:left; width:10em; height:50px; border:thin solid gray; border-radius:10%; margin:2px;' href='/locations/<%= places[p].shortname %>'>
-<% if (places[p].picture_thumb) { %>
-<img style='float:right' src="<%=places[p].picture_thumb%>" alt="Picture of <%= places[p].name %>">
-<%}%>
 <%= places[p].name %></a></li>
 <% } %>
+<img src="/maps/main.png" alt="Floor plan">
+</object></p>
 </ul>
