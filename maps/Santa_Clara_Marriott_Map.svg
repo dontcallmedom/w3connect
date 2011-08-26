@@ -474,5 +474,38 @@
 
     }
   }
+  var xhr = new XMLHttpRequest;
+  xhr.open("GET","/locations.json", true);
+  xhr.onreadystatechange = function() {
+        if (4 == xhr.readyState) {
+          var json = JSON.parse(xhr.responseText);
+          for ( var i = 0, len = json.length; len > i; i++ ) {
+            display( json[i] );
+          }
+        }
+   }
+   xhr.send();   
+    
+    
+    function display( data ) {
+      if (data.checkedin.length) {
+        var room = document.getElementById( data.shortname );
+        if (room) {
+      
+          var bbox = room.getBBox();
+       
+          var svgns = "http://www.w3.org/2000/svg";
+          var t = document.createElementNS(svgns, "text");
+          t.setAttribute( "x", bbox.x + bbox.width - 6);
+          t.setAttribute( "y", bbox.y + bbox.height - 2 );
+          t.setAttribute( "font-size", "6px");
+	  t.setAttribute( "fill", "green");
+          t.setAttribute( "text-anchor", "right");
+          t.textContent = data.checkedin.length;
+          document.documentElement.appendChild(t);
+        }
+      }
+     }
+
   ]]></script>  
 </svg>
