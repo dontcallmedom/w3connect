@@ -397,8 +397,25 @@
   </g>
   <script><![CDATA[ 
   if (window.location.hash) {
-    var id = window.location.hash.substring(1);
+    var id = window.location.hash.substring(1).split(',')[0];
+    var youarehere = window.location.hash.substring(1).split(',')[1];
     document.getElementById(id).style.fill = "yellow";
+    if (youarehere) {
+      var room = document.getElementById(youarehere);
+      room.setAttribute("stroke", "red");
+      room.setAttribute("stroke-width", "4px");
+      var bbox = room.getBBox();
+      
+      var svgns = "http://www.w3.org/2000/svg";
+      var c = document.createElementNS(svgns, "circle");
+      c.setAttribute( "id", "youarehere");
+      c.setAttribute( "cx", bbox.x + bbox.width/2);
+      c.setAttribute( "cy", bbox.y + bbox.height/2);
+      c.setAttribute( "r", "2px");
+      c.setAttribute( "fill", "red");
+      document.documentElement.appendChild(c);
+
+    }
   }
   ]]></script>  
 </svg>
