@@ -10,3 +10,4 @@ do cat Santa_Clara_Marriott_Map.svg |sed -e 's/"text\/css">/"text\/css">#'`basen
 done
 
 cp Santa_Clara_Marriott_Map.svg ../node.js/public/maps/main.svg
+inkscape ../node.js/public/maps/main.svg -e ../node.js/public/maps/main.png
