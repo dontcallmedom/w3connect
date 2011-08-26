@@ -5,6 +5,9 @@
 
 
   <style type="text/css">
+    .room a rect {
+           fill: #F4D9FF;
+     }
 
     .room rect, .room circle {
   		fill: none;
