@@ -1,3 +1,5 @@
+# depends on inkscape to generate PNG versions
+
 ROOMS_SVG=`for i in \`cat rooms.json|cut -d ":" -f 2|cut -d "," -f 1|cut -d '"' -f 2|grep -v "{"|grep -v "}"\`; do echo "$i.svg" ; done`
 
 for i in $ROOMS_SVG:
