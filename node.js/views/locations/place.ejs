@@ -8,5 +8,8 @@
 <% } else {%>
 <p><a href='/login'>Log in</a> to check in at <%= place.name %>.</p>
 <%}%>
+<p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="/maps/main.svg#<%= place.shortname %>">
+<img src="/maps/<%= place.shortname%>.png" alt="Floor plan with highlight on <%= place.name %>">
+</object></p>
 <h2>People whose last checkin was in <%= place.name %></h2>
 <%- partial('people/list.ejs') %>
