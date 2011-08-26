@@ -116,22 +116,28 @@
     <rect id="courtyard" x="83.173" y="254.951" width="98.321" height="62.643"/>
     <a title="Monterey" target="_parent" xlink:href="/locations/monterey"><rect id="monterey" x="221.693" y="203.027" width="20.434" height="22.278"/>
     </a>
-    <a title="Sequoia" target="_parent" xlink:href="/locations/sequoia"><rect id="sequoia" x="242.127" y="202.861" width="20.77" height="22.444"/></a>
-    <a title="Sierra" target="_parent" xlink:href="/locations/sierra"><rect id="sierra" x="242.127" y="232.506" width="20.435" height="22.108"/></a>
-    <a title="Ponderosa" target="_parent" xlink:href="/locations/ponderosa"><rect id="ponderosa" x="221.358" y="232.506" width="20.769" height="22.108"/></a>
+    <a title="Sequoia" target="_parent" xlink:href="/locations/sequoia"><rect id="sequoia" x="242.127" y="202.861" width="20.77" height="22.444"/>
+    </a>
+    <a title="Sierra" target="_parent" xlink:href="/locations/sierra"><rect id="sierra" x="242.127" y="232.506" width="20.435" height="22.108"/>
+    </a>
+    <a title="Ponderosa" target="_parent" xlink:href="/locations/ponderosa"><rect id="ponderosa" x="221.358" y="232.506" width="20.769" height="22.108"/>
+    </a>
     <a title="Seattle" target="_parent" xlink:href="/locations/seattle"><rect id="seattle" x="289.362" y="311.899" width="39.862" height="23.784"/>
     <text x="309" y="320">Seattle</text>
     </a>
     <a title="Portland" target="_parent" xlink:href="/locations/portland"><rect id="portland" x="289.695" y="335.684" width="39.529" height="23.784"/>
-    <text x="309" y="344">Portland</text></a>
+    <text x="309" y="344">Portland</text>
+    </a>
     <a title="Santa Barbara" target="_parent" xlink:href="/locations/santa-barbara"><rect id="santa-barbara" x="289.695" y="359.468" width="39.529" height="22.445"/>
     <text x="309" y="368">Santa &#x2026;</text>
     </a>
     <a title="Newport Beach" target="_parent" xlink:href="/locations/newport-beach"><rect id="newport-beach" x="289.362" y="381.913" width="40.198" height="24.119"/>
         <text x="309" y="390">Newpo&#x2026;</text>
 </a>
-    <a title="Prospector Suite A" target="_parent" xlink:href="/locations/prospector-suite-a"><rect id="prospector-suite-a" x="356.359" y="391.628" width="19.764" height="23.95"/></a>
-    <a  title="Prospector Suite B" target="_parent" xlink:href="/locations/prospector-suite-b"><rect id="prospector-suite-b" x="376.123" y="391.084" width="20.102" height="24.662"/></a>
+    <a title="Prospector Suite A" target="_parent" xlink:href="/locations/prospector-suite-a"><rect id="prospector-suite-a" x="356.359" y="391.628" width="19.764" height="23.95"/>
+    </a>
+    <a  title="Prospector Suite B" target="_parent" xlink:href="/locations/prospector-suite-b"><rect id="prospector-suite-b" x="376.123" y="391.084" width="20.102" height="24.662"/>
+    </a>
     <a title="Grand Ballroom E" target="_parent" xlink:href="/locations/grand-ballroom-e"><rect id="grand-ballroom-e" x="356.359" y="358.129" width="39.865" height="22.443"/>
     <text x="376" y="367">G.B. E</text>
     </a>
@@ -151,8 +157,9 @@
     <a title="Characters Sports Bar and Grill" target="_parent" xlink:href="/locations/chracters-sports-bar-and-grill"><rect id="chracters-sports-bar-and-grill" x="416.322" y="201.395" width="33.834" height="45.852"/>
     <text x="432" y="210">Bar</text>
 </a>
-    <a title="Parcel 104 Restaurant" target="_parent" xlink:href="/locations/parcel-104-restaurant"><rect id="parcel-104-restaurant" x="450.156" y="200.349" width="98.154" height="75.372"/></a>
+    <a title="Parcel 104 Restaurant" target="_parent" xlink:href="/locations/parcel-104-restaurant"><rect id="parcel-104-restaurant" x="450.156" y="200.349" width="98.154" height="75.372"/>
     <text x="499" y="210">Parcel 104 Restaurant</text>
+</a>
     <rect id="receiving" x="484.66" y="346.068" width="21.773" height="46.563"/>
     <rect id="human-resources" x="518.16" y="349.419" width="13.734" height="38.523"/>
     <rect id="sales-catering-office" x="548.309" y="359.134" width="101.166" height="18.088"/>
@@ -167,7 +174,8 @@
     </a>
     <a title="California Ballroom 6" target="_parent" xlink:href="/locations/california-ballroom-6"><rect id="california-ballroom-6" x="548.311" y="280.41" width="84.416" height="38.188"/>
     <text x="590" y="290">California BallRoom</text>
-    <text x="590" y="300">6</text></a>
+    <text x="590" y="300">6</text>
+    </a>
     <a title="California Ballroom 5" target="_parent" xlink:href="/locations/california-ballroom-5"><rect id="california-ballroom-5" x="548.645" y="259.306" width="84.082" height="21.104"/>
     <text x="590" y="268">5</text>
   </a>
@@ -449,6 +457,8 @@
   	<path id="path4467" class="st6" d="M262.562,241.82v5.652"/>
   </g>
   <script><![CDATA[ 
+  var svgns = "http://www.w3.org/2000/svg";
+
   if (window.location.hash) {
     var id = window.location.hash.substring(1).split(',')[0];
     var youarehere = window.location.hash.substring(1).split(',')[1];
@@ -463,7 +473,6 @@
       here.setAttribute("stroke-width", "4px");
       var bbox = here.getBBox();
       
-      var svgns = "http://www.w3.org/2000/svg";
       var c = document.createElementNS(svgns, "circle");
       c.setAttribute( "id", "youarehere");
       c.setAttribute( "cx", bbox.x + bbox.width/2);
@@ -474,45 +483,72 @@
 
     }
   }
+  // finding the rooms via their links
+  var room_links = document.getElementsByTagNameNS(svgns, "a");
+  // adding the counter
+  for (var r =0 ;r < room_links.length ; r++) {
+    var room = room_links[r].getElementsByTagNameNS(svgns, "rect")[0];
+    var bbox = room.getBBox();
+    var backdrop = document.createElementNS(svgns, "rect");
+    backdrop.setAttribute("id", room.getAttribute("id") + "-counter-backdrop");
+    backdrop.setAttribute("x", bbox.x + bbox.width - 8);
+    backdrop.setAttribute("width", 6);
+    backdrop.setAttribute("y", bbox.y + bbox.height - 9);
+    backdrop.setAttribute("height", 7);
+    var t = document.createElementNS(svgns, "text");
+    t.setAttribute("id", room.getAttribute("id") + "-counter");
+    t.setAttribute( "x", bbox.x + bbox.width - 6);
+    t.setAttribute( "y", bbox.y + bbox.height - 3 );
+    t.setAttribute( "font-size", "6px");
+    t.setAttribute( "text-anchor", "right");    
+    room_links[r].appendChild(backdrop);
+    room_links[r].appendChild(t);
+  }
   var xhr = new XMLHttpRequest;
   xhr.open("GET","/locations.json", true);
   xhr.onreadystatechange = function() {
         if (4 == xhr.readyState) {
           var json = JSON.parse(xhr.responseText);
           for ( var i = 0, len = json.length; len > i; i++ ) {
-            display( json[i] );
+	    if (json[i].checkedin.length) {
+              updateCounter( json[i].shortname, json[i].checkedin.length );
+            } 
           }
+	  if (window.EventSource) {
+	  // Live update!
+	  var evtSrc = new EventSource( "http://localhost:3000/locations/stream" );
+	  evtSrc.onmessage(function( e ) {
+	    updateCounter(e.left.shortname, -1);
+	    updateCounter(e.entered.shortname, +1);
+	    }, false);
+	  }
         }
    }
    xhr.send();   
-    
-    
-    function display( data ) {
-      if (data.checkedin.length) {
-        var room = document.getElementById( data.shortname );
-        if (room) {
-          room.parentNode.setAttribute('title', room.parentNode.getAttribute("title") + " (" + data.checkedin.length + " person" + (data.checkedin.length > 1 ? "s" : "") + " checked in)");
-          var bbox = room.getBBox();
-       
-          var svgns = "http://www.w3.org/2000/svg";
-	  var backdrop = document.createElementNS(svgns, "rect");
-	  backdrop.setAttribute("x", bbox.x + bbox.width - 8);
-	  backdrop.setAttribute("width", 6);
-	  backdrop.setAttribute("y", bbox.y + bbox.height - 9);
-	  backdrop.setAttribute("height", 7);
-	  backdrop.setAttribute( "fill", "white");
-          var t = document.createElementNS(svgns, "text");
-          t.setAttribute( "x", bbox.x + bbox.width - 6);
-          t.setAttribute( "y", bbox.y + bbox.height - 3 );
-          t.setAttribute( "font-size", "6px");
-	  t.setAttribute( "background", "white");
-          t.setAttribute( "text-anchor", "right");
-          t.textContent = data.checkedin.length;
-          document.documentElement.appendChild(backdrop);
-          document.documentElement.appendChild(t);
+
+   function updateCounter(roomid, counterIncrement) {       
+       var room = document.getElementById( roomid);
+       var counterText = document.getElementById( roomid +  "-counter");
+       var counterBackdrop = document.getElementById( roomid +  "-counter-backdrop");
+       var counter = (counterText.textContent ? parseInt(counterText.textContent) : 0);
+       var newCounter = counter + counterIncrement;
+       alert(newCounter);
+       if (room) {
+         var roomTitle = room.parentNode.getAttribute("title");
+	 if (roomTitle.indexOf('(')) {
+	   roomTitle = roomTitle.substring(0,roomTitle.indexOf('(') - 1);
+	  }
+         if (newCounter > 0) {   
+           room.parentNode.setAttribute('title', roomTitle + " (" + newCounter + " person" + (newCounter > 1 ? "s" : "") + " checked in)");
+	   counterBackdrop.setAttribute( "fill", "white");
+           counterText.textContent = newCounter;
+	  } else {
+           counterText.textContent = "";
+	   counterBackdrop.setAttribute( "fill", "none");
+           room.parentNode.setAttribute('title', roomTitle);
+          }
         }
-      }
-     }
+    }
 
   ]]></script>  
 </svg>
