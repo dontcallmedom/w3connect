@@ -427,7 +427,7 @@ app.get('/orgs/:id.:format?', function(req, res){
         res.send(org);
 	break;
       default:
-	res.render('orgs/org.ejs', { locals: { org: org, people:org.employees}});
+	res.render('orgs/org.ejs', { locals: { org: org, people:org.employees.slice(0)}}); // slice(0) to work around bug in populating arrays
     }
   });  
 });
