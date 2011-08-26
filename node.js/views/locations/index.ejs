@@ -1,5 +1,5 @@
 <h1>Places</h1>
-<p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="/maps/main.svg#,<% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
+<p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="/maps/main.svg#<% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
 <ul>
 
 <% for (var p  in places) { %>
