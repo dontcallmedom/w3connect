@@ -419,7 +419,7 @@ app.get('/orgs.:format?', function (req, res){
 
 app.get('/orgs/:id.:format?', function(req, res){
     Organization.findOne({w3cId: req.params.id})
-        .populate('employees', ['w3cId', 'given', 'family'])
+        .populate('employees', ['w3cId', 'given', 'family', 'picture_thumb'])
 	.run( function(err, org) {
     switch (req.params.format) {
       // When json, generate suitable data
@@ -427,7 +427,7 @@ app.get('/orgs/:id.:format?', function(req, res){
         res.send(org);
 	break;
       default:
-	res.render('orgs/org.ejs', { locals: { org: org}});
+	res.render('orgs/org.ejs', { locals: { org: org, people:org.employees}});
     }
   });  
 });
@@ -439,7 +439,7 @@ app.get('/taxi/', function (req, res) {
 });
 
 app.get('/taxi/from', function (req, res) {
-  TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family']).run (function (err, taxi) {
+  TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run (function (err, taxi) {
      req.flash('error',err);
      res.render('taxi/from.ejs', {locals: {taxi: taxi}});
 });
@@ -457,7 +457,7 @@ app.post('/taxi/from',
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
-       TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family']).run( function (err, taxi) {
+       TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
 	 req.flash('error',err);
  	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
         });
@@ -465,7 +465,7 @@ app.post('/taxi/from',
      var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user._id});
      taxi.save(function (err) {
        req.flash('error',err);
-       TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family']).run( function (err, taxi) {
+       TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
 	 req.flash('error',err);
  	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
         });
@@ -476,7 +476,7 @@ app.post('/taxi/from',
 
 
 app.get('/taxi/to', function (req, res) {
-  TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family']).run( function (err, taxi) {
+  TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
      req.flash('error',err);
      res.render('taxi/to.ejs', {locals: {taxi: taxi}});
   });
@@ -495,7 +495,7 @@ app.post('/taxi/to',
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
-       TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family']).run( function (err, taxi) {
+       TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
 	 req.flash('error',err);
  	 res.render('taxi/to.ejs', {locals: {taxi: taxi}});
         });
@@ -503,7 +503,7 @@ app.post('/taxi/to',
      var taxi = new TaxiToAirport({airport: req.form.airport, minTime: req.form.departureDate + 'T' + req.form.minDepartureTime + 'Z', maxTime: req.form.departureDate + 'T' + req.form.maxDepartureTime + 'Z', requester: req.user._id});
      taxi.save(function (err) {
        req.flash('error',err);
-       TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family']).run( function (err, taxi) {
+       TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
 	 req.flash('error',err);
  	 res.render('taxi/to.ejs', {locals: {taxi: taxi}});
         });
