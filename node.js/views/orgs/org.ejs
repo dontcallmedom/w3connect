@@ -1,11 +1,4 @@
 <h1><%= org.name %></h1>
 
-<h2>Employees on site</h2>
-<ul>
-<% if ("undefined" !== typeof org.employees) {
-while(e=org.employees.shift()) {
-%>
-<li><a href="/people/<%= e.w3cId%>"><%= e.given + " " + e.family %></li>
-<%}
-}%>
-</ul>
+<h2>Employees registered for the meeting</h2>
+<%- partial('people/list.ejs') %>
