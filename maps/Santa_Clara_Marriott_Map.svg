@@ -491,7 +491,7 @@
       if (data.checkedin.length) {
         var room = document.getElementById( data.shortname );
         if (room) {
-      
+          room.parentNode.setAttribute('title', room.parentNode.getAttribute("title") + " (" + data.checkedin.length + " person" + (data.checkedin.length > 1 ? "s" : "") + " checked in)");
           var bbox = room.getBBox();
        
           var svgns = "http://www.w3.org/2000/svg";
