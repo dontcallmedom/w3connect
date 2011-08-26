@@ -322,19 +322,19 @@ app.get('/locations.:format?', function(req, res) {
 app.get('/locations/:id.:format?', function(req, res) {
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
-    switch (req.params.format) {
-      // When json, generate suitable data
-      case 'json':
-        res.send(place);
-	break;
-      default:
-	People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
-	  people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
-	  res.render('locations/place.ejs', { locals: { place: place, people: people}});
-				 
-        });
-    }
-   } else {
+      People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
+        switch (req.params.format) {
+	    // When json, generate suitable data
+	case 'json':
+	    place.checkedin = people;
+            res.send(place);
+	    break;
+	default:
+	    res.render('locations/place.ejs', { locals: { place: place, people: people}});
+	}
+      });
+    } else {
        res.render('locations/unknown.ejs', {locals: { shortname: req.params.id}});
    }
   });
