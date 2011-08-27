@@ -143,3 +143,8 @@ body{
     background-color: #FFBABA;
     background-image: url('/img/error.png');
 }
+
+ul.peopleList li { list-style: none;}
+ul.peopleList li a { display:block; float:left; width:10em; height:50px; border:thin solid gray; border-radius:10%; margin:2px;}
+ul.peopleList li a.me { background-color: #cfc;}
+ul.peopleList li a img { float: right;}
