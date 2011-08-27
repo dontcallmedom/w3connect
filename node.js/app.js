@@ -151,6 +151,18 @@ app.configure('production', function(){
 
 
 // Routes
+// if the _format parameter is set, we override req.params.format
+app.post(RegExp(".*"), function(req, res, next) {
+    if (req.body && req.body._format) {
+	req.outputFormat = req.body._format;
+    }
+    next();
+});
+
+app.error(function(err, req, res, next){
+  res.send(err.message, 500);
+});
+
 
 app.get('/', function(req, res){
   res.render('index', {
@@ -367,7 +379,6 @@ app.post('/locations/:id.:format?', function(req, res) {
     req.session.redirectTo = '/locations/' + req.params.id;
     return res.redirect(everyauth.password.getLoginPath());
   }
-
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
 	if (req.body.checkin && req.user) {
@@ -384,7 +395,7 @@ app.post('/locations/:id.:format?', function(req, res) {
 	       if (!err) {
 		   emitter.emit("checkin", req.user, prevPosition, place);
 	       }
-               switch (req.params.format) {
+               switch (req.outputFormat) {
                  case 'json':
 		   if (!err) { 
                      res.send(JSON.stringify({success: 'Checked in at ' + place.name}));
