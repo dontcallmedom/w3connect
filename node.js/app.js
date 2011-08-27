@@ -110,6 +110,7 @@ everyauth.password
 // Configuration
 
 app.configure(function(){
+    emitter.setMaxListeners(0);
    Settings.findOne({}, ['w3c_admin_user','w3c_admin_password'], function (err, data) {
       if (data) {
         app.set('w3c_auth', new Buffer(data.w3c_admin_user + ':' + data.w3c_admin_password).toString('base64')); 	  
@@ -381,25 +382,38 @@ app.post('/locations/:id.:format?', function(req, res) {
 	   indiv.save(function(err) {
              req.flash('error',err);
 	       if (!err) {
-		   req.flash('info', 'Checked in at '  + place.name);
 		   emitter.emit("checkin", req.user, prevPosition, place);
 	       }
-             People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
-		res.render('locations/place.ejs', { locals: { place: place, people: people}});
-	     });
+               switch (req.params.format) {
+                 case 'json':
+		   if (!err) { 
+                     res.send(JSON.stringify({success: 'Checked in at ' + place.name}));
+		   } else {
+		     res.send({error: err});
+		   }
+    	           break;
+                 default:
+		   if (!err) {
+		     req.flash('info', 'Checked in at '  + place.name);
+		   } else {
+		       req.flash('error', err);
+		   }
+                   People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+  		     res.render('locations/place.ejs', { locals: { place: place, people: people}});
+	           });
+	       }
 	   });
 	} else {
-    switch (req.params.format) {
-      // When json, generate suitable data
-      case 'json':
-        res.send(place);
-	break;
-      default:
-	People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
-	  res.render('locations/place.ejs', { locals: { place: place, people: people}});
+          switch (req.params.format) {
+            case 'json':
+              res.send(place);
+	      break;
+            default:
+  	      People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+	      res.render('locations/place.ejs', { locals: { place: place, people: people}});
 				 
-        });
-    }
+              });
+          }
 	    
 	}
    } else {
