@@ -76,7 +76,7 @@ xhr.onreadystatechange = function() {
 }
 xhr.send();   
 
-if (window.EventSource && !id) {
+if (window.EventSource) {
     // Live update!
     var evtSrc = new EventSource( "/locations/stream" );
     evtSrc.onmessage = function( e ) {
