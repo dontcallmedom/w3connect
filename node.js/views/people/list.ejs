@@ -1,8 +1,8 @@
-<ul>
+<ul class='peopleList'>
 <% for (var p  in people) { %>
-  <li style='list-style:none'><a  style='display:block; float:left; width:10em; height:50px; border:thin solid gray; border-radius:10%; margin:2px; <% if(everyauth.user && people[p].login == everyauth.user.login) {%>background-color: #cfc;<%}%>' href='/people/<%= people[p].w3cId %>'>
+  <li><a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='/people/<%= people[p].w3cId %>'>
 <% if (people[p].picture_thumb) { %>
-<img style='float:right' src="<%=people[p].picture_thumb%>" alt="Picture of <%= people[p].given + " " + people[p].family %>">
+<img src="<%=people[p].picture_thumb%>" alt="Picture of <%= people[p].given + " " + people[p].family %>">
 <%}%>
 <%= people[p].given + " " + people[p].family %></a></li>
 <% } %>
