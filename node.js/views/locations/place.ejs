@@ -24,6 +24,8 @@ if (window.EventSource) {
 	       var li = $("<li></li>");
 	       li.append(a);
 	       $(".peopleList").eq(0).append(li);
+	    } else if (data.left.shortname == '<%= place.shortname %>') {
+	       $("a[href='/people/" + data.user.w3cId + "']",$(".peopleList").eq(0)).parent().remove();
 	    }
 }
 }
