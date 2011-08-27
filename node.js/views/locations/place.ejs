@@ -2,8 +2,8 @@
 <h2>Check in</h2>
 <%- messages()%>
 <% if (everyauth.loggedIn) {%>
-<form action="" method="post">
-<input type="submit" name="checkin" value="Check in at <%= place.name %>">
+<form class='client' action="" method="post">
+<input  type="submit" name="checkin" value="Check in at <%= place.name %>">
 </form>
 <% } else {%>
 <p><a href='/login'>Log in</a> to check in at <%= place.name %>.</p>
