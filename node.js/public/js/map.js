@@ -22,7 +22,7 @@ function youarehere(roomid) {
         var bbox = here.getBBox();
         youareherePoint.setAttribute( "cx", bbox.x + bbox.width/2);
         youareherePoint.setAttribute( "cy", bbox.y + bbox.height/2);
-        if (!document.documentElement.getElementById("you")) {
+        if (!document.getElementById("you")) {
             document.documentElement.appendChild(youareherePoint);
         }
     }
@@ -83,6 +83,9 @@ if (window.EventSource && !id) {
 	data = JSON.parse(e.data);
 	updateCounter(data.left.shortname, -1);
 	updateCounter(data.entered.shortname, +1);
+	if (data.you) {
+	    youarehere(data.entered.shortname);
+	}
     };
 }
 
