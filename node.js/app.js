@@ -152,7 +152,13 @@ app.get('/', function(req, res){
 	      return res.redirect(everyauth.password.getLoginPath());
 	  } else {
 	      // Import basic data: people and rooms
-
+	      imports.importUserList(app.set("w3c_auth"), function(success, info, errors) {
+		  req.flash("info", "First run, importing registrants list");
+		  if (success) success.forEach(function(i) { req.flash('success',i);});
+		  if (info) info.forEach(function(i) { req.flash('info',i);});
+		  if (errors) errors.forEach(function(i) { req.flash('error',i);});
+		  res.render('index');
+	      });
 	  }
       } else {
 	  res.render('index');
