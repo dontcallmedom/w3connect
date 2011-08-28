@@ -174,6 +174,9 @@ function updateCounter(roomid, counterIncrement) {
     var room = document.getElementById( roomid);
     var counterText = document.getElementById( roomid +  "-counter");
     var counterBackdrop = document.getElementById( roomid +  "-counter-backdrop");
+    if (!roomsCounter[roomid]) {
+	roomsCounter[roomid] = 0;
+    }
     roomsCounter[roomid] += counterIncrement;
     var newCounter = roomsCounter[roomid];
     if (room) {
