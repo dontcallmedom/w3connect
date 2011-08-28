@@ -1,4 +1,5 @@
 var svgns = "http://www.w3.org/2000/svg";
+var xlinkns = "http://www.w3.org/1999/xlink";
 var id, currentLocation;  
 var youareherePoint = document.createElementNS(svgns, "circle");
 youareherePoint.setAttribute( "r", "2px");
@@ -81,6 +82,7 @@ if (window.EventSource) {
     var evtSrc = new EventSource( "/locations/stream" );
     evtSrc.onmessage = function( e ) {
 	data = JSON.parse(e.data);
+	moveUser(data.left.shortname, data.entered.shortname, data.user);
 	updateCounter(data.left.shortname, -1);
 	updateCounter(data.entered.shortname, +1);
 	if (data.you) {
@@ -89,6 +91,80 @@ if (window.EventSource) {
     };
 }
 
+
+function moveUser (left, entered, user) {
+    var avatarId = "avatar_" + user.login;
+    var avatar = document.getElementById(avatarId);
+    var leftBox = document.getElementById(left).getBBox();
+    var enteredBox = document.getElementById(entered).getBBox();
+
+    if (!avatar) {
+	var name = document.createTextNode(user.given + " " + user.family);
+	if (user.picture_thumb) {
+	    avatar = document.createElementNS(svgns, "image");
+	    avatar.setAttribute("width",36);
+	    avatar.setAttribute("height",48);
+	    avatar.setAttributeNS(xlinkns, "href", user.picture_thumb);
+	    var title = document.createElementNS(svgns, "title");
+	    title.appendChild(name);
+	    avatar.appendChild(title);
+	} else {
+	    avatar = document.createElementNS(svgns, "text");
+	    avatar.setAttribute("text-anchor", "middle");
+	    avatar.appendChild(name);
+	}
+	avatar.setAttribute("id",avatarId);
+	avatar.setAttribute("x", leftBox.x + leftBox.width / 2);
+	avatar.setAttribute("y", leftBox.y + leftBox.height / 2);
+	var animateFadein = document.createElementNS(svgns, "animate");
+	var animateFadeout;
+	var animateX = document.createElementNS(svgns, "animate");
+	var animateY = document.createElementNS(svgns, "animate");
+	animateFadein.setAttribute("attributeName", "opacity");
+	animateFadein.setAttribute("from", "0");
+	animateFadein.setAttribute("to", "1");
+	animateFadein.setAttribute("dur", "0.5s");
+	animateFadein.setAttribute("fill", "freeze");
+	animateFadein.setAttribute("id", user.login + "_fadein");
+	animateFadein.setAttribute("begin", avatarId + ".load");
+	animateFadeout = animateFadein.cloneNode(true);
+	animateFadeout.setAttribute("from", "1");
+	animateFadeout.setAttribute("to", "0");
+	animateFadeout.setAttribute("begin", user.login + "_moveX.end");
+	animateX.setAttribute("attributeName", "x");
+	animateX.setAttribute("from", leftBox.x + leftBox.width / 2);
+	animateX.setAttribute("to", enteredBox.x + enteredBox.width / 2);
+	animateX.setAttribute("dur", "2s");
+	animateX.setAttribute("fill", "freeze");
+	animateX.setAttribute("id", user.login + "_moveX");
+	animateX.setAttribute("begin", user.login + "_fadein.end");
+	animateY.setAttribute("attributeName", "y");
+	animateY.setAttribute("id", user.login + "_moveY");
+	animateY.setAttribute("from", leftBox.y + leftBox.height / 2);
+	animateY.setAttribute("to", enteredBox.y + enteredBox.height / 2);
+	animateY.setAttribute("dur", "2s");
+	animateY.setAttribute("begin", user.login + "_fadein.end");
+	animateY.setAttribute("fill", "freeze");
+	avatar.appendChild(animateX);
+	avatar.appendChild(animateY);
+	avatar.appendChild(animateFadein);
+	avatar.appendChild(animateFadeout);
+	document.documentElement.appendChild(avatar);
+
+    } else {
+	var animateX = document.getElementById(user.login + "_moveX");
+	animateX.setAttribute("from", leftBox.x + leftBox.width / 2);
+	animateX.setAttribute("to", enteredBox.x + enteredBox.width / 2);
+	var animateY = document.getElementById(user.login + "_moveY");
+	animateY.setAttribute("from", leftBox.y + leftBox.height / 2);
+	animateY.setAttribute("to", enteredBox.y + enteredBox.height / 2);
+	avatar.setAttribute("x", leftBox.x + leftBox.width / 2);
+	avatar.setAttribute("y", leftBox.y + leftBox.height / 2);	
+	reloadAvatar = avatar.cloneNode(true);
+	document.documentElement.removeChild(avatar);
+	document.documentElement.appendChild(reloadAvatar);
+    }
+}
 
 function updateCounter(roomid, counterIncrement) {       
     var room = document.getElementById( roomid);
