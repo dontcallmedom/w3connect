@@ -178,16 +178,15 @@ function updateCounter(roomid, counterIncrement) {
 	roomsCounter[roomid] = 0;
     }
     roomsCounter[roomid] += counterIncrement;
-    var newCounter = roomsCounter[roomid];
     if (room) {
         var roomTitle = room.parentNode.getAttribute("title");
-	if (roomTitle.indexOf('(')) {
+	if (roomTitle.indexOf('(')! = -1) {
 	    roomTitle = roomTitle.substring(0,roomTitle.indexOf('(') - 1);
 	}
-        if (newCounter > 0) {   
-            room.parentNode.setAttribute('title', roomTitle + " (" + newCounter + " person" + (newCounter > 1 ? "s" : "") + " checked in)");
+        if (roomsCounter[roomid] > 0) {   
+            room.parentNode.setAttribute('title', roomTitle + " (" + roomsCounter[roomid] + " person" + (roomsCounter[roomid] > 1 ? "s" : "") + " checked in)");
 	    counterBackdrop.setAttribute( "fill", "white");
-            counterText.textContent = newCounter;
+            counterText.textContent = roomsCounter[roomid];
 	} else {
             counterText.textContent = "";
 	    counterBackdrop.setAttribute( "fill", "none");
