@@ -213,9 +213,8 @@ app.post('/admin/', function(req, res){
 	       if (!err) {
                  counterAdded++;
                  req.flash('info', people.given + ' ' + people.family + ' added');
-	       }
-	      // update list of employees
-	      Organization.findById(people.affiliation
+		 // update list of employees
+  	         Organization.findById(people.affiliation
                      // closure to add employee to org record
 				    , (function (p) {
 					return function (err, org) {
@@ -223,6 +222,7 @@ app.post('/admin/', function(req, res){
 					    org.employees.push(people._id);
 					    org.save();
 					}};})(people) );
+	       }
        	       if (counter == registrantsData.registrants.length) {
 		if (!counterAdded) {
 		    req.flash('info', 'No new data to import');
@@ -465,17 +465,18 @@ app.get('/orgs.:format?', function (req, res){
 
 app.get('/orgs/:id.:format?', function(req, res){
     Organization.findOne({w3cId: req.params.id})
-        .populate('employees', ['w3cId', 'given', 'family', 'picture_thumb'])
+        .populate('employees', ['login', 'w3cId', 'given', 'family', 'picture_thumb'])
 	.run( function(err, org) {
-    switch (req.params.format) {
-      // When json, generate suitable data
-      case 'json':
-        res.send(org);
-	break;
-      default:
-	res.render('orgs/org.ejs', { locals: { org: org, people:org.employees.slice(0)}}); // slice(0) to work around bug in populating arrays
-    }
-  });  
+	    var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
+	    console.log(JSON.stringify(employees));
+	    switch (req.params.format) {
+	    case 'json':
+		res.send(org);
+		break;
+	    default:
+		res.render('orgs/org.ejs', { locals: { org: org, people:employees}}); 
+	    }
+	});  
 });
 
 
