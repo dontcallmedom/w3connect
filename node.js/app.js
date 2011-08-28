@@ -55,7 +55,7 @@ everyauth.password
   .getLoginPath('/login')
   .postLoginPath('/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
-  .registerView('index.ejs')
+  .registerView('index.ejs') // @@@ need fixing
   .loginSuccessRedirect('/')
   /*.respondToLoginSucceed( function (res, user, data) {
     if (user) {
@@ -145,6 +145,7 @@ app.error(function(err, req, res, next){
 
 
 app.get('/', function(req, res){
+  // skipped by middleware at this point, need fixing @@@
   People.count({}, function(err, count) {
       if (!count) {
 	  // no user, need to import data
