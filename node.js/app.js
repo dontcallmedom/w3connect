@@ -95,6 +95,8 @@ everyauth.password
           return promise.fulfill(errors);
 	} else {
           var user = {id: login};
+	  // We'll use this to get data from WBS when importing registrants list
+	  app.set('w3c_auth', new Buffer(login + ':' + password).toString('base64')); 	  
           return promise.fulfill(user);	    
 	}
       });
@@ -110,14 +112,7 @@ everyauth.password
 // Configuration
 
 app.configure(function(){
-    emitter.setMaxListeners(0);
-   Settings.findOne({}, ['w3c_admin_user','w3c_admin_password'], function (err, data) {
-      if (data) {
-        app.set('w3c_auth', new Buffer(data.w3c_admin_user + ':' + data.w3c_admin_password).toString('base64')); 	  
-      } else {
-	  // Configure error, inform viewer
-      }
-   });
+  emitter.setMaxListeners(0);
   app.use(express.logger());
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -178,6 +173,10 @@ app.get('/admin/', function(req, res){
 
 app.post('/admin/', function(req, res){
   if (req.body.peopleUpdate) {
+    if (! req.loggedIn) {
+      req.session.redirectTo = '/locations/' + req.params.id;
+      return res.redirect(everyauth.password.getLoginPath());
+     }
    var https = require('https');
 
    var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-json.php?wgid=35125&qaireno=TPAC2011', headers: {Authorization: 'Basic ' + app.set('w3c_auth')}}, function (response) {
