@@ -721,139 +721,139 @@
        x="290.701"
        y="200.348"
        width="38.859"
-       height="91.788" />
+       height="91.788"><title>Restooms</title></rect>
     <rect
        id="toilets-3"
        x="649.977"
        y="225.497"
        width="22.111"
-       height="45.96" />
+       height="45.96"><title>Restooms</title></rect>
     <rect
        id="toilets-4"
        x="649.977"
        y="290.254"
        width="22.111"
-       height="50.334" />
+       height="50.334"><title>Restooms</title></rect>
     <circle
        id="parking-6"
        cx="98.05"
        cy="386.604"
-       r="7.538" />
+       r="7.538"><title>Parking</title></circle>
     <circle
        id="parking-5_1_"
        cx="92.162"
        cy="131.436"
-       r="7.537" />
+       r="7.537"><title>Parking</title></circle>
     <circle
        id="parking-4_1_"
        cx="192.266"
        cy="43.108"
-       r="7.537" />
+       r="7.537"><title>Parking</title></circle>
     <circle
        id="parking-3_1_"
        cx="690.824"
        cy="349.309"
-       r="7.537" />
+       r="7.537"><title>Parking</title></circle>
     <circle
        id="parking-2_1_"
        cx="631.939"
        cy="154.99"
-       r="7.537" />
+       r="7.537"><title>Parking</title></circle>
     <circle
        id="parking-1_1_"
        cx="587.5"
        cy="72.08"
-       r="7.537" />
+       r="7.537"><title>Parking</title></circle>
     <rect
        id="stairs-1"
        x="424.697"
        y="7.895"
        width="12.395"
-       height="19.933" />
+       height="19.933"><title>Stairs</title></rect>
     <rect
        id="stairs-2"
        x="410.627"
        y="95.662"
        width="15.914"
-       height="12.896" />
+       height="12.896"><title>Stairs</title></rect>
     <rect
        id="stairs-3"
        x="329.561"
        y="137.368"
        width="8.373"
-       height="10.721" />
+       height="10.721"><title>Stairs</title></rect>
     <rect
        id="stairs-4"
        x="302.95"
        y="107.052"
        width="8.855"
-       height="14.32" />
+       height="14.32"><title>Stairs</title></rect>
     <rect
        id="stairs-5"
        x="150.507"
        y="88.46"
        width="13.567"
-       height="18.592" />
+       height="18.592"><title>Stairs</title></rect>
     <rect
        id="stairs-6"
        x="270.603"
        y="206.377"
        width="8.373"
-       height="15.745" />
+       height="15.745"><title>Stairs</title></rect>
     <rect
        id="stairs-7"
        x="311.471"
        y="268.81"
        width="18.09"
-       height="14.615" />
+       height="14.615"><title>Stairs</title></rect>
     <rect
        id="stairs-8"
        x="222.362"
        y="280.41"
        width="12.396"
-       height="18.425" />
+       height="18.425"><title>Stairs</title></rect>
     <rect
        id="stairs-9"
        x="213.652"
        y="381.578"
        width="15.412"
-       height="17.418" />
+       height="17.418"><title>Stairs</title></rect>
     <rect
        id="stairs-10"
        x="97.244"
        y="238.201"
        width="17.499"
-       height="16.331" />
+       height="16.331"><title>Stairs</title></rect>
     <rect
        id="stairs-11"
        x="21.371"
        y="350.758"
        width="16.58"
-       height="15.074" />
+       height="15.074"><title>Stairs</title></rect>
     <rect
        id="elevator-1"
        x="431.732"
        y="104.539"
        width="19.43"
-       height="14.739" />
+       height="14.739"><title>Elevator</title></rect>
     <rect
        id="elevator-2"
        x="369.734"
        y="194.432"
        width="19.096"
-       height="12.813" />
+       height="12.813"><title>Elevator</title></rect>
     <rect
        id="elevator-3"
        x="181.494"
        y="280.745"
        width="20.435"
-       height="14.404" />
+       height="14.404"><title>Elevator</title></rect>
     <rect
        id="elevator-4"
        x="57.547"
        y="303.022"
        width="19.598"
-       height="14.069" />
+       height="14.069"><title>Elevator</title></rect>
   </g>
   <!-- <circle cx="396.225"  cy="346.068" r="5" fill="lime"/> -->
   <g
