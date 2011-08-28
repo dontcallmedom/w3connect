@@ -92,7 +92,7 @@ if (window.EventSource) {
 		    youarehere(entered);
 		}
 	    };
-	})(date.left.shortname, data.entered.shortname, data.you), 3000);
+	})(data.left.shortname, data.entered.shortname, data.you), 3000);
     };
 }
 
