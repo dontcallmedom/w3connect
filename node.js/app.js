@@ -304,7 +304,7 @@ app.post('/admin/', function(req, res){
 });
 
 
-app.get('/people/:id.:format?', function(req, res){
+app.get('/people/:id.:format?', function(req, res, next){
     People.findOne({w3cId: req.params.id}).populate('affiliation', ['w3cId', 'name']).run( function(err, indiv) {
 	if (indiv) {
 	    switch (req.params.format) {
@@ -467,7 +467,7 @@ app.get('/orgs.:format?', function (req, res){
   });  
 });
 
-app.get('/orgs/:id.:format?', function(req, res){
+app.get('/orgs/:id.:format?', function(req, res, next){
     Organization.findOne({w3cId: req.params.id})
         .populate('employees', ['login', 'w3cId', 'given', 'family', 'picture_thumb'])
 	.run( function(err, org) {
