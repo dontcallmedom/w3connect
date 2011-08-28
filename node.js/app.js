@@ -62,7 +62,15 @@ var mongooseSessionStore = new SessionMongoose({
 });
 
 everyauth.everymodule.findUserById( function (userId, callback) {
-  People.findOne({login: userId}, callback);
+  // is there anyone in the db yet? 
+    People.count({}, function(err, count) {
+	if (!count) {
+	    // No one in the db, we create a mock user to allow for import
+	    callback(err, {'login': userId, 'given': 'Admin', 'family': 'Istrator'});
+	} else {
+	    People.findOne({login: userId}, callback);
+	}
+    });
 });
 
 // Adapted from everyauth ldap module
