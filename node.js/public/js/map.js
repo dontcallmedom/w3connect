@@ -1,6 +1,7 @@
 var svgns = "http://www.w3.org/2000/svg";
 var xlinkns = "http://www.w3.org/1999/xlink";
 var id, currentLocation;  
+var roomsCounter = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
 youareherePoint.setAttribute( "r", "2px");
 youareherePoint.setAttribute( "id", "you");
@@ -173,8 +174,8 @@ function updateCounter(roomid, counterIncrement) {
     var room = document.getElementById( roomid);
     var counterText = document.getElementById( roomid +  "-counter");
     var counterBackdrop = document.getElementById( roomid +  "-counter-backdrop");
-    var counter = (counterText.textContent ? parseInt(counterText.textContent) : 0);
-    var newCounter = counter + counterIncrement;
+    roomsCounter[roomid] += counterIncrement;
+    var newCounter = roomsCounter[roomid];
     if (room) {
         var roomTitle = room.parentNode.getAttribute("title");
 	if (roomTitle.indexOf('(')) {
