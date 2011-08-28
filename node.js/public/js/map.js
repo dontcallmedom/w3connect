@@ -8,8 +8,11 @@ youareherePoint.setAttribute( "fill", "red");
 
 
 function updateYouAreHere(entered, left) {
-   if (left && var there = document.getElementById(left)) {
-       there.setAttribute("class", "room");
+    if (left) {
+	var there = document.getElementById(left);
+	if (there) {
+	    there.setAttribute("class", "room");
+	}
     }
     var here = document.getElementById(entered);
    if (here) {
