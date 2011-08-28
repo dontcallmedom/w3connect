@@ -84,14 +84,15 @@ if (window.EventSource) {
     evtSrc.onmessage = function( e ) {
 	data = JSON.parse(e.data);
 	moveUser(data.left.shortname, data.entered.shortname, data.user);
-	setTimeout(function() {
-	    updateCounter(data.left.shortname, -1);
-	    updateCounter(data.entered.shortname, +1);
-	    
-	    if (data.you) {
-		youarehere(data.entered.shortname);
-	    }
-	}, 3000);
+	setTimeout((function(left, entered, you) {
+	    return function() {
+		updateCounter(left, -1);
+		updateCounter(entered, +1);	    
+		if (you) {
+		    youarehere(entered);
+		}
+	    };
+	})(date.left.shortname, data.entered.shortname, data.you), 3000);
     };
 }
 
