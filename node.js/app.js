@@ -467,14 +467,18 @@ app.get('/orgs/:id.:format?', function(req, res){
     Organization.findOne({w3cId: req.params.id})
         .populate('employees', ['login', 'w3cId', 'given', 'family', 'picture_thumb'])
 	.run( function(err, org) {
-	    var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
-	    console.log(JSON.stringify(employees));
-	    switch (req.params.format) {
-	    case 'json':
-		res.send(org);
-		break;
-	    default:
-		res.render('orgs/org.ejs', { locals: { org: org, people:employees}}); 
+	    if (org) {
+		var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
+		console.log(JSON.stringify(employees));
+		switch (req.params.format) {
+		case 'json':
+		    res.send(org);
+		    break;
+		default:
+		    res.render('orgs/org.ejs', { locals: { org: org, people:employees}}); 
+		}
+	    } else {
+		next();
 	    }
 	});  
 });
