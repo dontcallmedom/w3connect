@@ -180,7 +180,7 @@ function updateCounter(roomid, counterIncrement) {
     roomsCounter[roomid] += counterIncrement;
     if (room) {
         var roomTitle = room.parentNode.getAttribute("title");
-	if (roomTitle.indexOf('(')! = -1) {
+	if (roomTitle.indexOf('(') != -1) {
 	    roomTitle = roomTitle.substring(0,roomTitle.indexOf('(') - 1);
 	}
         if (roomsCounter[roomid] > 0) {   
