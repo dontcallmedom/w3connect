@@ -46,14 +46,19 @@ var Settings = new Schema({
   w3c_admin_password: String
 });
 
+var StatusUpdate = new Schema({
+    author: {type: Schema.ObjectId, ref: 'People'},
+    content: String,
+    time: Date
+});
+
 var Event  = new Schema({
     registered: [{type: Schema.ObjectId, ref: 'People'}],
     interested: [{type: Schema.ObjectId, ref: 'People'}],
-    type: enum("meeting", "meal", "werewolf", "run"),
+    eventType : {type: String, enum: ["meeting", "meal", "werewolf", "run"]},
     name: String,
     group: {type: Schema.ObjectId, ref: 'Group'},
-    updates: [{author: {type: Schema.ObjectId, ref: 'People'},
-	       content: String}],
+    updates: [{type: Schema.ObjectId, ref: 'StatusUpdate'}],
     timeStart: Date,
     timeEnd: Date
 });
@@ -81,6 +86,7 @@ mongoose.model('Group', Group);
 mongoose.model('Place', Place);
 mongoose.model('Settings', Settings);
 mongoose.model('Event', Event);
+mongoose.model('StatusUpdate', StatusUpdate);
 mongoose.model('TaxiToAirport', TaxiToAirport);
 exports.People = function(db) {
   return db.model('People');
@@ -101,6 +107,11 @@ exports.Place = function(db) {
 exports.Settings = function(db) {
   return db.model('Settings');
 };
+
+exports.StatusUpdate = function(db) {
+  return db.model('StatusUpdate');
+};
+
 
 exports.Event = function(db) {
   return db.model('Event');
