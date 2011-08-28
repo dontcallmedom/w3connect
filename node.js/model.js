@@ -32,8 +32,7 @@ var Organization = new Schema({
 var Group = new Schema({
   w3cId: {type: Number, unique: true},
   name: {type: String, unique: true},
-  url: {type: String, unique: true},
-  participants: [{type: Schema.ObjectId, ref: 'People'}]
+  url: {type: String, unique: true}
 });
 
 var Place = new Schema({
@@ -45,6 +44,18 @@ var Place = new Schema({
 var Settings = new Schema({
   w3c_admin_user: String,
   w3c_admin_password: String
+});
+
+var Event  = new Schema({
+    registered: [{type: Schema.ObjectId, ref: 'People'}],
+    interested: [{type: Schema.ObjectId, ref: 'People'}],
+    type: enum("meeting", "meal", "werewolf", "run"),
+    name: String,
+    group: {type: Schema.ObjectId, ref: 'Group'},
+    updates: [{author: {type: Schema.ObjectId, ref: 'People'},
+	       content: String}],
+    timeStart: Date,
+    timeEnd: Date
 });
 
 var TaxiFromAirport = new Schema({
@@ -69,6 +80,7 @@ mongoose.model('Organization', Organization);
 mongoose.model('Group', Group);
 mongoose.model('Place', Place);
 mongoose.model('Settings', Settings);
+mongoose.model('Event', Event);
 mongoose.model('TaxiToAirport', TaxiToAirport);
 exports.People = function(db) {
   return db.model('People');
@@ -88,6 +100,10 @@ exports.Place = function(db) {
 
 exports.Settings = function(db) {
   return db.model('Settings');
+};
+
+exports.Event = function(db) {
+  return db.model('Event');
 };
 
 
