@@ -306,14 +306,18 @@ app.post('/admin/', function(req, res){
 
 app.get('/people/:id.:format?', function(req, res){
     People.findOne({w3cId: req.params.id}).populate('affiliation', ['w3cId', 'name']).run( function(err, indiv) {
-    switch (req.params.format) {
-      // When json, generate suitable data
-      case 'json':
-        res.send(indiv);
-	break;
-      default:
-	res.render('people/indiv.ejs', { locals: { indiv: indiv}});
-    }
+	if (indiv) {
+	    switch (req.params.format) {
+		// When json, generate suitable data
+	    case 'json':
+		res.send(indiv);
+		break;
+	    default:
+		res.render('people/indiv.ejs', { locals: { indiv: indiv}});
+	    }
+	} else {
+	    next();
+	}
   });  
 });
 
