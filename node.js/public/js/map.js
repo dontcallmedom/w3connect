@@ -1,6 +1,5 @@
 var svgns = "http://www.w3.org/2000/svg";
 var xlinkns = "http://www.w3.org/1999/xlink";
-var id, currentLocation;  
 var roomsCounter = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
 youareherePoint.setAttribute( "r", "2px");
@@ -8,38 +7,33 @@ youareherePoint.setAttribute( "id", "you");
 youareherePoint.setAttribute( "fill", "red");
 
 
-function youarehere(roomid) {
-    // removing marker from current location
-    if (currentLocation) {
-        var there = document.getElementById(currentLocation);
-	if (there) {
-	    there.setAttribute("class", "room");
-	}
+function updateYouAreHere(entered, left) {
+   if (left && var there = document.getElementById(left)) {
+       there.setAttribute("class", "room");
     }
-    currentLocation = roomid;
-    // and adding it to new location
-    var here = document.getElementById(roomid);
-    if (here) {
+    var here = document.getElementById(entered);
+   if (here) {
         here.setAttribute("class", "room youarehere");
         var bbox = here.getBBox();
         youareherePoint.setAttribute( "cx", bbox.x + bbox.width/2);
         youareherePoint.setAttribute( "cy", bbox.y + bbox.height/2);
         if (!document.getElementById("you")) {
-            document.documentElement.appendChild(youareherePoint);
+	    document.documentElement.appendChild(youareherePoint);
         }
     }
 }
 
 if (window.location.hash) {
-    id = window.location.hash.substring(1).split(',')[0];
-    currentLocation = window.location.hash.substring(1).split(',')[1];
+    var id = window.location.hash.substring(1).split(',')[0];
     var room = document.getElementById(id);
     if (room) {
 	room.parentNode.removeAttribute("xlink:href");
 	room.style.fill = "yellow";
     }
+
+    var currentLocation = window.location.hash.substring(1).split(',')[1];
     if (currentLocation) {
-	youarehere(currentLocation);
+	updateYouAreHere(currentLocation, null);
     }
 }
 
@@ -85,16 +79,18 @@ if (window.EventSource) {
 	data = JSON.parse(e.data);
 	moveUser(data.left.shortname, data.entered.shortname, data.user);
 	setTimeout((function(left, entered, you) {
-	    return function() {
+	    return function() {	
 		updateCounter(left, -1);
 		updateCounter(entered, +1);	    
 		if (you) {
-		    youarehere(entered);
+		    updateYouAreHere(entered, left);
 		}
 	    };
 	})(data.left.shortname, data.entered.shortname, data.you), 3000);
     };
 }
+
+
 
 
 function moveUser (left, entered, user) {
