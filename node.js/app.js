@@ -15,7 +15,7 @@ validate = form.validate;
 
 var fs = require('fs');
 
-var app = module.exports = express.createServer();
+var app = module.exports = express.createServer({key: fs.readFileSync('/etc/ssl/private/wildcard.w3.org.key'), cert: fs.readFileSync('/etc/ssl/certs/cert-w3.org.crt')});
 var emitter = new EventEmitter();
 
 var mongoose = require('mongoose'),
@@ -126,7 +126,7 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.logger());
   app.use(express.errorHandler()); 
-  app.set('port', 80);
+  app.set('port', 443);
 });
 
 
