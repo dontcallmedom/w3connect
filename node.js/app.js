@@ -126,7 +126,7 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.logger());
   app.use(express.errorHandler()); 
-  app.set('port', 80);
+  app.set('port', 443);
 });
 
 
