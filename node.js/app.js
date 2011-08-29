@@ -320,6 +320,19 @@ app.post('/locations/:id.:format?', function(req, res) {
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
 	if (req.body.checkin && req.user) {
+	    // the user is already checked in in that place
+	    if (req.user.lastKnownPosition.shortname == place.shortname) {
+		switch (req.outputFormat) {
+		case "json":
+		    res.send(JSON.stringify({success: "Already checked in at " + place.name}));
+		    break;
+		default:
+		    req.flash('info', "You’re already checked in at " + place.name);
+                    People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
+  			res.render('locations/place.ejs', { locals: { place: place, people: people}});
+	            });		    
+		}
+	    } else {
 	   var indiv = req.user ;
 	    var prevPosition = {shortname: indiv.lastKnownPosition.shortname,
 				name: indiv.lastKnownPosition.name,
@@ -352,6 +365,7 @@ app.post('/locations/:id.:format?', function(req, res) {
 	           });
 	       }
 	   });
+	    }
 	} else {
           switch (req.params.format) {
             case 'json':
