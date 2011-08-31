@@ -76,4 +76,7 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth)  {
     stream.setHeader("Authorization", 'Basic ' + twitter_auth);
     stream.write("follow=" + twitter_ids.join(","));
     stream.end();
+    emitter.on("twitterListChange", function() {
+	stream.abort();
+    });
 };
