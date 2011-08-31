@@ -1,4 +1,5 @@
 var http = require('http');
+var https = require('https');
 var EventEmitter = require('events').EventEmitter;
 
 function loadTwitterListPage(owner, slug, cursor, users, callback) {
@@ -44,7 +45,7 @@ exports.listTwitterIds = function(list_owner, list_slug, callback) {
 
 exports.listenToTweets = function(twitter_ids, twitter_auth)  {
     var emitter = new EventEmitter();
-    var stream = http.request(
+    var stream = https.request(
 	{host: 'stream.twitter.com', path:'/1/statuses/filter.json', 'method': 'POST'}, 
 	function (res) {
 	    res.setEncoding('utf8');
