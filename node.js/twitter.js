@@ -9,17 +9,21 @@ function loadTwitterListPage(owner, slug, cursor, users, callback) {
        response.on('data', function (chunk) {
 	   twitterDataJSON = twitterDataJSON + chunk;
        });
-       response.on('end', function () {
-	   console.log(response.statusCode + JSON.stringify(response.headers));
-	   twitterData = JSON.parse(twitterDataJSON);
-	   users = users.concat(twitterData.users);
-	   if (twitterData.next_cursor) {
-	       loadTwitterListPage(owner, slug, twitterData.next_cursor, users, callback);
-	   } else {
-	       callback(users);
-	   }
-       });
-   });
+       response.on(
+	   'end',
+	   function () {
+	       if (response.statusCode != 200){
+  		   console.log(response.statusCode + JSON.stringify(response.headers));		   
+	       }
+	       twitterData = JSON.parse(twitterDataJSON);
+	       users = users.concat(twitterData.users);
+	       if (twitterData.next_cursor) {
+		   loadTwitterListPage(owner, slug, twitterData.next_cursor, users, callback);
+	       } else {
+		   callback(users);
+	       }
+	   });
+			  });
 }
 
 exports.listTwitterIds = function(list_owner, list_slug, callback) {
@@ -30,7 +34,6 @@ exports.listTwitterIds = function(list_owner, list_slug, callback) {
 	[], 
 	function (users) {
 	    var twitterIds = [];
-	    console.log(users);
 	    for (u in users) {
 		twitterIds.push(users[u].id);
 	    }
