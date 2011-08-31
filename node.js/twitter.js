@@ -68,6 +68,7 @@ exports.listenToTweets = function(twitter_ids, twitter_auth)  {
 		'end',
 		function () {
 		    console.log("Twitter stream terminated with error " + res.statusCode);
+		    console.log(JSON.stringify(res.headers));
 		});
 	}
     );
