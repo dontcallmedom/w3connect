@@ -76,12 +76,19 @@ var TaxiToAirport = new Schema({
   sharing: [Number]
 });
 
+var TwitterSettings = new Schema({
+  username: String,
+  password: String,
+  ids:  [Number]
+});
+
 mongoose.model('Organization', Organization);
 mongoose.model('Group', Group);
 mongoose.model('Place', Place);
 mongoose.model('Event', Event);
 mongoose.model('StatusUpdate', StatusUpdate);
 mongoose.model('TaxiToAirport', TaxiToAirport);
+mongoose.model('TwitterSettings', TwitterSettings);
 exports.People = function(db) {
   return db.model('People');
 };
@@ -114,4 +121,8 @@ exports.TaxiToAirport = function(db) {
 
 exports.TaxiFromAirport = function(db) {
   return db.model('TaxiFromAirport');
+};
+
+exports.TwitterSettings = function(db) {
+  return db.model('TwitterSettings');
 };
