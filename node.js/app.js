@@ -6,7 +6,8 @@
 var express = require('express');
 var everyauth = require('everyauth'),
     EventEmitter = require('events').EventEmitter;
-var imports = require("./imports.js");
+var imports = require("./imports.js"),
+    twitter = require("./twitter.js");;
 
 
 form = require("express-form"),
@@ -27,6 +28,7 @@ var Organization = require('./model.js').Organization(db);
 var Place = require('./model.js').Place(db);
 var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
 var TaxiToAirport = require('./model.js').TaxiToAirport(db);
+var TwitterSettings = require('./model.js').TwitterSettings(db);
 
 
 
@@ -109,6 +111,32 @@ app.configure(function(){
  app.use(express.cookieParser()); 
   app.use(express.session({store: mongooseSessionStore, secret:'abc'}));
   app.use(everyauth.middleware());
+  // Loading up list of twitter users
+  TwitterSettings.findOne(
+      {}, 
+      function(err, settings) {
+	  // No twitter settings
+	  if (err || !settings) {
+	      console.log("No twitter settings found, won't get updates from Twitter");
+	  } else {
+	      if (!(settings.username && settings.password && settings.list && settings.list.owner && settings.list.slug)) {
+		  console.log("Incomplete twitter settings found, won't get updates from Twitter: " + JSON.stringify(settings));
+	      } else {
+		  app.set('twitter_auth', new Buffer(settings.username + ':' + settings.password).toString('base64')); 	  
+		  if (!settings.ids || !settings.ids.length) {
+		      // load a list of users from Twitter
+		      twitter.listTwitterIds(
+			  settings.list.owner,
+			  settings.list.slug,
+			  function (ids) {
+			      console.log("Found twitter ids: " + ids);
+			      settings.ids = ids;
+			      settings.save();
+			  });
+		  }
+	      }
+	  }
+      });
 });
 
 app.configure('test', function(){
@@ -288,6 +316,10 @@ app.get('/locations/stream', function(req, res) {
     res.writeHead(200);
     emitter.on("checkin", function(user, left, entered) {
 	res.write("data: " + JSON.stringify({"user": user, "left": left, "entered": entered, "you": (req.user && JSON.stringify(user._id) == JSON.stringify(req.user._id))}) + "\n\n");
+    });
+    emitter.on("tweet", function(tweet) {
+        res.write("event: tweet\n");
+	res.write("data: " + JSON.stringify(tweet) + "\n\n");
     });
 });
 
