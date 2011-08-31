@@ -43,8 +43,7 @@ exports.listTwitterIds = function(list_owner, list_slug, callback) {
 	});
 };
 
-exports.listenToTweets = function(twitter_ids, twitter_auth)  {
-    var emitter = new EventEmitter();
+exports.listenToTweets = function(emitter, twitter_ids, twitter_auth)  {
     var stream = https.request(
 	{host: 'stream.twitter.com', path:'/1/statuses/filter.json', 'method': 'POST'}, 
 	function (res) {
