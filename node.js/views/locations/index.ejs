@@ -13,14 +13,51 @@
 <div id="messages">
 </div>
 <script>
+function parseTweetAsHTML(tweet) {
+	 // based on http://www.simonwhatley.co.uk/parsing-twitter-usernames-hashtags-and-urls-with-javascript
+	 tweet = tweet.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
+	 	url.link(url);
+	 })
+	 tweet = tweet.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
+		var username = u.replace("@","")
+		return u.link("http://twitter.com/"+username);
+	});
+	tweet = tweet.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
+		var tag = t.replace("#","%23")
+		return t.link("http://search.twitter.com/search?q="+tag);
+	});
+	return tweet;
+}
+
 if (window.EventSource) {
 	  var evtSrc = new EventSource( "/locations/stream" );
 	  evtSrc.onmessage = function( e ) {
+	    // @@@ check origin
 	    var data = JSON.parse(e.data);
 	    var info = document.createElement("p");
 	    info.setAttribute("class","info");
 	    info.appendChild(document.createTextNode(data.user.given + ' ' + data.user.family + ' left ' + data.left.name + ' and has checked in at ' + data.entered.name));
 	    document.getElementById("messages").appendChild(info);
           };
+	  evtSrc.addEventListener("tweet",function( e ) {
+	    // @@@ check origin	     
+	    var data = JSON.parse(e.data);
+	    var info = document.createElement("p");
+	    info.setAttribute("class","info");
+	    var img = document.createElement("img");
+	    img.setAttribute("src", data.user.profile_image_url_https);
+	    img.setAttribute("alt", "Twitter profile picture of " + data.user.name);
+	    info.appendChild(img);
+	    info.appendChild(document.createTextNode(data.user.name + " (@" + data.user.screen_name + ') '));
+	    var link = document.createElement("a");
+	    link.setAttribute("href","http://twitter.com/#!/" + data.user.screen_name + "/status/" + data.id_str);
+	    link.appendChild(document.createTextNode("microblogged: "));
+	    var span = document.createElement("span");
+	    span.innerHTML = parseTweetAsHTML(data.text);
+	    info.appendChild(link);
+	    info.appendChild(span);
+	    document.getElementById("messages").appendChild(info);
+
+          }, false);
 }
 </script>
