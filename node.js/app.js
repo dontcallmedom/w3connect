@@ -129,7 +129,6 @@ app.configure(function(){
 			  settings.list.owner,
 			  settings.list.slug,
 			  function (ids) {
-			      console.log("Found twitter ids: " + ids);
 			      settings.ids = ids;
 			      settings.save();
 			  });
