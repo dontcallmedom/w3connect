@@ -24,8 +24,8 @@ function loadTwitterListPage(owner, slug, cursor, users, callback) {
 
 exports.listTwitterIds = function(list_owner, list_slug, callback) {
     loadTwitterListPage(
-	options.owner_name,
-	options.list_slug,
+	list_owner,
+	list_slug,
 	    -1,
 	[], 
 	function (users) {
