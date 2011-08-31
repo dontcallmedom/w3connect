@@ -14,7 +14,7 @@
 </div>
 <script>
 var messages = document.getElementById("messages");
-function parseTweetAsHTML(tweet) {
+*/ function parseTweetAsHTML(tweet) {
 	 // based on http://www.simonwhatley.co.uk/parsing-twitter-usernames-hashtags-and-urls-with-javascript
 	 tweet = tweet.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
 	 	return url.link(url);
@@ -28,7 +28,7 @@ function parseTweetAsHTML(tweet) {
 		return t.link("http://search.twitter.com/search?q="+tag);
 	});
 	return tweet;
-}
+}*/
 
 if (window.EventSource) {
 	  var evtSrc = new EventSource( "/locations/stream" );
@@ -40,7 +40,7 @@ if (window.EventSource) {
 	    info.appendChild(document.createTextNode(data.user.given + ' ' + data.user.family + ' left ' + data.left.name + ' and has checked in at ' + data.entered.name));
 	    messages.appendChild(info);
           };
-	  evtSrc.addEventListener("tweet",function( e ) {
+/*	  evtSrc.addEventListener("tweet",function( e ) {
 	    // @@@ check origin	     
 	    var data = JSON.parse(e.data);
 	    var info = document.createElement("p");
@@ -61,6 +61,6 @@ if (window.EventSource) {
 	    setTimeout(function() {messages.removeChild(info);}
 	    , 10000);
 
-          }, false);
+          }, false);*/
 }
 </script>
