@@ -77,6 +77,10 @@ var TaxiToAirport = new Schema({
 });
 
 var TwitterSettings = new Schema({
+  list: {
+      owner: String,
+      slug: String
+  },
   username: String,
   password: String,
   ids:  [Number]
