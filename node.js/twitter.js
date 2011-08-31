@@ -2,6 +2,7 @@ var http = require('http');
 var EventEmitter = require('events').EventEmitter;
 
 function loadTwitterListPage(owner, slug, cursor, users, callback) {
+    // Rate limited to 150 / hour, beware!
    var request = http.get({host: 'api.twitter.com', path:'/1/lists/members.json?slug=' + slug + '&owner_screen_name=' + owner + '&skip_status=1&cursor=' + cursor}, function (response) {
        response.setEncoding('utf8');
        var twitterDataJSON = "", twitterData;
@@ -21,35 +22,54 @@ function loadTwitterListPage(owner, slug, cursor, users, callback) {
    });
 }
 
-loadTwitterListPage('t', 'sf', -1, [], function (users) {
-    var twitterIds = [];
-    console.log(users);
-    for (u in users) {
-	twitterIds.push(users[u].id);
-    }
-    var stream = http.request({host: 'stream.twitter.com', path:'/1/statuses/filter.json', 'method': 'POST'}, function (res) {
-	res.setEncoding('utf8');
-	var incompleteChunk = "";
-	res.on('data', function (chunk) {
-	    incompleteChunk += chunk;
-	    incompleteChunk = incompleteChunk.trim();
-	    if (incompleteChunk) {
-		console.log(chunk);
-		try {
-		    var tweet = JSON.parse(incompleteChunk);
-		    console.log(tweet.text);
-		    incompleteChunk = "";
-		} catch (err) {
-		    console.log(err);
-		}
+exports.listTwitterIds = function(list_owner, list_slug, callback) {
+    loadTwitterListPage(
+	options.owner_name,
+	options.list_slug,
+	    -1,
+	[], 
+	function (users) {
+	    var twitterIds = [];
+	    console.log(users);
+	    for (u in users) {
+		twitterIds.push(users[u].id);
 	    }
+	    callback(twitterIds);
+    
 	});
-	res.on('end', function () {
-	    console.log("terminated with error " + res.statusCode);
-	});
-    });
+};
+
+exports.listenToTweets = function(twitter_ids, twitter_auth)  {
+    var emitter = new EventEmitter();
+    var stream = http.request(
+	{host: 'stream.twitter.com', path:'/1/statuses/filter.json', 'method': 'POST'}, 
+	function (res) {
+	    res.setEncoding('utf8');
+	    var incompleteChunk = "";
+	    res.on(
+		'data',
+		function (chunk) {
+		    incompleteChunk += chunk;
+		    incompleteChunk = incompleteChunk.trim();
+		    if (incompleteChunk) {
+			try {
+			    var tweet = JSON.parse(incompleteChunk);
+			    emitter.emit("tweet", tweet);
+			    incompleteChunk = "";
+			} catch (err) {
+			    console.log(err);
+			}
+		    }
+		});
+	    res.on(
+		'end',
+		function () {
+		    console.log("Twitter stream terminated with error " + res.statusCode);
+		});
+	}
+    );
     stream.setHeader("Content-Type", "application/x-www-form-urlencoded");
-    stream.setHeader("Authorization", 'Basic ' + new Buffer('dontcallmedom' + ':' + '@@@').toString('base64'));
-    stream.write("follow=" + twitterIds.join(","));
+    stream.setHeader("Authorization", 'Basic ' + new Buffer(options.twitter_auth.name + ':' + options.twitter_auth.password).toString('base64'));
+    stream.write("follow=" + twitter_ids.join(","));
     stream.end();
-});
+};
