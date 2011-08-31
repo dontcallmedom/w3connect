@@ -72,7 +72,7 @@ exports.listenToTweets = function(twitter_ids, twitter_auth)  {
 	}
     );
     stream.setHeader("Content-Type", "application/x-www-form-urlencoded");
-    stream.setHeader("Authorization", 'Basic ' + new Buffer(options.twitter_auth.name + ':' + options.twitter_auth.password).toString('base64'));
+    stream.setHeader("Authorization", 'Basic ' + twitter_auth);
     stream.write("follow=" + twitter_ids.join(","));
     stream.end();
 };
