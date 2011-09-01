@@ -71,7 +71,10 @@ exports.getTwitterId = function(screen_name, callback) {
 
 exports.listenToTweets = function(emitter, twitter_ids, twitter_auth)  {
     var stream = https.request(
-	{host: 'stream.twitter.com', path:'/1/statuses/filter.json', 'method': 'POST'}, 
+	{
+	    host: 'stream.twitter.com'
+	    // host: 'localhost', port: 3030
+	 , path:'/1/statuses/filter.json', 'method': 'POST'}, 
 	function (res) {
 	    res.setEncoding('utf8');
 	    var incompleteChunk = "";
@@ -95,6 +98,7 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth)  {
 		function () {
 		    console.log("Twitter stream terminated with error " + res.statusCode);
 		    console.log(JSON.stringify(res.headers));
+		    // @@@ retry connection but with rate regulation
 		});
 	}
     );
