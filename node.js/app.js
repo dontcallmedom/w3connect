@@ -127,9 +127,9 @@ app.configure(function(){
 		      if (!settings.ids) {
 			  settings.ids = [];
 		      }
-		      People.find({}, [twitterAccount], function(err, people) {
+		      People.find({}, ['twitterAccount'], function(err, people) {
 			  for (p in people) {
-			      if (people[p].twitterAccount && p.twitterAccount.id) {
+			      if (people[p].twitterAccount && people[p].twitterAccount.id) {
 				  settings.ids.push(people[p].twitterAccount.id);
 			      }
 			  }
