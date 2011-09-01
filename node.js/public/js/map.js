@@ -136,7 +136,7 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	animateFadeout.setAttribute("from", "1");
 	animateFadeout.setAttribute("to", "0");
 	animateFadeout.setAttribute("id", backbox.getAttribute("id") + + "_fadeout");
-	animateFadeout.setAttribute("begin", backbox.getAttribute("id") + + ".load + 10s");
+	animateFadeout.setAttribute("begin", backbox.getAttribute("id") + + ".load + 9s");
 	backbox.appendChild(animateFadein);
 	backbox.appendChild(animateFadeout);
 	box.appendChild(document.createTextNode(text));
