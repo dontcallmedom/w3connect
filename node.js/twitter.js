@@ -43,6 +43,32 @@ exports.listTwitterIds = function(list_owner, list_slug, callback) {
 	});
 };
 
+exports.getTwitterId = function(screen_name, callback) {
+   var request = http.get(
+       {host: 'api.twitter.com', path:'/1/users/lookup.json?screen_name=' + screen_name},
+       function (response) {
+	   response.setEncoding('utf8');
+	   var twitterDataJSON = "", twitterData;
+	   response.on('data', function (chunk) {
+	       twitterDataJSON = twitterDataJSON + chunk;
+	   });
+	   response.on(
+	       'end',
+	       function () {
+		   if (response.statusCode != 200){
+  		       console.log("Looking twitter user id failed: " + response.statusCode + JSON.stringify(response.headers));		   
+		   } else {
+		       try {
+			   twitterData = JSON.parse(twitterDataJSON);
+			   callback(twitterData[0].id);
+		       } catch (err) {
+			   console.log(err);
+		       }
+		   }
+	       });
+       });
+};
+
 exports.listenToTweets = function(emitter, twitter_ids, twitter_auth)  {
     var stream = https.request(
 	{host: 'stream.twitter.com', path:'/1/statuses/filter.json', 'method': 'POST'}, 
