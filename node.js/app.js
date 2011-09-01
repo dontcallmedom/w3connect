@@ -119,21 +119,41 @@ app.configure(function(){
 	  if (err || !settings) {
 	      console.log("No twitter settings found, won't get updates from Twitter");
 	  } else {
-	      if (!(settings.username && settings.password && settings.list && settings.list.owner && settings.list.slug)) {
+	      if (!(settings.username && settings.password)) {
 		  console.log("Incomplete twitter settings found, won't get updates from Twitter: " + JSON.stringify(settings));
 	      } else {
 		  app.set('twitter_auth', new Buffer(settings.username + ':' + settings.password).toString('base64')); 	  
 		  if (!settings.ids || !settings.ids.length) {
-		      // load a list of users from Twitter
-		      twitter.listTwitterIdsFromTwitterList(
-			  settings.list.owner,
-			  settings.list.slug,
-			  function (ids) {
-			      settings.ids = ids;
+		      if (!settings.ids) {
+			  settings.ids = [];
+		      }
+		      People.find({}, [twitterAccount], function(err, people) {
+			  for (p in people) {
+			      if (people[p].twitterAccount && p.twitterAccount.id) {
+				  settings.ids.push(people[p].twitterAccount.id);
+			      }
+			  }
+			  // defaulting to registered list of users
+			  if (!settings.ids.length) {
+			      if (settings.list && settings.list.owner && settings.list.slug) {
+				  // load a list of users from Twitter
+				  twitter.listTwitterIdsFromTwitterList(
+				      settings.list.owner,
+				      settings.list.slug,
+				      function (ids) {
+					  settings.ids = ids;
+					  settings.save();
+					  twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
+				      });
+			      }
+			  } else {
 			      settings.save();
-			  });
+			      twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
+			  }
+		      });
+		  } else {
+		      twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
 		  }
-		  twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
 	      }
 	  }
       });
