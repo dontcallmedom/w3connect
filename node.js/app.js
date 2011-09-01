@@ -125,7 +125,7 @@ app.configure(function(){
 		  app.set('twitter_auth', new Buffer(settings.username + ':' + settings.password).toString('base64')); 	  
 		  if (!settings.ids || !settings.ids.length) {
 		      // load a list of users from Twitter
-		      twitter.listTwitterIds(
+		      twitter.listTwitterIdsFromTwitterList(
 			  settings.list.owner,
 			  settings.list.slug,
 			  function (ids) {

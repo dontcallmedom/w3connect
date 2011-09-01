@@ -27,7 +27,7 @@ function loadTwitterListPage(owner, slug, cursor, users, callback) {
 			  });
 }
 
-exports.listTwitterIds = function(list_owner, list_slug, callback) {
+exports.listTwitterIdsFromTwitterList = function(list_owner, list_slug, callback) {
     loadTwitterListPage(
 	list_owner,
 	list_slug,
