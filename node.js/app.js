@@ -373,8 +373,8 @@ app.get('/locations/stream', function(req, res) {
     });
     emitter.on("tweet", function(tweet) {
 	People.findOne(
-	    {twitterAccount.id:tweet.user.id},
-	    [lastKnownPosition],
+	    {"twitterAccount.id":tweet.user.id},
+	    ["lastKnownPosition"],
 	    function(err, indiv) {
 		res.write("event: tweet\n");
 		tweet.position = "";
