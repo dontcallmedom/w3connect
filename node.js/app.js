@@ -309,7 +309,9 @@ app.post('/people/:id.:format?', function(req, res, next){
 				TwitterSettings.findOne(
 				    {}, 
 				    function(err, settings) {
-					settings.ids.push(id);
+					var ids = settings.ids;
+					ids.push(id);
+					settings.ids = ids;
 					twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
 					settings.save();
 				    }
