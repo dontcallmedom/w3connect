@@ -7,6 +7,7 @@ var People = new Schema({
   given: String,
   family: String,
   email: {type: String, unique: true},
+  twitterAccount: {name: String, id: String},
   login: {type: String, unique: true},
   affiliation: {type: Schema.ObjectId, ref: 'Organization'},
   picture: String,
