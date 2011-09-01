@@ -75,10 +75,12 @@ xhr.onreadystatechange = function() {
 }
 xhr.send();   
 
+var tweetQueue = [];
 if (window.EventSource) {
     // Live update!
     var evtSrc = new EventSource( "/locations/stream" );
     evtSrc.onmessage = function( e ) {
+	// @@@ check origin
 	data = JSON.parse(e.data);
 	moveUser(data.left.shortname, data.entered.shortname, data.user);
 	setTimeout((function(left, entered, you) {
@@ -91,10 +93,61 @@ if (window.EventSource) {
 	    };
 	})(data.left.shortname, data.entered.shortname, data.you), 3000);
     };
+    evtSrc.addEventListener("tweet", function(tweet) {
+	// @@@ check origin
+	data = JSON.parse(tweet.data);
+	if (data.position) {
+	    displayTweet(data.text, data.user.screen_name, data.user.profile_image_url_https, data.id, data.position);
+	}
+    }, false);
 }
 
 
-
+function displayTweet(text, screen_name, profile_image, id, room) {
+    var roomBox = document.getElementById(room);
+    if (roomBox) {
+	var backbox = document.createElementNS(svgns, "rect");
+	var box = document.createElementNS(svgns, "text");
+	var animateFadein = document.createElementNS(svgns, "animate");
+	var animateFadeout = document.createElementNS(svgns, "animate");
+	var bbox = roomBox.getBBox();
+	backbox.setAttribute("x", bbox.x + bbox.width / 2 - 5);
+	backbox.setAttribute("id", "tweet" + id);
+	backbox.setAttribute("y", bbox.y + bbox.height / 2 - 15 );
+	backbox.setAttribute("width","210");
+	backbox.setAttribute("height","60");
+	backbox.setAttribute("fill", "white");
+	backbox.setAttribute("stroke", "black");
+	backbox.setAttribute("stroke-width", "2");
+	box.setAttribute("x", bbox.x + bbox.width / 2);
+	box.setAttribute("y", bbox.y + bbox.height / 2);
+	box.setAttribute("width","200");
+	box.setAttribute("height","50");
+	box.setAttribute("fill", "black");
+	box.setAttribute("font-size", "10px");
+	animateFadein.setAttribute("attributeName", "opacity");
+	animateFadein.setAttribute("from", "0");
+	animateFadein.setAttribute("to", "1");
+	animateFadein.setAttribute("dur", "2s");
+	animateFadein.setAttribute("fill", "freeze");
+	animateFadein.setAttribute("id", backbox.getAttribute("id") + "_fadein");
+	animateFadein.setAttribute("begin", backbox.getAttribute("id") + + ".load");
+	animateFadeout = animateFadein.cloneNode(true);
+	animateFadeout.setAttribute("from", "1");
+	animateFadeout.setAttribute("to", "0");
+	animateFadeout.setAttribute("id", backbox.getAttribute("id") + + "_fadeout");
+	animateFadeout.setAttribute("begin", backbox.getAttribute("id") + + ".load + 10s");
+	backbox.appendChild(animateFadein);
+	backbox.appendChild(animateFadeout);
+	box.appendChild(document.createTextNode(text));
+	document.documentElement.appendChild(backbox);
+	document.documentElement.appendChild(box);
+	setTimeout(function() {
+	    document.documentElement.removeChild(backbox);
+	    document.documentElement.removeChild(box);
+	}, 10000);
+    }
+}
 
 function moveUser (left, entered, user) {
     var avatarId = "avatar_" + user.login;
