@@ -268,7 +268,41 @@ app.post('/admin/', function(req, res){
 });
 
 
-app.get('/people/:id.:format?', function(req, res, next){
+app.post('/people/:id.:format?', function(req, res, next){
+    if (! req.loggedIn) {
+      return res.redirect(everyauth.password.getLoginPath());
+    } else {
+	if (req.body.updateProfile && req.body.twitter && req.user.w3cId == req.params.id) {
+	    twitter.getTwitterId(req.body.twitter, function(err, id) {
+		if (err) {
+		    req.flash("error", err);
+		    next();
+		} else {
+		    People.findOne({w3cId: req.params.id}).run( function(err, indiv) {
+			if (err) {
+			    next();
+			} else {
+			    indiv.twitterAccount = {"name": req.body.twitter, id: id};
+			    indiv.save(function(err) {
+				if (!err) {
+				    req.flash("success", "Successfully added your twitter account");
+				} else {
+				    req.flash("error", "Failed to add your twitter account: " + err);
+				}
+				next();
+			    });
+			}
+		    });
+		}
+	    });
+	} else {
+	    next();
+	}
+    }
+});
+
+
+app.all('/people/:id.:format?', function(req, res, next){
     People.findOne({w3cId: req.params.id}).populate('affiliation', ['w3cId', 'name']).run( function(err, indiv) {
 	if (indiv) {
 	    switch (req.params.format) {
