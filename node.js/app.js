@@ -372,8 +372,17 @@ app.get('/locations/stream', function(req, res) {
 	res.write("data: " + JSON.stringify({"user": user, "left": left, "entered": entered, "you": (req.user && JSON.stringify(user._id) == JSON.stringify(req.user._id))}) + "\n\n");
     });
     emitter.on("tweet", function(tweet) {
-        res.write("event: tweet\n");
-	res.write("data: " + JSON.stringify(tweet) + "\n\n");
+	People.findOne(
+	    {twitterAccount.id:tweet.user.id},
+	    [lastKnownPosition],
+	    function(err, indiv) {
+		res.write("event: tweet\n");
+		tweet.position = "";
+		if (indiv && indiv.lastKnownPosition && indiv.lastKnownPosition.shortname) {
+		    tweet.position = indiv.lastKnownPosition.shortname;
+		}
+		res.write("data: " + JSON.stringify(tweet) + "\n\n");		
+	    });
     });
 });
 
