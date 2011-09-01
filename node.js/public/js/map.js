@@ -130,13 +130,11 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	animateFadein.setAttribute("to", "1");
 	animateFadein.setAttribute("dur", "1s");
 	animateFadein.setAttribute("fill", "freeze");
-	animateFadein.setAttribute("id", backbox.getAttribute("id") + "_fadein");
-	animateFadein.setAttribute("begin", backbox.getAttribute("id") + + ".load");
+	animateFadein.setAttribute("begin", backbox.getAttribute("id") + ".load");
 	animateFadeout = animateFadein.cloneNode(true);
 	animateFadeout.setAttribute("from", "1");
 	animateFadeout.setAttribute("to", "0");
-	animateFadeout.setAttribute("id", backbox.getAttribute("id") + + "_fadeout");
-	animateFadeout.setAttribute("begin", backbox.getAttribute("id") + + ".load + 9s");
+	animateFadeout.setAttribute("begin", backbox.getAttribute("id") + ".load + 9s");
 	backbox.appendChild(animateFadein);
 	backbox.appendChild(animateFadeout);
 	box.appendChild(document.createTextNode(text));
