@@ -56,13 +56,13 @@ exports.getTwitterId = function(screen_name, callback) {
 	       'end',
 	       function () {
 		   if (response.statusCode != 200){
-  		       console.log("Looking twitter user id failed: " + response.statusCode + JSON.stringify(response.headers));		   
+		       callback("Looking twitter user id failed: " + response.statusCode + JSON.stringify(response.headers), null);
 		   } else {
 		       try {
 			   twitterData = JSON.parse(twitterDataJSON);
-			   callback(twitterData[0].id);
+			   callback(null, twitterData[0].id);
 		       } catch (err) {
-			   console.log(err);
+			   callback("Failed to parse response from Twitter API (" + err + ")", null);
 		       }
 		   }
 	       });
