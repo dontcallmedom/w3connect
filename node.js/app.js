@@ -304,6 +304,16 @@ app.post('/people/:id.:format?', function(req, res, next){
 			} else {
 			    indiv.twitterAccount = {"name": req.body.twitter, id: id};
 			    indiv.save(function(err) {
+				// re-start twitter listener
+				emitter.emit("twitterListChange");
+				TwitterSettings.findOne(
+				    {}, 
+				    function(err, settings) {
+					settings.ids.push(id);
+					twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
+					settings.save();
+				    }
+				);
 				if (!err) {
 				    req.flash("success", "Successfully added your twitter account");
 				} else {
