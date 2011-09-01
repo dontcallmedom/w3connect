@@ -189,7 +189,7 @@ function moveUser (left, entered, user) {
 	animateX.setAttribute("attributeName", "x");
 	animateX.setAttribute("from", leftBox.x + leftBox.width / 2);
 	animateX.setAttribute("to", enteredBox.x + enteredBox.width / 2);
-	animateX.setAttribute("dur", "1s");
+	animateX.setAttribute("dur", "2s");
 	animateX.setAttribute("fill", "freeze");
 	animateX.setAttribute("id", user.login + "_moveX");
 	animateX.setAttribute("begin", user.login + "_fadein.end");
@@ -197,7 +197,7 @@ function moveUser (left, entered, user) {
 	animateY.setAttribute("id", user.login + "_moveY");
 	animateY.setAttribute("from", leftBox.y + leftBox.height / 2);
 	animateY.setAttribute("to", enteredBox.y + enteredBox.height / 2);
-	animateY.setAttribute("dur", "0.5s");
+	animateY.setAttribute("dur", "2s");
 	animateY.setAttribute("begin", user.login + "_fadein.end");
 	animateY.setAttribute("fill", "freeze");
 	avatar.appendChild(animateX);
