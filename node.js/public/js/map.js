@@ -128,7 +128,7 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	animateFadein.setAttribute("attributeName", "opacity");
 	animateFadein.setAttribute("from", "0");
 	animateFadein.setAttribute("to", "1");
-	animateFadein.setAttribute("dur", "2s");
+	animateFadein.setAttribute("dur", "1s");
 	animateFadein.setAttribute("fill", "freeze");
 	animateFadein.setAttribute("id", backbox.getAttribute("id") + "_fadein");
 	animateFadein.setAttribute("begin", backbox.getAttribute("id") + + ".load");
@@ -180,7 +180,7 @@ function moveUser (left, entered, user) {
 	animateFadein.setAttribute("attributeName", "opacity");
 	animateFadein.setAttribute("from", "0");
 	animateFadein.setAttribute("to", "1");
-	animateFadein.setAttribute("dur", "0.5s");
+	animateFadein.setAttribute("dur", "1s");
 	animateFadein.setAttribute("fill", "freeze");
 	animateFadein.setAttribute("id", user.login + "_fadein");
 	animateFadein.setAttribute("begin", avatarId + ".load");
@@ -191,7 +191,7 @@ function moveUser (left, entered, user) {
 	animateX.setAttribute("attributeName", "x");
 	animateX.setAttribute("from", leftBox.x + leftBox.width / 2);
 	animateX.setAttribute("to", enteredBox.x + enteredBox.width / 2);
-	animateX.setAttribute("dur", "2s");
+	animateX.setAttribute("dur", "1s");
 	animateX.setAttribute("fill", "freeze");
 	animateX.setAttribute("id", user.login + "_moveX");
 	animateX.setAttribute("begin", user.login + "_fadein.end");
@@ -199,7 +199,7 @@ function moveUser (left, entered, user) {
 	animateY.setAttribute("id", user.login + "_moveY");
 	animateY.setAttribute("from", leftBox.y + leftBox.height / 2);
 	animateY.setAttribute("to", enteredBox.y + enteredBox.height / 2);
-	animateY.setAttribute("dur", "2s");
+	animateY.setAttribute("dur", "0.5s");
 	animateY.setAttribute("begin", user.login + "_fadein.end");
 	animateY.setAttribute("fill", "freeze");
 	avatar.appendChild(animateX);
