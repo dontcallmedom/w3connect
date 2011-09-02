@@ -75,8 +75,8 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth, attempt)  
     }
     var stream = https.request(
 	{
-	    //host: 'stream.twitter.com'
-	    host: 'localhost', port: 3030
+	    host: 'stream.twitter.com'
+	    //host: 'localhost', port: 3030
 	 , path:'/1/statuses/filter.json', 'method': 'POST'}, 
 	function (res) {
 	    res.setEncoding('utf8');
