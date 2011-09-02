@@ -1,5 +1,6 @@
 var svgns = "http://www.w3.org/2000/svg";
 var xlinkns = "http://www.w3.org/1999/xlink";
+var xhtmlns = "http://www.w3.org/1999/xhtml";
 var roomsCounter = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
 youareherePoint.setAttribute( "r", "2px");
@@ -107,7 +108,7 @@ function displayTweet(text, screen_name, profile_image, id, room) {
     var roomBox = document.getElementById(room);
     if (roomBox) {
 	var backbox = document.createElementNS(svgns, "rect");
-	var box = document.createElementNS(svgns, "text");
+	var box = document.createElementNS(svgns, "foreignObject");
 	var animateFadein = document.createElementNS(svgns, "animate");
 	var animateFadeout = document.createElementNS(svgns, "animate");
 	var bbox = roomBox.getBBox();
@@ -125,6 +126,9 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	box.setAttribute("height","50");
 	box.setAttribute("fill", "black");
 	box.setAttribute("font-size", "10px");
+	var div =  document.createElementNS(xhtmlns, "div");
+	div.appendChild(document.createTextNode(text));
+	box.appendChild(div);
 	animateFadein.setAttribute("attributeName", "opacity");
 	animateFadein.setAttribute("from", "0");
 	animateFadein.setAttribute("to", "1");
@@ -137,7 +141,6 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	animateFadeout.setAttribute("begin", backbox.getAttribute("id") + ".load + 9s");
 	backbox.appendChild(animateFadein);
 	backbox.appendChild(animateFadeout);
-	box.appendChild(document.createTextNode(text));
 	document.documentElement.appendChild(backbox);
 	document.documentElement.appendChild(box);
 	setTimeout(function() {
