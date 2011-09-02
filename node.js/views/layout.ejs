@@ -25,7 +25,7 @@
   <div id="container">
     <header>
 <h1><a href="/">W3Connect</a></h1>
-<p style='float:right'><% if (everyauth.loggedIn) {%>Logged in as <%=user.login%>. <a href="/logout">Log out</a>?<%} else { %>Not logged in. <a href="/login">Log in</a>?<%}%></p>
+<p style='float:right'><% if (everyauth.loggedIn) {%>Logged in as <a href='/people/<%= user.w3cId %>'><%=user.login%></a>. <a href="/logout">Log out</a>?<%} else { %>Not logged in. <a href="/login">Log in</a>?<%}%></p>
 <a href="/people/">People</a> | <a href="/locations/">Places</a> | <a href="/orgs/">Organizations</a>
     </header>
     <div id="main" role="main">
