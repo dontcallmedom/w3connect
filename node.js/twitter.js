@@ -76,7 +76,7 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth, attempt)  
     var stream = https.request(
 	{
 	    //host: 'stream.twitter.com'
-	    host: 'localhost', port: 3060
+	    host: 'localhost', port: 3030
 	 , path:'/1/statuses/filter.json', 'method': 'POST'}, 
 	function (res) {
 	    res.setEncoding('utf8');
@@ -99,9 +99,14 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth, attempt)  
 	    res.on(
 		'end',
 		function () {
+		    
 		    console.log("Twitter stream terminated with error " + res.statusCode);
 		    console.log(JSON.stringify(res.headers));
-		    // @@@ retry connection but with rate regulation
+		    // https://dev.twitter.com/docs/streaming-api/concepts
+		    // When a HTTP error (> 200) is returned, back off exponentially. 
+		    // Perhaps start with a 10 second wait, double on each subsequent failure, and finally cap the wait at 240 seconds
+		    setTimeout(function() { exports.listenToTweets(emitter, twitter_ids, twitter_auth, attempt + 1); }, Math.min(Math.pow(2, attempt - 1) * 10000, 240000));
+
 		});
 	}
     );
