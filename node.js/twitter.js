@@ -69,11 +69,14 @@ exports.getTwitterId = function(screen_name, callback) {
        });
 };
 
-exports.listenToTweets = function(emitter, twitter_ids, twitter_auth)  {
+exports.listenToTweets = function(emitter, twitter_ids, twitter_auth, attempt)  {
+    if (!attempt) {
+	attempt = 1;
+    }
     var stream = https.request(
 	{
-	    host: 'stream.twitter.com'
-	    // host: 'localhost', port: 3030
+	    //host: 'stream.twitter.com'
+	    host: 'localhost', port: 3060
 	 , path:'/1/statuses/filter.json', 'method': 'POST'}, 
 	function (res) {
 	    res.setEncoding('utf8');
@@ -102,10 +105,20 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth)  {
 		});
 	}
     );
+    try {
     stream.setHeader("Content-Type", "application/x-www-form-urlencoded");
     stream.setHeader("Authorization", 'Basic ' + twitter_auth);
     stream.write("follow=" + twitter_ids.join(","));
+    stream.on('error', function(err) {
+	// https://dev.twitter.com/docs/streaming-api/concepts
+	// When a network error (TCP/IP level) is encountered, back off linearly.
+	// Perhaps start at 250 milliseconds and cap at 16 seconds.
+	setTimeout(function() { exports.listenToTweets(emitter, twitter_ids, twitter_auth, attempt + 1); }, Math.min(attempt * 250, 16000));
+    });
     stream.end();
+    } catch(err) {
+	console.log(err);
+    }
     emitter.on("twitterListChange", function() {
 	stream.abort();
     });
