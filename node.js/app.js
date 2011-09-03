@@ -396,27 +396,6 @@ app.get('/locations/stream', function(req, res) {
     });
 });
 
-app.get('/locations/:id.:format?', function(req, res) {
-    Place.findOne({shortname: req.params.id}, function(err, place) {
-    if (place) {
-      People.find({"lastKnownPosition.shortname": place.shortname}, ['w3cId', 'given', 'family', 'picture_thumb'], function(err, people) {
-	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
-        switch (req.params.format) {
-	    // When json, generate suitable data
-	case 'json':
-	    place.checkedin = people;
-            res.send(place);
-	    break;
-	default:
-	    res.render('locations/place.ejs', { locals: { place: place, people: people}});
-	}
-      });
-    } else {
-       res.render('locations/unknown.ejs', {locals: { shortname: req.params.id}});
-   }
-  });
-
-});
 
 app.post('/locations/:id.:format?', function(req, res) {
   if (! req.loggedIn) {
@@ -434,9 +413,7 @@ app.post('/locations/:id.:format?', function(req, res) {
 		    break;
 		default:
 		    req.flash('info', "You’re already checked in at " + place.name);
-                    People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
-  			res.render('locations/place.ejs', { locals: { place: place, people: people}});
-	            });		    
+		    next();
 		}
 	    } else {
 	   var indiv = req.user ;
@@ -466,31 +443,42 @@ app.post('/locations/:id.:format?', function(req, res) {
 		   } else {
 		       req.flash('error', err);
 		   }
-                   People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
-  		     res.render('locations/place.ejs', { locals: { place: place, people: people}});
-	           });
+		   next();
 	       }
 	   });
 	    }
 	} else {
-          switch (req.params.format) {
-            case 'json':
-              res.send(place);
-	      break;
-            default:
-  	      People.find({"lastKnownPosition.shortname": place.shortname}, function(err, people) {
-	      res.render('locations/place.ejs', { locals: { place: place, people: people}});
-				 
-              });
-          }
-	    
+	    next();
 	}
    } else {
+       next();
+   }
+  });
+
+});
+
+app.all('/locations/:id.:format?', function(req, res) {
+    Place.findOne({shortname: req.params.id}, function(err, place) {
+    if (place) {
+      People.find({"lastKnownPosition.shortname": place.shortname}, ['w3cId', 'given', 'family', 'picture_thumb'], function(err, people) {
+	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
+        switch (req.params.format) {
+	    // When json, generate suitable data
+	case 'json':
+	    place.checkedin = people;
+            res.send(place);
+	    break;
+	default:
+	    res.render('locations/place.ejs', { locals: { place: place, people: people}});
+	}
+      });
+    } else {
        res.render('locations/unknown.ejs', {locals: { shortname: req.params.id}});
    }
   });
 
 });
+
 
 
 app.get('/people.:format?', function (req, res){
