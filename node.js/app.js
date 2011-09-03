@@ -26,6 +26,7 @@ var People = require('./model.js').People(db);
 
 var Organization = require('./model.js').Organization(db);
 var Place = require('./model.js').Place(db);
+var Event = require('./model.js').Event(db);
 var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
 var TaxiToAirport = require('./model.js').TaxiToAirport(db);
 var TwitterSettings = require('./model.js').TwitterSettings(db);
@@ -216,11 +217,6 @@ app.get('/', function(req, res){
   });
 });
 
-app.get('/admin/', function(req, res){
-    res.render('admin/index');
-
-});
-
 app.post('/admin/', function(req, res){
   if (req.body.peopleUpdate) {
     if (! req.loggedIn) {
@@ -234,22 +230,22 @@ app.post('/admin/', function(req, res){
 	  if (success) success.forEach(function(i) { req.flash('success',i);});
 	  if (info) info.forEach(function(i) { req.flash('info',i);});
 	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
-          res.render('admin/index');
+	  next();
       });
   } else  if (req.body.placeAdd) {
       var place = new Place();
       place.shortname = req.body.shortname;
       place.name = req.body.name;
-      function addPlace(p) {
-	  return function(err) { 
-                res.render('admin/index', {
-                  locals: {
-	            placeAddition : p
-	          }
-                 });
-	       };
-      };
-      place.save(addPlace(place));
+      place.save(
+	  function(err) {
+	      if (err) {
+		  req.flash("error", "Error while adding new place: " + err);
+	      } else {
+		  req.flash("success", "New place added: " + p.name);
+	      }
+	      next();
+	  }
+      );
   } else if (req.body.placesUpdate) {
    var https = require('https');
 
@@ -274,19 +270,21 @@ app.post('/admin/', function(req, res){
 		     addCounter++;
 		 }
 		 if (counter == placesData.length) {
-		     res.render('admin/index');
+		     next();
 		 }
 	     });
 	 }
      });
    });
   } else {
-    res.render('admin/index', {
-      title: 'TPAC Web App Administration'
-    });      
+      next();
   }
 });
 
+app.all('/admin/', function(req, res){
+    res.render('admin/index');
+
+});
 
 app.post('/people/:id.:format?', function(req, res, next){
     if (! req.loggedIn) {
