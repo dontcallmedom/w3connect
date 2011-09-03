@@ -14,9 +14,6 @@
 <input type='submit' name='placesUpdate' value='Update list of pre-defined rooms'>
 </form>
 
-<% if (typeof placeAddition !== 'undefined') {%>
-<p>New place added: <%= placeAddition.name %></p>
-<% }%>
 <form action='' method='post'>
 <p><label>Shortname: <input placeholder="Shortname used for checkin" pattern="[0-9a-z]+" type='text' name="shortname" > (only letters and numbers, no spaces)</label></p>
 <p><label>Name: <input type="text" placeholder="Human readable name of the place to create" name="name"></label></p>
