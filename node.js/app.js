@@ -217,7 +217,7 @@ app.get('/', function(req, res){
   });
 });
 
-app.post('/admin/', function(req, res){
+app.post('/admin/', function(req, res, next){
   if (req.body.peopleUpdate) {
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
@@ -397,7 +397,7 @@ app.get('/locations/stream', function(req, res) {
 });
 
 
-app.post('/locations/:id.:format?', function(req, res) {
+app.post('/locations/:id.:format?', function(req, res, next) {
   if (! req.loggedIn) {
     req.session.redirectTo = '/locations/' + req.params.id;
     return res.redirect(everyauth.password.getLoginPath());
@@ -535,12 +535,6 @@ app.get('/taxi/', function (req, res) {
   res.render('taxi/index.ejs');
 });
 
-app.get('/taxi/from', function (req, res) {
-  TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run (function (err, taxi) {
-     req.flash('error',err);
-     res.render('taxi/from.ejs', {locals: {taxi: taxi}});
-});
-});
 
 app.post('/taxi/from',
   form(
@@ -548,36 +542,31 @@ app.post('/taxi/from',
 	 validate("terminal").required(),
 	 validate("arrival").required().regex("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]*)?)?", "%s must match YYYY-MM-DDTHH:mm(:ss)?")
   ),
-  function (req, res) {
+	 function (req, res, next) {
   if (! req.loggedIn) {
     req.session.redirectTo = '/taxi/from';
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
-       TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
-	 req.flash('error',err);
- 	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
-        });
+      next();
   } else {
      var taxi = new TaxiFromAirport({flight: {airport: req.form.airport, eta: req.form.arrival, airline: req.form.airline, code: req.form.code, terminal: req.form. terminal}, requester: req.user._id});
      taxi.save(function (err) {
        req.flash('error',err);
-       TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
-	 req.flash('error',err);
- 	 res.render('taxi/from.ejs', {locals: {taxi: taxi}});
-        });
+	 next();
       });
   }
 });
 
-
-
-app.get('/taxi/to', function (req, res) {
-  TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
-     req.flash('error',err);
-     res.render('taxi/to.ejs', {locals: {taxi: taxi}});
+app.all('/taxi/from', function (req, res) {
+  TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run (function (err, taxi) {
+      if (err) {
+	  req.flash('error',err);
+      }
+     res.render('taxi/from.ejs', {locals: {taxi: taxi}});
   });
 });
+
 
 app.post('/taxi/to',
   form(
@@ -586,28 +575,32 @@ app.post('/taxi/to',
 	 validate("minDepartureTime").required().regex("[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]*)?)?", "%s must match HH:mm"),
 	 validate("maxDepartureTime").required().regex("[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]*)?)?", "%s must match HH:mm")
   ),
-  function (req, res) {
+	 function (req, res, next) {
   if (! req.loggedIn) {
     req.session.redirectTo = '/taxi/to';
     return res.redirect(everyauth.password.getLoginPath());
   }
   if (!req.form.isValid) {
-       TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
-	 req.flash('error',err);
- 	 res.render('taxi/to.ejs', {locals: {taxi: taxi}});
-        });
+      next();
   } else {
      var taxi = new TaxiToAirport({airport: req.form.airport, minTime: req.form.departureDate + 'T' + req.form.minDepartureTime + 'Z', maxTime: req.form.departureDate + 'T' + req.form.maxDepartureTime + 'Z', requester: req.user._id});
      taxi.save(function (err) {
        req.flash('error',err);
-       TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
-	 req.flash('error',err);
- 	 res.render('taxi/to.ejs', {locals: {taxi: taxi}});
-        });
+	 next();
       });
   }
 
 });
+
+app.all('/taxi/to', function (req, res) {
+  TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
+      if (err) {
+	  req.flash('error',err);
+      }
+     res.render('taxi/to.ejs', {locals: {taxi: taxi}});
+  });
+});
+
 
 everyauth.helpExpress(app);
 app.dynamicHelpers({ messages: require('express-messages') });
