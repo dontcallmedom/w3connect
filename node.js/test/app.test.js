@@ -5,28 +5,38 @@
 process.env.NODE_ENV = 'test';
 var app = require('../app'),  assert = require('assert');
 module.exports = {
-'GET /people.json': function() {
-    assert.response(app,
-      { url: '/people.json' },
-      { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8' }},
-      function(res) {
-        var documents = JSON.parse(res.body);
-        assert.type(documents, 'object');
-
-/*        documents.forEach(function(d) {
-          app.People.findById(d._id, function(people) {
-            document.remove();
-          });
-        });*/
-      });
-  },
 'GET /': function() {
     assert.response(app,
       { url: '/' },
       { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }},
       function(res) {
         assert.includes(res.body, '<title>W3Connect</title>');
-        process.exit();
       });
- }
+},
+    'GET /locations' : function() {
+    assert.response(app,
+      { url: '/locations' },
+		    { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }},
+	function(res) {
+	    assert.includes("<h1>Places</h1>");
+	});
+    }, 
+
+    'GET /people' : function() {
+    assert.response(app,
+      { url: '/people' },
+		    { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }},
+	function(res) {
+	    assert.includes("<h1>People</h1>");
+	});
+    }, 
+'GET /people.json': function() {
+    assert.response(app,
+      { url: '/people.json' },
+      { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8' }},
+      function(res) {
+        var people = JSON.parse(res.body);
+        assert.type(people, 'object');
+      });
+}
 };
