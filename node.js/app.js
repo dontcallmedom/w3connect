@@ -89,7 +89,8 @@ everyauth.password
       if (errors.length) return errors;
       var ldap = require('./ldapauth');
       // modified version of ldapauth that takes an additional scheme parameter available from https://github.com/dontcallmedom/node-ldapauth
-      ldap.authenticate(config.ldap.scheme, config.ldap.host, config.ldap.port,'uid=' + login + ',' + config.ldap.dn_realm , password, function(err, result) {
+      console.log(config.ldap);
+      ldap.authenticate(config.ldap.scheme, config.ldap.host, parseInt(config.ldap.port),'uid=' + login + ',' + config.ldap.dn_realm , password, function(err, result) {
         if (err) {
           return promise.fail(err);
         }
