@@ -7,7 +7,7 @@ var express = require('express');
 var everyauth = require('everyauth'),
     EventEmitter = require('events').EventEmitter;
 var imports = require("./imports.js"),
-    twitter = require("./twitter.js");;
+    twitter = require("./twitter.js");
 
 
 form = require("express-form"),
@@ -16,12 +16,28 @@ validate = form.validate;
 
 var fs = require('fs');
 
-var app = module.exports = express.createServer({key: fs.readFileSync('/etc/ssl/private/wildcard.w3.org.key'), cert: fs.readFileSync('/etc/ssl/certs/cert-w3.org.crt')});
+// Reading command line options
+var argv = require("optimist")
+  .options('c', {
+	   alias: 'config',
+	   default:'config.ini'}).argv;
+
+// Reading configuration file
+var config = require('iniparser').parseSync(argv.c);
+
+var app;
+if (config.https.key_file && config.https.certificate_file) {
+    app = express.createServer({key: fs.readFileSync(config.https.key_file), cert: fs.readFileSync(config.https.certificate_file)});
+} else {
+    app = express.createServer();
+}
+module.exports = app;
+
 var emitter = new EventEmitter();
 
-var mongoose = require('mongoose'),
-db = mongoose.connect('mongodb://localhost/tpac');
 
+var mongoose = require('mongoose'),
+db = mongoose.connect('mongodb://' + config.mongo.host + '/' + config.mongo.dbname);
 var People = require('./model.js').People(db);
 
 var Organization = require('./model.js').Organization(db);
@@ -32,13 +48,11 @@ var TaxiToAirport = require('./model.js').TaxiToAirport(db);
 var TwitterSettings = require('./model.js').TwitterSettings(db);
 
 
-
-
 // Authentication 
 // Session Store
 var SessionMongoose = require("session-mongoose");
 var mongooseSessionStore = new SessionMongoose({
-    url: "mongodb://localhost/session",
+    url: "mongodb://" + config.mongo.host + '/'  + config.authentication.session_db,
     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
 });
 
@@ -110,7 +124,7 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public', { maxAge: 86400}));
   app.use(express.methodOverride());
  app.use(express.cookieParser()); 
-  app.use(express.session({store: mongooseSessionStore, secret:'abc'}));
+  app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret}));
   app.use(everyauth.middleware());
   // Loading up list of twitter users
   TwitterSettings.findOne(
