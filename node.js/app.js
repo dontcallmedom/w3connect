@@ -465,8 +465,9 @@ app.all('/locations/:id.:format?', function(req, res) {
         switch (req.params.format) {
 	    // When json, generate suitable data
 	case 'json':
-	    place.checkedin = people;
-            res.send(place);
+	    var placeData = place.toObject();
+	    placeData.checkedin = people.map(function(x) { return x.toObject();});
+            res.send(placeData);
 	    break;
 	default:
 	    res.render('locations/place.ejs', { locals: { place: place, people: people}});
