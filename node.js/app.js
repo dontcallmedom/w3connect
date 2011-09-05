@@ -263,7 +263,7 @@ app.post('/admin/', function(req, res, next){
 	  }
       );
   } else if (req.body.placesUpdate) {
-      var url = require("URL").parse(config.map.rooms_json);
+      var url = require("url").parse(config.map.rooms_json);
       var http;
       if (url.protocol == "http:") {
 	  http = require('http');
