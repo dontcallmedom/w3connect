@@ -100,6 +100,7 @@ everyauth.password
 	} else {
           var user = {id: login};
 	  // We'll use this to get data from WBS when importing registrants list
+	  // @@@ move to import.js? use cleaner abstraction
 	  app.set('w3c_auth', new Buffer(login + ':' + password).toString('base64')); 	  
           return promise.fulfill(user);	    
 	}
@@ -262,35 +263,45 @@ app.post('/admin/', function(req, res, next){
 	  }
       );
   } else if (req.body.placesUpdate) {
-   var https = require('https');
-
-   var request = https.get({host: 'dvcs.w3.org', path:'/hg/tpac-web/raw-file/tip/maps/rooms.json'}, function (response) {
-     response.setEncoding('utf8');
-     var placesJSON = "", placesData;
-     response.on('data', function (chunk) {
-       placesJSON = placesJSON + chunk;
-     });
-     response.on('end', function () {
-	 Place.find({}).remove();
-        placesData = JSON.parse(placesJSON);
-	 for (i in placesData) {
-	     var p = new Place(placesData[i]);
-	     var counter = 0;
-	     var addCounter = 0;
-	     p.save(function (err) {
-		 counter++;
-		 if (err) {
-		     req.flash('error',err);
-		 } else {
-		     addCounter++;
-		 }
-		 if (counter == placesData.length) {
-		     next();
-		 }
-	     });
-	 }
-     });
-   });
+      var url = require("URL").parse(config.map.rooms_json);
+      var http;
+      if (url.protocol == "http:") {
+	  http = require('http');
+      } else if (url.protocol == "https:") {
+	  http = require('https');
+      } else {
+	  req.flash("error", "Unrecognized protocol for room descriptions: " + config.map.rooms_json);
+	  next();
+      }
+      if (http) {
+	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + url.search + url.hash}, function (response) {
+	      response.setEncoding('utf8');
+	      var placesJSON = "", placesData;
+	      response.on('data', function (chunk) {
+		  placesJSON = placesJSON + chunk;
+	      });
+	      response.on('end', function () {
+		  Place.find({}).remove();
+		  placesData = JSON.parse(placesJSON);
+		  for (i in placesData) {
+		      var p = new Place(placesData[i]);
+		      var counter = 0;
+		      var addCounter = 0;
+		      p.save(function (err) {
+			  counter++;
+			  if (err) {
+			      req.flash('error',err);
+			  } else {
+			      addCounter++;
+			  }
+			  if (counter == placesData.length) {
+			      next();
+			  }
+		      });
+		  }
+	      });
+	  });
+      }
   } else {
       next();
   }
