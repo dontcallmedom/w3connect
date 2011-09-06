@@ -53,11 +53,20 @@ var Event  = new Schema({
     interested: [{type: Schema.ObjectId, ref: 'People'}],
     eventType : {type: String, enum: ["meeting", "meal", "werewolf", "run"]},
     name: String,
+    description: String,
     group: {type: Schema.ObjectId, ref: 'Group'},
     updates: [{type: Schema.ObjectId, ref: 'StatusUpdate'}],
     timeStart: Date,
     timeEnd: Date
 });
+
+
+var EventRating = new Schema({
+    event: {type: Schema.ObjectId, ref:'Event'},
+    rating: {type: String, enum: ['interested', 'very interested', "can't miss it", "not interested"]},
+    rater: {type: Schema.ObjectId, ref: 'People'}
+});
+
 
 var TaxiFromAirport = new Schema({
   flight: {airline: String, code: String, eta: Date, airport: {type: String, enum:['San Jose', 'San Francisco', 'Oakland']}, terminal: String},
@@ -91,6 +100,7 @@ mongoose.model('Organization', Organization);
 mongoose.model('Group', Group);
 mongoose.model('Place', Place);
 mongoose.model('Event', Event);
+mongoose.model('EventRating', EventRating);
 mongoose.model('StatusUpdate', StatusUpdate);
 mongoose.model('TaxiToAirport', TaxiToAirport);
 mongoose.model('TwitterSettings', TwitterSettings);
@@ -119,6 +129,9 @@ exports.Event = function(db) {
   return db.model('Event');
 };
 
+exports.EventRating = function(db) {
+  return db.model('EventRating');
+};
 
 exports.TaxiToAirport = function(db) {
   return db.model('TaxiToAirport');
