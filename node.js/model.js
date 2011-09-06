@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var People = new Schema({
-  w3cId: {type: Number, unique: true},
+  slug: {type: String, unique: true},
   given: String,
   family: String,
   email: {type: String, unique: true},
@@ -23,7 +23,7 @@ mongoose.model('People', People);
 
 
 var Organization = new Schema({
-  w3cId: {type: Number, unique: true},
+  slug: {type: String, unique: true},
   name: {type: String, unique: true},
   url: {type: String},
   groups: [{type: Schema.ObjectId, ref: 'Group'}],
@@ -31,7 +31,7 @@ var Organization = new Schema({
 });
 
 var Group = new Schema({
-  w3cId: {type: Number, unique: true},
+  slug: {type: String, unique: true},
   name: {type: String, unique: true},
   url: {type: String, unique: true}
 });
