@@ -15,7 +15,7 @@ function loadPeopleData(id) {
      });
      response.on('end', function () {
        peopleData = JSON.parse(peopleJSON);
-       People.findOne({w3cId: id}, function(err, people) {
+       People.findOne({slug: id}, function(err, people) {
            if (people && people.picture != peopleData.picture) {
 	       people.picture = peopleData.picture;
 	       people.save();
@@ -51,7 +51,7 @@ exports.importUserList = function(auth, callback)  {
 	    return function (err) {
 		// assume duplicate key errors
 	        if (err) {
-		    Organization.findOne({w3cId: people.affiliationId}, ["_id", "name"], function(err, org) {
+		    Organization.findOne({slug: people.affiliationId}, ["_id", "name"], function(err, org) {
 		    if (org) {
 			people.affiliation = org._id;
 		    }
@@ -96,12 +96,12 @@ exports.importUserList = function(auth, callback)  {
 	    people.family = peopleData.family;
 	    people.email = peopleData.email;
 	    people.login = peopleData.login;
-	    people.w3cId = peopleData.w3cId;
-	    loadPeopleData(people.w3cId);
-	    if (peopleData.organization && peopleData.organization.w3cId) {
-		     people.affiliationId = peopleData.organization.w3cId;
+	    people.slug = peopleData.slug;
+	    loadPeopleData(people.slug);
+	    if (peopleData.organization && peopleData.organization.slug) {
+		     people.affiliationId = peopleData.organization.slug;
   		     org = new Organization();
-		     org.w3cId = peopleData.organization.w3cId;
+		     org.slug = peopleData.organization.slug;
 		     org.name = peopleData.organization.name;
 		     org.save(addOrg(org, people));		       
 	    } else {
