@@ -316,13 +316,13 @@ app.post('/people/:id.:format?', function(req, res, next){
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
     } else {
-	if (req.body.updateProfile && req.body.twitter && req.user.w3cId == req.params.id) {
+	if (req.body.updateProfile && req.body.twitter && req.user.slug == req.params.id) {
 	    twitter.getTwitterId(req.body.twitter, function(err, id) {
 		if (err) {
 		    req.flash("error", err);
 		    next();
 		} else {
-		    People.findOne({w3cId: req.params.id}).run( function(err, indiv) {
+		    People.findOne({slug: req.params.id}).run( function(err, indiv) {
 			if (err) {
 			    next();
 			} else {
@@ -359,7 +359,7 @@ app.post('/people/:id.:format?', function(req, res, next){
 
 
 app.all('/people/:id.:format?', function(req, res, next){
-    People.findOne({w3cId: req.params.id}).populate('affiliation', ['w3cId', 'name']).run( function(err, indiv) {
+    People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).run( function(err, indiv) {
 	if (indiv) {
 	    switch (req.params.format) {
 		// When json, generate suitable data
@@ -380,7 +380,7 @@ app.get('/locations.:format?', function(req, res) {
     places.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
     var counter=0;
     for (p in places) {
-      People.find({"lastKnownPosition.shortname": places[p].shortname}, ['w3cId', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
+      People.find({"lastKnownPosition.shortname": places[p].shortname}, ['slug', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
          counter++;
          place.checkedin = people;
          if (counter==places.length) {	     
@@ -486,7 +486,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 app.all('/locations/:id.:format?', function(req, res) {
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
-      People.find({"lastKnownPosition.shortname": place.shortname}, ['w3cId', 'given', 'family', 'picture_thumb'], function(err, people) {
+      People.find({"lastKnownPosition.shortname": place.shortname}, ['slug', 'given', 'family', 'picture_thumb'], function(err, people) {
 	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
         switch (req.params.format) {
 	    // When json, generate suitable data
@@ -538,8 +538,8 @@ app.get('/orgs.:format?', function (req, res){
 });
 
 app.get('/orgs/:id.:format?', function(req, res, next){
-    Organization.findOne({w3cId: req.params.id})
-        .populate('employees', ['login', 'w3cId', 'given', 'family', 'picture_thumb'])
+    Organization.findOne({slug: req.params.id})
+        .populate('employees', ['login', 'slug', 'given', 'family', 'picture_thumb'])
 	.run( function(err, org) {
 	    if (org) {
 		var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
@@ -586,7 +586,7 @@ app.post('/taxi/from',
 });
 
 app.all('/taxi/from', function (req, res) {
-  TaxiFromAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run (function (err, taxi) {
+  TaxiFromAirport.find({}).populate('requester', ['slug', 'given', 'family', 'picture_thumb']).run (function (err, taxi) {
       if (err) {
 	  req.flash('error',err);
       }
@@ -620,7 +620,7 @@ app.post('/taxi/to',
 });
 
 app.all('/taxi/to', function (req, res) {
-  TaxiToAirport.find({}).populate('requester', ['w3cId', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
+  TaxiToAirport.find({}).populate('requester', ['slug', 'given', 'family', 'picture_thumb']).run( function (err, taxi) {
       if (err) {
 	  req.flash('error',err);
       }
