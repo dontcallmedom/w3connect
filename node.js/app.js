@@ -61,7 +61,7 @@ everyauth.everymodule.findUserById( function (userId, callback) {
     People.count({}, function(err, count) {
 	if (!count) {
 	    // No one in the db, we create a mock user to allow for import
-	    callback(err, {'login': userId, 'given': 'Admin', 'family': 'Istrator', 'w3cId': 0});
+	    callback(err, {'login': userId, 'given': 'Admin', 'family': 'Istrator', 'slug': 'admin'});
 	} else {
 	    People.findOne({login: userId}, callback);
 	}
