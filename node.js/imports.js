@@ -14,6 +14,7 @@ function loadPeopleData(id) {
        peopleJSON = peopleJSON + chunk;
      });
      response.on('end', function () {
+		     try {
        peopleData = JSON.parse(peopleJSON);
        People.findOne({slug: id}, function(err, people) {
            if (people && people.picture != peopleData.picture) {
@@ -25,7 +26,10 @@ function loadPeopleData(id) {
 	       people.save();
 	   }
 
-       });
+       });			 
+		     } catch (x) {
+			 console.log(x);
+		     }
      });
   });
 }
