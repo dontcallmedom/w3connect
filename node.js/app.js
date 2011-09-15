@@ -274,7 +274,7 @@ app.post('/admin/', function(req, res, next){
 	  next();
       }
       if (http) {
-	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + url.search + url.hash}, function (response) {
+	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '')  + (url.hash ? url.hash : '')}, function (response) {
 	      response.setEncoding('utf8');
 	      var placesJSON = "", placesData;
 	      response.on('data', function (chunk) {
