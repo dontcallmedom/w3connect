@@ -29,6 +29,7 @@ function loadPeopleData(id) {
 
        });			 
 		     } catch (x) {
+			 console.log("Retrieved http://www.w3.org/2011/08/w3c-data/people/" + id);
 			 console.log(peopleJSON);
 		     }
      });
