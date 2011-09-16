@@ -20,11 +20,11 @@ function loadPeopleData(id) {
        People.findOne({slug: id}, function(err, people) {
            if (people && peopleData.picture && people.picture != peopleData.picture) {
 	       people.picture = peopleData.picture;
-	       people.save();
+	       people.save(function(err) { console.log(err);});
 	   }
            if (people && peopleData.thumbnail && people.picture_thumb != peopleData.thumbnail) {
 	       people.picture_thumb = peopleData.thumbnail;
-	       people.save();
+	       people.save(function(err) { console.log(err);});
 	   }
 
        });			 
