@@ -14,6 +14,7 @@ function loadPeopleData(id) {
        peopleJSON = peopleJSON + chunk;
      });
      response.on('end', function () {
+	 
 		     try {
        peopleData = JSON.parse(peopleJSON);
        People.findOne({slug: id}, function(err, people) {
@@ -28,7 +29,7 @@ function loadPeopleData(id) {
 
        });			 
 		     } catch (x) {
-			 console.log(x);
+			 console.log(peopleJSON);
 		     }
      });
   });
