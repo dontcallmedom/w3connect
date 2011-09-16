@@ -18,11 +18,11 @@ function loadPeopleData(id) {
 		     try {
        peopleData = JSON.parse(peopleJSON);
        People.findOne({slug: id}, function(err, people) {
-           if (people && people.picture != peopleData.picture) {
+           if (people && peopleData.picture && people.picture != peopleData.picture) {
 	       people.picture = peopleData.picture;
 	       people.save();
 	   }
-           if (people && people.picture_thumb != peopleData.thumbnail) {
+           if (people && peopleData.thumbnail && people.picture_thumb != peopleData.thumbnail) {
 	       people.picture_thumb = peopleData.thumbnail;
 	       people.save();
 	   }
