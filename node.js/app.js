@@ -191,7 +191,7 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.logger());
   app.use(express.errorHandler()); 
-  app.set('port', 443);
+  app.set('port', 80);
 });
 
 
@@ -210,7 +210,7 @@ app.error(function(err, req, res, next){
 });
 
 
-app.get('/', function(req, res){
+app.get('/2011/11/TPAC/live/', function(req, res){
   // skipped by middleware at this point, need fixing @@@
   People.count({}, function(err, count) {
       if (!count) {
