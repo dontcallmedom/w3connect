@@ -1,5 +1,5 @@
 <h1>Places</h1>
-<p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="/maps/main.svg#<% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
+<p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="/2011/11/TPAC/live/maps/main.svg#<% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
 <ul>
 
 <% for (var p  in places) { %>
@@ -7,7 +7,7 @@
 <%= places[p].name %></a></li>
 <% } %>
 </ul>
-<img style="max-width:100%" src="/maps/main.png" alt="Floor plan">
+<img style="max-width:100%" src="/2011/11/TPAC/live/maps/main.png" alt="Floor plan">
 </object>
 </p>
 <div id="messages">
@@ -31,7 +31,7 @@ var messages = document.getElementById("messages");
 }*/
 
 if (window.EventSource) {
-	  var evtSrc = new EventSource( "/locations/stream" );
+	  var evtSrc = new EventSource( "/2011/11/TPAC/live/locations/stream" );
 	  evtSrc.onmessage = function( e ) {
 	    // @@@ check origin
 	    var data = JSON.parse(e.data);
