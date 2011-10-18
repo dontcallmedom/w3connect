@@ -1,8 +1,9 @@
 # depends on inkscape to generate PNG versions
-
-DESTDIR = "$2"
+DESTDIR="$2"
 
 if [ ! -d "$DESTDIR" ] ; then mkdir "$DESTDIR" ; fi
+
+if [ ! -d "$DESTDIR" ] ; then echo "$DESTDIR doesn't exist and couldn't be created" ; exit 1; fi
 
 ROOMS_IDS=`cat rooms.json|cut -d ":" -f 2|cut -d "," -f 1|cut -d '"' -f 2|grep -v "\["|grep -v "\]"`
 ROOMS_SVG=`for i in $ROOMS_IDS; do echo "$i.svg" ; done`
