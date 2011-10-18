@@ -1,7 +1,7 @@
 <h1>Organizations</h1>
 <ul>
 <% for (var o  in orgs) { %>
-  <li><a <% if(everyauth.user && everyauth.user.affiliation._id == orgs[o]._id) {%>class='self'<%}%> href='/orgs/<%= orgs[o].slug %>'>
+  <li><a <% if(everyauth.user && everyauth.user.affiliation._id == orgs[o]._id) {%>class='self'<%}%> href='/2011/11/TPAC/live/orgs/<%= orgs[o].slug %>'>
 <%= orgs[o].name %></a></li>
 <% } %>
 </ul>
