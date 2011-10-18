@@ -4,6 +4,7 @@
  */
 
 var express = require('express');
+require("express-namespace");
 var everyauth = require('everyauth'),
     EventEmitter = require('events').EventEmitter;
 var imports = require("./imports.js"),
@@ -209,8 +210,8 @@ app.error(function(err, req, res, next){
   res.send(err.message, 500);
 });
 
-
-app.get('/2011/11/TPAC/live/', function(req, res){
+app.namespace('/2011/11/TPAC/live', function(){
+app.get('/', function(req, res){
   // skipped by middleware at this point, need fixing @@@
   People.count({}, function(err, count) {
       if (!count) {
@@ -627,7 +628,7 @@ app.all('/taxi/to', function (req, res) {
      res.render('taxi/to.ejs', {locals: {taxi: taxi}});
   });
 });
-
+});
 
 everyauth.helpExpress(app);
 app.dynamicHelpers({ messages: require('express-messages') });
