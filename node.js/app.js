@@ -71,11 +71,11 @@ everyauth.everymodule.findUserById( function (userId, callback) {
 
 // Adapted from everyauth ldap module
 everyauth.password
-  .getLoginPath('/login')
-  .postLoginPath('/login') // Uri path that your login form POSTs to
+  .getLoginPath('/2011/11/TPAC/live/login')
+  .postLoginPath('/2011/11/TPAC/live/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
-  .loginSuccessRedirect('/')
+  .loginSuccessRedirect('/2011/11/TPAC/live/')
   /*.respondToLoginSucceed( function (res, user, data) {
     if (user) {
       res.writeHead(303, {'Location': data.session.redirectTo});
@@ -108,8 +108,8 @@ everyauth.password
       });
       return promise;
   })
-  .getRegisterPath('/')
-  .postRegisterPath('/')
+  .getRegisterPath('/2011/11/TPAC/live/')
+  .postRegisterPath('/2011/11/TPAC/live/')
   .registerUser(function() {
       return null;
    });
