@@ -63,7 +63,7 @@ for (var r =0 ;r < room_links.length ; r++) {
     room_links[r].appendChild(t);
 }
 var xhr = new XMLHttpRequest;
-xhr.open("GET","/locations.json", true);
+xhr.open("GET","/2011/11/TPAC/live/locations.json", true);
 xhr.onreadystatechange = function() {
     if (4 == xhr.readyState) {
         var json = JSON.parse(xhr.responseText);
@@ -79,7 +79,7 @@ xhr.send();
 var tweetQueue = [];
 if (window.EventSource) {
     // Live update!
-    var evtSrc = new EventSource( "/locations/stream" );
+    var evtSrc = new EventSource( "/2011/11/TPAC/live/locations/stream" );
     evtSrc.onmessage = function( e ) {
 	// @@@ check origin
 	data = JSON.parse(e.data);
