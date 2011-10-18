@@ -1,6 +1,6 @@
 <ul class='peopleList'>
 <% for (var p  in people) { %>
-  <li><a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='/people/<%= people[p].slug %>'>
+  <li><a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='/2011/11/TPAC/live/people/<%= people[p].slug %>'>
 <% if (people[p].picture_thumb) { %>
 <img src="<%=people[p].picture_thumb%>" alt="Picture of <%= people[p].given + " " + people[p].family %>">
 <%}%>
