@@ -2,6 +2,6 @@
 <ul class='list-graphical group'>
 <% for (var o  in orgs) { %>
   <li><a <% if(everyauth.user && everyauth.user.affiliation._id == orgs[o]._id) {%>class='self'<%}%> href='/2011/11/TPAC/live/orgs/<%= orgs[o].slug %>'>
-<%= orgs[o].name %></a></li>
+<%= orgs[o].name %> (<%= orgs[o].employees.slice(0).length %>)</a></li>
 <% } %>
 </ul>
