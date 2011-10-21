@@ -10,7 +10,9 @@
     "session-mongoose": "0.0.1",
     "express-form":"0.6.1",
     "express-messages":"0.0.2",
-    "express-namespace":"0.0.3"
+    "iniparser":"1.0.3",
+    "optimist":"0.2.6",
+    "express-namespace":"0.0.4"
   },
   "devDependencies": {},
   "engines": {
