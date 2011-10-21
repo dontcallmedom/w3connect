@@ -21,7 +21,7 @@ addEvent("onload",init);
 <%- partial('schedule/event-list.ejs', {eventList: myEvents, showTime: true, className: "mySchedule"}) %>
 <% } %>
 <% } else { %>
-<dd class="placeholder"><a href="<%= url %>?login">Log in with Twitter to build your schedule</a></dd>
+<dd class="placeholder"><a href="/2011/11/TPAC/live/login">Log in to build your schedule</a></dd>
 <% } %>
 <% for (var d in days) { %>
 <% var day = days[d];%>
