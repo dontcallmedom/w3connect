@@ -1,0 +1,6 @@
+<% if (link == url) { %>
+<li class="selected <%= (typeof class != "undefined" ? class : "") %>"><a><%= text %>
+<% } else { %>
+<li class="<%= (typeof class != "undefined" ? class : "") %>"><a href="<%= link %>"><%= text %>
+<%} %>
+</a></li>
