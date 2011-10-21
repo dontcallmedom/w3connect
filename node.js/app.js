@@ -536,7 +536,7 @@ app.get('/orgs.:format?', function (req, res){
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
-        res.send(org);
+        res.send(orgs);
 	break;
       default:
         res.render('orgs/index.ejs', { locals: { orgs: orgs}});
