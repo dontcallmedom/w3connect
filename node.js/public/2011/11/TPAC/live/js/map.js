@@ -3,7 +3,7 @@ var xlinkns = "http://www.w3.org/1999/xlink";
 var xhtmlns = "http://www.w3.org/1999/xhtml";
 var roomsCounter = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
-youareherePoint.setAttribute( "r", "2px");
+youareherePoint.setAttribute( "r", "4px");
 youareherePoint.setAttribute( "id", "you");
 youareherePoint.setAttribute( "fill", "red");
 
@@ -45,25 +45,24 @@ if (window.location.hash) {
 var room_links = document.getElementsByTagNameNS(svgns, "a");
 // adding the counter
 for (var r =0 ;r < room_links.length ; r++) {
-    var room = room_links[r].getElementsByTagNameNS(svgns, "rect")[0];
+    var room = room_links[r].getElementsByTagNameNS(svgns, "path")[0];
     var bbox = room.getBBox();
     var backdrop = document.createElementNS(svgns, "rect");
     backdrop.setAttribute("id", room.getAttribute("id") + "-counter-backdrop");
-    backdrop.setAttribute("x", bbox.x + bbox.width - 8);
-    backdrop.setAttribute("width", 6);
-    backdrop.setAttribute("y", bbox.y + bbox.height - 9);
-    backdrop.setAttribute("height", 7);
+    backdrop.setAttribute("x", bbox.x + 8);
+    backdrop.setAttribute("width", 20);
+    backdrop.setAttribute("y", bbox.y + bbox.height / 2 - 9);
+    backdrop.setAttribute("height", 20);
     var t = document.createElementNS(svgns, "text");
     t.setAttribute("id", room.getAttribute("id") + "-counter");
-    t.setAttribute( "x", bbox.x + bbox.width - 6);
-    t.setAttribute( "y", bbox.y + bbox.height - 3 );
-    t.setAttribute( "font-size", "6px");
-    t.setAttribute( "text-anchor", "right");    
+    t.setAttribute( "x", bbox.x + 16);
+    t.setAttribute( "y", bbox.y + bbox.height / 2 + 5);
+    t.setAttribute( "text-anchor", "middle");    
     room_links[r].appendChild(backdrop);
     room_links[r].appendChild(t);
 }
 var xhr = new XMLHttpRequest;
-xhr.open("GET","/2011/11/TPAC/live/locations.json", true);
+xhr.open("GET","/locations.json", true);
 xhr.onreadystatechange = function() {
     if (4 == xhr.readyState) {
         var json = JSON.parse(xhr.responseText);
@@ -79,7 +78,7 @@ xhr.send();
 var tweetQueue = [];
 if (window.EventSource) {
     // Live update!
-    var evtSrc = new EventSource( "/2011/11/TPAC/live/locations/stream" );
+    var evtSrc = new EventSource( "/locations/stream" );
     evtSrc.onmessage = function( e ) {
 	// @@@ check origin
 	data = JSON.parse(e.data);
@@ -115,19 +114,30 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	backbox.setAttribute("x", bbox.x + bbox.width / 2 - 5);
 	backbox.setAttribute("id", "tweet" + id);
 	backbox.setAttribute("y", bbox.y + bbox.height / 2 - 15 );
-	backbox.setAttribute("width","210");
-	backbox.setAttribute("height","60");
+	backbox.setAttribute("width","250");
+	backbox.setAttribute("height","80");
 	backbox.setAttribute("fill", "white");
 	backbox.setAttribute("stroke", "black");
 	backbox.setAttribute("stroke-width", "2");
 	box.setAttribute("x", bbox.x + bbox.width / 2);
 	box.setAttribute("y", bbox.y + bbox.height / 2);
 	box.setAttribute("width","200");
-	box.setAttribute("height","50");
+	box.setAttribute("height","60");
 	box.setAttribute("fill", "black");
-	box.setAttribute("font-size", "10px");
 	var div =  document.createElementNS(xhtmlns, "div");
-	div.appendChild(document.createTextNode(text));
+	div.setAttribute("style", "font-size:20px");
+	var img = document.createElementNS(svgns, "image");
+	img.setAttributeNS(xlinkns, "href", profile_image);
+	img.setAttribute("x", bbox.x + bbox.width / 2 - 36 );
+	img.setAttribute("width", 36 );
+	img.setAttribute("y", bbox.y + bbox.height / 2 );
+	img.setAttribute("height", 48 );
+	var a = document.createElementNS(xhtmlns, "a");
+	a.appendChild(document.createTextNode(screen_name));
+	a.setAttribute("href", "https://twitter.com/" + screen_name+ "/statuses/" + id);
+	div.appendChild(a);
+	div.appendChild(document.createTextNode(": " + text));
+	box.appendChild(img);
 	box.appendChild(div);
 	animateFadein.setAttribute("attributeName", "opacity");
 	animateFadein.setAttribute("from", "0");

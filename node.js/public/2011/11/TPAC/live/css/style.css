@@ -1,117 +1,1011 @@
-﻿/**
- * HTML5 ✰ Boilerplate
+@charset "UTF-8";
+/* CSS Document */
+/*
+ * RESET
+ *
  */
-
-html, body, div, span, object, iframe,
+/* ensures layout reflows on the iPhone in landscape orientation */
+html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
-small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section, summary,
-time, mark, audio, video {
+table, caption, tbody, tfoot, thead, tr, th, td {
   margin: 0;
   padding: 0;
   border: 0;
+  outline: 0;
   font-size: 100%;
-  font: inherit;
+  font-weight: normal;
   vertical-align: baseline;
-}
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-blockquote, q { quotes: none; }
+  background: transparent; }
+
+
+a {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 100%; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
 blockquote:before, blockquote:after,
-q:before, q:after { content: ""; content: none; }
-ins { background-color: #ff9; color: #000; text-decoration: none; }
-mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
-del { text-decoration: line-through; }
-abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
-table { border-collapse: collapse; border-spacing: 0; }
-hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
-input, select { vertical-align: middle; }
-body { font:13px/1.231 sans-serif; *font-size:small; }
-select, input, textarea, button { font:99% sans-serif; }
-pre, code, kbd, samp { font-family: monospace, sans-serif; }
-html { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } 
-a:hover, a:active { outline: none; }
-ul, ol { margin-left: 2em; }
-ol { list-style-type: decimal; }
-nav ul, nav li { margin: 0; list-style:none; list-style-image: none; }
-small { font-size: 85%; }
-strong, th { font-weight: bold; }
-td { vertical-align: top; }
-sub, sup { font-size: 75%; line-height: 0; position: relative; }
-sup { top: -0.5em; }
-sub { bottom: -0.25em; }
-pre {
-  white-space: pre; white-space: pre-wrap; word-wrap: break-word;
-  padding: 15px;
-}
-textarea { overflow: auto; } 
-.iem7 legend { margin-left: -7px; }
-input[type="radio"] { vertical-align: text-bottom; }
-input[type="checkbox"] { vertical-align: bottom; }
-.iem7 input[type="checkbox"] { vertical-align: baseline; }
-label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
-button, input, select, textarea { margin: 0; }
-input:valid, textarea:valid   {  }
-input:invalid, textarea:invalid {
-   border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red;
-}
-.no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
-::-moz-selection{ background: #FF5E99; color:#fff; text-shadow: none; }
-::selection { background:#FF5E99; color:#fff; text-shadow: none; }
-a:link { -webkit-tap-highlight-color: #FF5E99; }
-button {  width: auto; overflow: visible; }
-.iem7 img { -ms-interpolation-mode: bicubic; }
-body, select, input, textarea {
-  color: #444;
-}
-h1, h2, h3, h4, h5, h6 { font-weight: bold; }
-a, a:active, a:visited { color: #607890; }
-a:hover { color: #036; }
-.nocallout {-webkit-touch-callout: none;}
-.ellipsis {
-  text-overflow: ellipsis;
+q:before, q:after {
+  content: '';
+  content: none; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* includes SASS variables for colours and dimensions */
+/* dimensions */
+/* colours */
+/*
+ * END RESET
+ * 
+ */
+/*
+ * DEFAULT STYLES
+ * 
+ */
+body {
+  font-size: 1em;
+  color: #333333;
+  font-weight: normal;
+  font-family: sans-serif;
+  line-height: 100%; }
+
+/*
+ * PAGE CONTAINERS
+ * See documentation for details regarding use of #wrap and #content
+ */
+/* enables layout in these HTML 5 elements */
+header, footer, aside, section, nav {
+  display: block; }
+
+#wrap {
+  width: 100%;
   overflow: hidden;
-  white-space: nowrap;
-}
-textarea.contenteditable {-webkit-appearance: none;}
-.gifhidden {position: absolute; left: -100%;}
-.ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
-.hidden { display: none; visibility: hidden; }
-.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
-.visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
-.invisible { visibility: hidden; }
-.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after { clear: both; }
-.clearfix { zoom: 1; }
+  position: absolute;
+  left: 0;
+  padding: 0; }
 
+#content {
+  margin-left: 0.5em;
+  margin-right: 0.5em; }
 
-/* Primary Styles for mobile
-   Author:
-*/
+footer {
+  background: #666666 url(../img/footer.png) repeat-x top;
+  padding: .7em 0em;
+  height: 6em; }
+  footer p {
+    color: white;
+    font-size: .9em;
+    margin-left: 0.5em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    padding: 0em; }
+  footer.extended {
+    height: 12em; }
 
+/* clearfix compatible with all Nokia webkit browsers, testing is recommended on other devices */
+.group:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; }
 
-/* CSS MQ */
+/* removes bottom margin, useful when stacking components that are normally meant to be used independently */
+.flush {
+  margin-bottom: 0; }
 
-@media only screen and (min-width: 800px) {
-}/*/mediaquery*/
+/*
+ * BASIC ELEMENTS
+ * Basic styling of common elements.
+ */
+p {
+  line-height: 125%;
+  margin-top: 0em;
+  margin-bottom: 1em;
+  clear: both; }
 
-@media
-only screen and (-webkit-min-device-pixel-ratio: 1.5),
-only screen and (-o-min-device-pixel-ratio: 3/2),
-only screen and (min-device-pixel-ratio: 1.5) {
-}
+em {
+  font-style: italic; }
 
-/* additions to HTML5 boilerplate basic style */
+/*
+ * LINK STATES
+ * 
+ */
+a:link {
+  color: #003399; }
+
+a:visited {
+  color: #006600; }
+
+a:hover {
+  color: #ff9900; }
+
+a:active {
+  color: #990000; }
+
+/*
+ * NATIVE LISTS
+ * 
+ */
+ul {
+  list-style: disc;
+  margin-left: 1em;
+  margin-bottom: 1em;
+  padding-left: 0.5em; }
+  ul ul {
+    margin: 0.3em 0em; }
+
+ol {
+  list-style: decimal;
+  margin-left: 1em;
+  padding-left: 0.5em;
+  margin-bottom: 1em; }
+  ol ol {
+    margin: 0.3em 0em; }
+
+/*
+ * HEADERS
+ * 
+ */
+/*alternate header - designed to be used in apps or widgets*/
+h1 {
+  font-size: 1.7em;
+  padding-top: .5em;
+  padding-bottom: .8em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  font-weight: bold;
+  background: #f6f6f6 url(../img/header-shadow.png) repeat-x bottom;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  text-align: center; }
+
+h1.other {
+  font-size: 1.7em;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+  clear: both;
+  line-height: 100%;
+  font-weight: bold; }
+
+h2 {
+  font-size: 1.5em;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+  clear: both;
+  line-height: 100%;
+  color: #000077; }
+
+h3 {
+  font-size: 1.3em;
+  padding-top: .3em;
+  padding-bottom: .3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background: white url(../img/header-gradient.png) repeat-x bottom;
+  border-top: 1px solid #d8d8d8;
+  margin-top: 0em;
+  margin-bottom: 0.7em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  line-height: 100%; }
+
+h4 {
+  font-size: 1.3em;
+  color: #219b00;
+  margin-top: 0em;
+  margin-bottom: 0.7em;
+  clear: both;
+  line-height: 100%; }
+
+h5 {
+  font-size: 1.2em;
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  padding-left: 0.5em;
+  padding-top: .3em;
+  padding-bottom: .3em;
+  margin-top: 0em;
+  margin-bottom: 0.8em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  clear: both;
+  line-height: 100%; }
+
+h6 {
+  font-size: 1em;
+  color: #333333;
+  margin-top: 0em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #d8d8d8;
+  clear: both;
+  font-weight: 600; }
+
+/*
+ * BLOCKQUOTE
+ * 
+ */
+blockquote {
+  margin-right: 1em;
+  margin-bottom: 2em;
+  margin-top: 0em;
+  padding: 1em 0 0 2em;
+  background: url(../img/quote.png) no-repeat 0em 0.5em;
+  font-style: italic; }
+  blockquote p {
+    margin: 0;
+    padding: 0; }
+
+/*
+ * END DEFAULT STYLES
+ * 
+ */
+/*
+ * 1. BRANDING AND MARKETING
+ * 
+ */
+/*
+ * BRANDING AREA
+ * logo, background and hyperlink
+ */
+.branding {
+  height: 4.5em;
+  background: url(../img/branding-background.png) repeat-x bottom;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-top: 5px solid #219b00;
+  margin-bottom: 1em; }
+  .branding img {
+    padding-top: 1em;
+    padding-left: 0.5em; }
+  .branding a {
+    width: 100%;
+    height: 5em;
+    display: block;
+    background-image: none;
+    padding-right: 0; }
+
+/*
+ * ADVERTISMENT CONTAINER
+ * 
+ */
+.advertisement {
+  padding: 0;
+  margin: 0em 0 2em 0;
+  width: 100%; }
+  .advertisement p {
+    border: 1px solid #d8d8d8;
+    padding: 0.4em 0.4em;
+    background-color: #f6f6f6;
+    margin-bottom: 0;
+    margin-top: 0em; }
+  .advertisement span {
+    text-transform: uppercase;
+    padding: 0;
+    float: right;
+    font-size: 0.7em;
+    color: #d8d8d8;
+    padding-bottom: 0.3em; }
+
+/*
+ * 2. LISTS
+ * 
+ */
+/*
+ * LIST WITH GRAPHIC OR ICON
+ * 
+ */
+ul.list-graphical {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 0em;
+  margin-bottom: 1em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  color: #333333;
+  border-bottom: #d8d8d8 1px solid; }
+  ul.list-graphical li {
+    background-color: #f6f6f6;
+    display: block;
+    line-height: 2.5em;
+    border-top: #d8d8d8 1px solid;
+    overflow: hidden; }
+    ul.list-graphical li:hover {
+      background: #c0da07 url(../img/global-hover.png) repeat-x top; }
+  ul.list-graphical a {
+    display: block;
+    height: 2.5em;
+    text-decoration: none;
+    padding-right: 0.5em; }
+    ul.list-graphical a:link, ul.list-graphical a:visited {
+      color: #333333; }
+    ul.list-graphical a img {
+      float: left;
+      margin-right: .5em;
+      width: auto;
+      height: 2.5em; }
+    ul.list-graphical a:hover {
+      outline: none;
+      color: white; }
+    ul.list-graphical a:active {
+      color: white; }
+
+/*
+ * SIMPLE STYLED LIST BOX
+ * 
+ */
+/*note: change to line height and height required to adjust height*/
+nav ul.list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 1em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  border-bottom: 1px solid #d8d8d8;
+  color: #333333; }
+  nav ul.list li {
+    background-color: #f6f6f6;
+    line-height: 2.5em;
+    display: block;
+    border-top: #d8d8d8 1px solid; }
+    nav ul.list li:hover {
+      background: #c0da07 url(../img/global-hover.png) repeat-x top; }
+  nav ul.list a {
+    padding-left: .5em;
+    display: block;
+    height: 2.5em;
+    background: url(../img/open.png) no-repeat right center;
+    text-decoration: none;
+    overflow: hidden; }
+    nav ul.list a:link, nav ul.list a:visited {
+      color: #333333; }
+    nav ul.list a:hover {
+      outline: none;
+      color: white; }
+    nav ul.list a:active {
+      color: white; }
+
+/*
+ * ACCORDION DEFINITION LIST
+ * 
+ */
+dl.list-accordion {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #d8d8d8;
+  /*definition container*/
+  /*definition term*/ }
+  dl.list-accordion dt {
+    padding-left: .5em;
+    line-height: 2.5em;
+    height: 2.5em;
+    border-top: 1px solid #d8d8d8; }
+  dl.list-accordion dd {
+    padding: 0.5em;
+    line-height: normal;
+    background-color: white;
+    /*content inside of definition container*/ }
+    dl.list-accordion dd p {
+      margin: 0;
+      padding: 0 0 0.4em 0; }
+  dl.list-accordion dt {
+    background-color: #f6f6f6;
+    /*container for expand/collapse icon*/ }
+    dl.list-accordion dt span {
+      width: 14px;
+      height: 2.5em;
+      margin-right: 0.5em;
+      display: block;
+      float: left; }
+    dl.list-accordion dt.expanded {
+      border-bottom: 1px solid #d8d8d8;
+      /*switches icon when expanded*/ }
+      dl.list-accordion dt.expanded span {
+        background: url(../img/sprite-expand-collapse.png) no-repeat right center; }
+      dl.list-accordion dt.expanded:hover {
+        background: #c0da07 url(../img/global-hover.png) repeat-x top;
+        color: white;
+        cursor: pointer; }
+    dl.list-accordion dt.collapsed {
+      border-bottom: none;
+      /*switches icon when collapsed*/ }
+      dl.list-accordion dt.collapsed span {
+        background: url(../img/sprite-expand-collapse.png) no-repeat left center; }
+      dl.list-accordion dt.collapsed:hover {
+        background: #c0da07 url(../img/global-hover.png) repeat-x top;
+        color: white;
+        cursor: pointer; }
+
+/*
+ * IMAGE GRID
+ * 
+ */
+.grid ul {
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 0;
+  margin-bottom: 1em; }
+  .grid ul li {
+    display: inline; }
+    .grid ul li img {
+      border: 1px solid #d8d8d8;
+      padding: .2em .2em;
+      margin-right: 0;
+      margin-left: 0;
+      margin-bottom: 0.5em; }
+
+/* adjusts padding and margins to form 4 image wide grid on larger devices*/
+@media screen and (min-width: 320px) {
+  .grid ul li img {
+    padding: .3em .3em;
+    margin-right: .1em;
+    margin-left: .1em; } }
+
+/*
+ * 3. NAVIGATION COMPONENTS
+ * 
+ */
+/*
+ * BACK TO TOP AND HOME
+ * 
+ */
+nav.pagelevel {
+  font-size: 1em;
+  border-top: 1px solid #d8d8d8;
+  margin-top: 0em;
+  margin-bottom: 1em;
+  margin-left: -0.5em;
+  margin-right: -0.5em; }
+  nav.pagelevel a {
+    color: #333333;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    line-height: 2.125em; }
+  nav.pagelevel.top {
+    background: #f6f6f6 url(../img/top.png) no-repeat 0.5em center;
+    border-bottom: 1px solid #d8d8d8;
+    padding-left: 2.2em; }
+  nav.pagelevel.home {
+    background: #f6f6f6 url(../img/home.png) no-repeat 0.5em center;
+    padding-left: 1.5em;
+    margin-bottom: 0; }
+
+/*
+ * BREADCRUMBS
+ * 
+ */
+nav.breadcrumbs ul {
+  margin-top: 0em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  padding-right: 0.5em;
+  padding-left: 0;
+  font-size: 80%;
+  list-style-type: none; }
+  nav.breadcrumbs ul li {
+    display: inline;
+    line-height: 1.875em; }
+
+/*
+ * FOOTER OR ADMIN NAV
+ * 
+ */
+nav.admin ul {
+  display: block;
+  color: white;
+  padding-top: 0em;
+  margin-bottom: 1em;
+  padding-left: 0;
+  margin-right: 0.5em;
+  margin-bottom: 0;
+  font-size: .8em;
+  margin-left: 0.5em; }
+  nav.admin ul a {
+    color: white; }
+  nav.admin ul li {
+    display: inline;
+    line-height: 1.875em;
+    float: left; }
+    nav.admin ul li a {
+      padding-right: 0.5em;
+      padding-left: 0.5em;
+      border-right: 1px solid white;
+      text-decoration: none; }
+    nav.admin ul li.last a {
+      border-right: none;
+      padding-right: 0; }
+    nav.admin ul li.first a {
+      padding-left: 0; }
+
+/*
+ * HORIZONTAL NAV
+ * 
+ */
+nav.horizontal ul {
+  padding: 0;
+  margin: 0 0 1em 0;
+  list-style-type: none;
+  width: 100%;
+  float: left;
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 2px solid #d8d8d8;
+  border-left: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  background-color: #f6f6f6; }
+  nav.horizontal ul li {
+    float: left;
+    margin: 0;
+    padding: 0;
+    background-color: #f6f6f6;
+    /* switch to:hover for non-touch devices*/ }
+    nav.horizontal ul li:hover,     nav.horizontal ul li.selected {
+      background: #c0da07 url(../img/global-hover.png) repeat-x top; }
+  nav.horizontal ul a {
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    padding: 0 0;
+    margin: 0;
+    line-height: 2.5em;
+    background: url(../img/vertical-divider.png) repeat-y left center;
+    text-align: center;
+    color: #333333; }
+    nav.horizontal ul a.first {
+      background-image: none; }
+    nav.horizontal ul a:hover,     nav.horizontal ul .selected a {
+      outline: none;
+      color: white;
+      background-image: none; }
+
+/*sets number of navigation bar items*/
+/*add class to li*/
+ul.four-piece li {
+  width: 25%; }
+
+ul.three-piece li {
+  width: 33.3%; }
+
+ul.two-piece li {
+  width: 50%; }
+
+/*
+ * 4. STYLISED LINKS
+ * includes icon to represent the type of link
+ */
+/*external link*/
+a.external {
+  background: url(../img/icon-link-external.png) no-repeat right top;
+  padding-right: 1em; }
+
+/*links to ical data*/
+/*see 'data-ical' in resources*/
+a.ical {
+  background: url(../img/icon-link-ical.png) no-repeat right top;
+  padding-right: 1em; }
+
+a[href^="mailto:"] {
+  background: url(../img/icon-link-email.png) no-repeat right top;
+  padding-right: 1em; }
+
+a[href^="tel:"] {
+  background: url(../img/icon-link-tel.png) no-repeat right top;
+  padding-right: 1em; }
+
+a[href^="sms:"] {
+  background: url(../img/icon-link-sms.png) no-repeat right top;
+  padding-right: 1em; }
+
+/*
+ * 5. BUTTON
+ * 
+ */
+/*
+ * STYLED BUTTON
+ * 
+ */
+/* change button width to auto for full-width button or customise width */
+/* style has been modified to work with 'hovering' script */
+/* see documentation for details */
+a.button {
+  display: block;
+  line-height: 2.5em;
+  width: 6em;
+  background-color: #f6f6f6;
+  text-align: center;
+  border-bottom: 2px solid #d8d8d8;
+  border-left: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  text-decoration: none;
+  color: #333333;
+  padding: 0 .3em;
+  margin-bottom: 1em;
+  /* if not using the 'hovering' script, rename this style to ':hover' */ }
+  a.button.hovering {
+    background: #c0da07 url(../img/button.png) repeat-x bottom;
+    color: white;
+    outline: none; }
+
+/*
+ * 6. FORMS
+ * 
+ */
+fieldset {
+  margin-top: 0em; }
+
+legend {
+  font-size: 110%;
+  font-weight: bold;
+  padding-bottom: .5em;
+  color: #000077; }
+
+form {
+  color: #333333; }
+  form label {
+    font-size: .9em;
+    margin-bottom: 1em;
+    margin-top: .5em; }
+  form ul {
+    list-style-type: none;
+    margin-bottom: 1em;
+    margin-top: .5em;
+    margin-left: 0;
+    padding: 0; }
+    form ul li {
+      margin: 0;
+      padding: 0; }
+
+input[type='text'] {
+  border: 1px solid #d8d8d8;
+  background: white url(../img/form-input-shadow.png) repeat-x top;
+  display: block;
+  padding: 0.2em;
+  width: 98%;
+  color: #333333;
+  margin-bottom: 1em; }
+
+textarea {
+  border: 1px solid #d8d8d8;
+  background: white url(../img/form-input-shadow.png) repeat-x top;
+  display: block;
+  padding: 0.2em;
+  color: #333333;
+  width: 98%;
+  line-height: normal;
+  margin-bottom: 1em; }
+
+form ul li input[type='radio'], form ul li input[type='checkbox'] {
+  margin: 0;
+  padding: 0; }
+
+select {
+  border: 1px solid #d8d8d8;
+  background: white;
+  color: #999999;
+  margin-top: 0em;
+  margin-bottom: 1em;
+  padding-left: 0.5em;
+  display: block;
+  width: 98%; }
+
+input[type='button'] {
+  border: 1px solid #d8d8d8;
+  background-color: white;
+  padding: 1em 1.3em;
+  color: #999999;
+  margin: 0em 0 1em 0; }
+
+/*
+ * 7. TABLES
+ * 
+ */
+table {
+  border: 1px solid #d8d8d8;
+  margin: 0;
+  width: 100%;
+  color: #333333;
+  vertical-align: top;
+  margin-bottom: 1em; }
+
+td {
+  border-bottom: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  padding-left: .3em;
+  padding-right: .3em;
+  padding-top: .2em;
+  padding-bottom: .2em;
+  line-height: 1.625em; }
+
+tr {
+  height: 1.5em; }
+  tr:hover {
+    background: #c0da07 url(../img/global-hover.png) repeat-x top;
+    color: white; }
+
+th, tfoot {
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  background-color: #666666;
+  text-align: left;
+  padding-left: .3em;
+  padding-right: .2em;
+  padding-top: .2em;
+  padding-bottom: .2em;
+  line-height: 1.625em;
+  font-weight: bold;
+  color: white; }
+
+caption {
+  font-style: italic;
+  caption-side: bottom;
+  text-align: left;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em; }
+
+.odd {
+  background-color: #f6f6f6; }
+
+/*
+ * 8. FLEXIBLE CONTAINERS
+ * 
+ */
+/*
+ * SIMPLE FLEXIBLE BOX
+ * 
+ */
+.box-flat {
+  background-color: #f6f6f6;
+  margin-bottom: 1em;
+  padding: 1em 1em 0.2em 1em;
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 2px solid #d8d8d8;
+  border-left: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8; }
+
+.box-flat p {
+  padding: 0; }
+
+/*
+ * FLEXIBLE BOX WITH ROUNDED CORNERS
+ * 
+ */
+.box-rounded {
+  background: url(../img/box-bottom-left.png) no-repeat left bottom;
+  margin-top: 0em;
+  margin-bottom: 1em; }
+  .box-rounded h2 {
+    background: url(../img/box-top-right.png) no-repeat right top;
+    padding-top: .5em;
+    padding-bottom: 5px;
+    margin: 0;
+    font-size: 110%;
+    color: #219b00;
+    padding-left: .8em;
+    padding-right: .8em;
+    border: none; }
+  .box-rounded p {
+    padding-left: .8em;
+    padding-right: .8em;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: none;
+    margin: 0; }
+
+.box-rounded-outer {
+  background: url(../img/box-bottom-right.png) no-repeat right bottom;
+  padding-bottom: .5em; }
+
+.box-rounded-inner {
+  background: url(../img/box-top-left.png) no-repeat left top; }
+
+/*
+ * 9. UTILITY COMPONENTS
+ * see documentation for details
+ */
+/*
+ * 5-STAR RATING
+ * static only
+ */
+.rating {
+  width: 150px;
+  height: 24px;
+  background: url(../img/sprite-rating.png) no-repeat 0px 0px;
+  margin-bottom: 1em; }
+  .rating span {
+    float: right;
+    padding-top: 0.4em; }
+
+.stars-0 {
+  background-position: left 0px; }
+
+.stars-1 {
+  background-position: left -25px; }
+
+.stars-2 {
+  background-position: left -50px; }
+
+.stars-3 {
+  background-position: left -75px; }
+
+.stars-4 {
+  background-position: left -100px; }
+
+.stars-5 {
+  background-position: left -125px; }
+
+/*
+ * \ SWITCH
+ * 
+ */
+ol.toggle-switch {
+  background: white url(../img/toggle-button.png) repeat-x top;
+  height: 2em;
+  line-height: 2em;
+  width: 7.5em;
+  padding: 0 0 0 0;
+  margin: 0;
+  border: 1px solid #999999; }
+  ol.toggle-switch li {
+    display: block;
+    float: left;
+    text-align: center;
+    width: 50%;
+    color: white;
+    background: #c0da07 url(../img/toggle-on.png) repeat-x left top;
+    height: 2em; }
+    ol.toggle-switch li a {
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      display: block;
+      text-decoration: none;
+      cursor: pointer;
+      line-height: 2em; }
+      ol.toggle-switch li a:hover {
+        outline: none; }
+
+ol.toggle-switch.on li.label-off {
+  visibility: hidden; }
+ol.toggle-switch.on li a {
+  border-right: 2px solid #999999; }
+
+ol.toggle-switch.off {
+  background: white url(../img/toggle-button.png) repeat-x top; }
+  ol.toggle-switch.off li {
+    background: #d8d8d8 url(../img/toggle-off.png) repeat-x left top; }
+    ol.toggle-switch.off li.label-on {
+      visibility: hidden; }
+    ol.toggle-switch.off li a {
+      color: #333333;
+      border-left: 2px solid #999999; }
+
+ul.toggle {
+  list-style-type: none;
+  margin-bottom: 0; }
+  ul.toggle label {
+    font-weight: bold; }
+
+/*
+ * LIST CONTAINER FOR TOGGLE SWITCH
+ * includes label
+ */
+/*line-height adjusts container height*/
+ul.list-toggle {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  border-top: 1px solid #d8d8d8;
+  color: #333333;
+  height: 3em;
+  background-color: #f6f6f6;
+  display: block; }
+  ul.list-toggle label {
+    padding-left: 0.5em;
+    margin-top: 1em;
+    float: left;
+    display: block; }
+  ul.list-toggle ul {
+    margin-top: 0; }
+  ul.list-toggle ol.toggle-switch {
+    margin: .5em .5em 0em 0em;
+    float: right;
+    height: 2em; }
+  ul.list-toggle.last {
+    border-bottom: 1px solid #d8d8d8;
+    margin-bottom: 1em; }
+
+/*
+ * SLIDESHOW
+ * 
+ */
+#slideshow {
+  width: 200px;
+  text-align: center;
+  margin: 0 auto; }
+  #slideshow .slideshow-image {
+    display: block;
+    width: 200px;
+    height: 130px;
+    background: url(../img/photos/loading.gif) no-repeat center 4em; }
+    #slideshow .slideshow-image img {
+      margin: 0 auto; }
+  #slideshow span {
+    width: 13em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+    padding: .3em 5px; }
+  #slideshow a {
+    text-decoration: none; }
+  #slideshow p {
+    margin: 0;
+    padding: .3em 0;
+    font-size: .8em; }
+  #slideshow ul.controls {
+    width: 6em;
+    float: none;
+    margin: 0 auto 1em auto; }
+    #slideshow ul.controls li {
+      /* if not using the doHighlight function, remove the 'hovering' style */
+      /* then apply the background image declarations to the :hover class above*/ }
+      #slideshow ul.controls li:hover {
+        background-image: none;
+        background-color: #f6f6f6; }
+      #slideshow ul.controls li.hovering {
+        background: #c0da07 url(../img/global-hover.png) repeat-x top; }
+        #slideshow ul.controls li.hovering a {
+          background-image: none; }
+    #slideshow ul.controls img {
+      margin: .5em 0;
+      background-image: none;
+      vertical-align: middle; }
+    #slideshow ul.controls a {
+      line-height: 1.5em;
+      background: url(../img/vertical-divider.png) repeat-y left center; }
+      #slideshow ul.controls a.first {
+        background-image: none; }
+
+ol.data {
+  display: none; }
+
+/* addition to Nokia Web templates start here */
 body{
     font-family:Arial, Helvetica, sans-serif; 
     font-size:13px;
+}
+
+#messages {
+ clear:left;
 }
 .info, .success, .warning, .error, .validation {
     border: 1px solid;
@@ -144,7 +1038,50 @@ body{
     background-image: url('/img/error.png');
 }
 
-ul.peopleList li { list-style: none;}
-ul.peopleList li a { display:block; float:left; width:10em; height:50px; border:thin solid gray; border-radius:10%; margin:2px;}
-ul.peopleList li a.me { background-color: #cfc;}
-ul.peopleList li a img { float: right;}
+footer a:link {
+  color: #003399; }
+
+footer a:visited {
+  color: #000099; }
+
+strong {
+ font-weight: bold;
+}
+
+  dl.list-accordion dt {
+    height:auto;
+    min-height: 2.5em;
+}
+
+.self { 
+ background-color: #efe;
+} 
+
+.youarehere {
+ border-color: red !important;
+}
+
+dl.list-accordion dd.teaser {
+  overflow: hidden;
+  height: 2px;
+  position: relative;
+}
+
+dl.list-accordion dd.teaser span {
+  position: absolute;
+  background: url("../img/gradient.png") repeat-x;
+  top:0;
+  left:0;
+  height:10px;
+  width:100%;
+  padding-top:6px;
+}
+
+dl.list-accordion dd.hidden {
+  display:none;
+}
+
+dl.list-accordion dd.placeholder {
+  font-style:italic;
+}
+
