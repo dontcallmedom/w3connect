@@ -564,8 +564,48 @@ app.get('/orgs/:id.:format?', function(req, res, next){
 	});  
 });
 
+app.get('/schedule(-:datetime)?', function (req, res){
+    Event.find({})
+	        .asc('timeStart')
+		.populate('room', ['shortname','name'])
+		.run( 
+	function(err, events) {
+	    var days = [];
+	    var timeslots = [];
+	    var schedule = {};
+	    var current = (req.params.datetime ? parseDate(req.params.datetime.substring(1)) : new Date());
+	    console.log(req.params.datetime);
+	    var currentEvents = [];
+	    var nextEvents = [];
+	    var currentTimeEnd;
+	    for (var i in events) {
+		var day = events[i].timeStart.toDateString();
+		events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
+		events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset,10));
+		var timeslot = {timeStart: events[i].timeStart , timeEnd: events[i].timeEnd}; 
+		if (events[i].timeStart <= current && events[i].timeEnd >= current) {
+		    currentTimeEnd = events[i].timeEnd;
+		    currentEvents.push(events[i]);
+		}
+		if (currentTimeEnd && events[i].timeStart.toString() == currentTimeEnd.toString()) {
+		    nextEvents.push(events[i]);
+		}
+		if (!schedule[day]) {
+		    days.push(day);
+		    schedule[day] = {};
+		    timeslots[day] = [];
+		}
+		if (!schedule[day][JSON.stringify(timeslot)]) {
+		    schedule[day][JSON.stringify(timeslot)] = [];
+		    timeslots[day].push(timeslot);
+		}
+		schedule[day][JSON.stringify(timeslot)].push(events[i]);
+	    }
+	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, title: "Schedule"}});
+	});
+});
 
-
+/*
 app.get('/taxi/', function (req, res) {
   res.render('taxi/index.ejs');
 });
@@ -634,7 +674,7 @@ app.all('/taxi/to', function (req, res) {
       }
      res.render('taxi/to.ejs', {locals: {taxi: taxi}});
   });
-});
+});*/
 });
 
 everyauth.helpExpress(app);
