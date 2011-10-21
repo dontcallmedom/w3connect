@@ -564,7 +564,116 @@ app.get('/orgs/:id.:format?', function(req, res, next){
 	});  
 });
 
-app.get('/schedule(-:datetime)?', function (req, res){
+app.get('/schedule/stream', function(req, res) {
+    res.setHeader("Content-Type", 'text/event-stream');
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+    res.writeHead(200);
+    // Heroku requires activity to avoid request timeout
+    setInterval(function() { res.write(":\n"); }, 30);
+    emitter.on("interest", function(user, event) {
+	res.write("event: interest\n" + "data:  "+ JSON.stringify({"user": user, "event": event}) + "\n\n");
+    });
+    emitter.on("uninterest", function(user, event) {
+	res.write("event: uninterest\n" + "data:  "+ JSON.stringify({"user": user, "event": event}) + "\n\n");
+    });
+});
+
+
+app.post("/schedule/events/:slug", function(req, res, next) {
+    if (req.user && (req.body.interested || req.body.uninterested)) {	
+	Event.findOne({slug: req.params.slug}, function(err, event) {
+	    if (err) {
+		next();
+	    }
+	    var interestedList = event.interested.slice(0);
+	    var interested = [];
+	    var userFound = false;
+	    var success = false;
+	    for (var i in interestedList) {
+		if (interestedList[i].toString() == req.user._id.toString()) {
+		    userFound = true;
+		    if (!req.body.uninterested) {
+			success = false;
+		    } else {
+			emitter.emit("uninterest", req.user, event);
+			success = true;
+		    }
+		} else {
+		    interested.push(interestedList[i]);
+		}
+	    }
+	    if (!userFound && req.body.interested) {
+		interested.push(req.user._id);
+		emitter.emit("interest", req.user, event);
+		success = true;
+	    }
+	    if (!success) {
+		switch (req.outputFormat) {
+		case 'json':
+		    res.send(JSON.stringify({error: "no change"}));
+		    break;
+		default:
+		    req.flash("error", "no change");
+		    next();
+		}
+	    } else {
+		event.interested = interested;
+		event.save(function(err) {
+		    switch (req.outputFormat) {
+		    case "json":
+			if (!err) {
+			    res.send(JSON.stringify({success: 'Interest ' + (req.body.interested ? "recorded for" : "removed from") + event.name}));
+			} else { 
+			    res.send({error: err});                   
+			}
+			break;
+		    default:
+			if (!err) {
+			    req.flash('success', 'Interest recorded in '  + (req.body.interested ? "recorded for " : "removed from ") + event.name);
+			} else {
+			    req.flash('error', err);
+			}
+			next();
+			break;
+		    }
+		});
+	    }
+	});
+    } else {
+	next();
+    }
+});
+
+app.all('/schedule/events/:slug.:format?', function(req, res, next) {
+    Event.findOne({slug: req.params.slug})
+	.populate('room', ['shortname', 'name'])
+	.run(
+	    function(err, event) {
+		if (err) {
+		    console.log("unknown event: " + err);
+		    next();
+		}
+		switch (req.params.format) {
+		case 'json':
+		    res.send(event);
+		    break;
+		default:
+		    res.render("schedule/event.ejs", {event: event, title: event.name});
+		}
+	    });
+});
+
+app.get('/schedule/?(:datetime)?', function (req, res, next){
+    var current = new Date();
+    current.setUTCHours(current.getUTCHours() + 1);
+    if (req.params.datetime) {
+	current = parseDate(req.params.datetime);
+	// if the datetime param is not a valid date, pursue
+	if (isNaN(current.getTime())) {
+	    next();
+	}
+    }
     Event.find({})
 	        .asc('timeStart')
 		.populate('room', ['shortname','name'])
@@ -573,10 +682,9 @@ app.get('/schedule(-:datetime)?', function (req, res){
 	    var days = [];
 	    var timeslots = [];
 	    var schedule = {};
-	    var current = (req.params.datetime ? parseDate(req.params.datetime.substring(1)) : new Date());
-	    console.log(req.params.datetime);
 	    var currentEvents = [];
 	    var nextEvents = [];
+	    var myEvents = [];
 	    var currentTimeEnd;
 	    for (var i in events) {
 		var day = events[i].timeStart.toDateString();
@@ -590,6 +698,10 @@ app.get('/schedule(-:datetime)?', function (req, res){
 		if (currentTimeEnd && events[i].timeStart.toString() == currentTimeEnd.toString()) {
 		    nextEvents.push(events[i]);
 		}
+		var isInterested = new RegExp("^"  + events[i].interested.join("|") + "$");
+		if (req.user && isInterested.test(req.user._id)) {
+		    myEvents.push(events[i]);
+		}
 		if (!schedule[day]) {
 		    days.push(day);
 		    schedule[day] = {};
@@ -601,7 +713,7 @@ app.get('/schedule(-:datetime)?', function (req, res){
 		}
 		schedule[day][JSON.stringify(timeslot)].push(events[i]);
 	    }
-	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, title: "Schedule"}});
+	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, myEvents: myEvents, title: "Schedule", script:"/js/event-interest.js"}});
 	});
 });
 
