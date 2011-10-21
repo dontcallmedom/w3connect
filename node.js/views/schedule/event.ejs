@@ -1,0 +1,12 @@
+<h1><%= event.name %></h1>
+<dl>
+<dt>Presenters</dt>
+<dd><%= event.presenter %></dd>
+<% if (event.room) { %>
+<dt>Room</dt>
+<dd><a href="/locations/<%= event.room.shortname %>"><%= event.room.name %></a></dd><% } %>
+<% if (event.description) { %>
+<dt>Description</dt>
+<dd><%= event.description %></dd>
+<% } %>
+</dl>
