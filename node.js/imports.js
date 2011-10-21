@@ -104,10 +104,10 @@ exports.importUserList = function(auth, callback)  {
 	    people.login = peopleData.login;
 	    people.slug = peopleData.w3cId;
 	    loadPeopleData(people.slug);
-	    if (peopleData.organization && peopleData.organization.slug) {
-		     people.affiliationId = peopleData.organization.slug;
+	    if (peopleData.organization && peopleData.organization.w3cId) {
+		     people.affiliationId = peopleData.organization.w3cId;
   		     org = new Organization();
-		     org.slug = peopleData.organization.slug;
+		     org.slug = peopleData.organization.w3cId;
 		     org.name = peopleData.organization.name;
 		     org.save(addOrg(org, people));		       
 	    } else {
