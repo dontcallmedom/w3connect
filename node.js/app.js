@@ -57,6 +57,8 @@ var mongooseSessionStore = new SessionMongoose({
     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
 });
 
+everyauth.everymodule.moduleTimeout(40000);
+
 everyauth.everymodule.findUserById( function (userId, callback) {
   // is there anyone in the db yet? 
     People.count({}, function(err, count) {
@@ -631,6 +633,6 @@ app.all('/taxi/to', function (req, res) {
 });
 
 everyauth.helpExpress(app);
-app.dynamicHelpers({ messages: require('express-messages') });
+app.dynamicHelpers({ messages: require('express-messages') , url: function(req, res) { return require("url").parse(req.url).pathname;} });
 app.listen(  app.set('port'));
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
