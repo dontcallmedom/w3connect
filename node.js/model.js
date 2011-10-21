@@ -49,6 +49,7 @@ var StatusUpdate = new Schema({
 });
 
 var Event  = new Schema({
+    slug: String,
     registered: [{type: Schema.ObjectId, ref: 'People'}],
     interested: [{type: Schema.ObjectId, ref: 'People'}],
     eventType : {type: String, enum: ["meeting", "meal", "werewolf", "run"]},
