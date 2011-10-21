@@ -529,7 +529,9 @@ app.get('/people.:format?', function (req, res){
 });
 
 app.get('/orgs.:format?', function (req, res){
-  var orgs = Organization.find({}, function (err, orgs) {
+  var orgs = Organization.find({})
+		.populate('employees', ['login'])
+		.run( function (err, orgs) {
     orgs.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
     switch (req.params.format) {
       // When json, generate suitable data
@@ -548,6 +550,7 @@ app.get('/orgs/:id.:format?', function(req, res, next){
 	.run( function(err, org) {
 	    if (org) {
 		var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
+		employees.sort(function (a,b) { return (a.family > b.family ? 1 : (b.family > a.family ? -1 : 0));});
 		switch (req.params.format) {
 		case 'json':
 		    res.send(org);
