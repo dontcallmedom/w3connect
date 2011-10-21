@@ -13,7 +13,7 @@
         <div id="content">
 	  <%- partial('nav-bar.ejs') %>
 <%- body %>
-<p><% if (user) {%>Logged in as <a href='/2011/11/TPAC/live/people/<%= user.slug %>'><%=user.login%></a>. <a href="/logout">Log out</a>?<%} else { %>Not logged in. <a href="/2011/11/TPAC/live/login">Log in</a><%}%></p>
+<p><% if (user) {%>Logged in as <a href='/2011/11/TPAC/live/people/<%= user.slug %>'><%=user.login%></a>. <a href="/2011/11/TPAC/live/logout">Log out</a>?<%} else { %>Not logged in. <a href="/2011/11/TPAC/live/login">Log in</a><%}%></p>
 	  <%- partial('nav-bar.ejs') %>
         </div>
                 <footer class="group">
