@@ -57,6 +57,8 @@ var mongooseSessionStore = new SessionMongoose({
     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
 });
 
+everyauth.everymodule.logoutPath('/2011/11/TPAC/live/logout');
+
 everyauth.everymodule.moduleTimeout(40000);
 
 everyauth.everymodule.findUserById( function (userId, callback) {
