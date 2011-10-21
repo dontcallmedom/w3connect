@@ -1,3 +1,5 @@
+<h1>Login</h1>
+
 <% if ('undefined' !== typeof errors && errors.length) {%>
 <ul id='error'>
 <% for (e in errors) {%>
@@ -13,11 +15,11 @@ Logged in as <%=JSON.stringify(everyauth)%>
 <p id='login'>
 <label for='<%=everyauth.password.loginFormFieldName%>'>Login
 <input type="text" name="<%=everyauth.password.loginFormFieldName%>"></label>
-</div>
+</p>
 <p id='password'>
 <label for='<%=everyauth.password.passwordFormFieldName%>'>Password
 <input type="password" name="<%=everyauth.password.passwordFormFieldName%>"></label>
-</div>
+</p>
 <p id='submit'>
 <input type='submit' value='Login'>
 </p>
