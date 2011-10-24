@@ -442,7 +442,7 @@ app.post('/admin/', function(req, res, next){
 });
 
 app.all('/admin/', function(req, res){
-    res.render('admin/index');
+    res.render('admin/index', {locals: { title: 'Administration'}});
 
 });
 
@@ -501,7 +501,7 @@ app.all('/people/:id.:format?', function(req, res, next){
 		res.send(indiv);
 		break;
 	    default:
-		res.render('people/indiv.ejs', { locals: { indiv: indiv}});
+		res.render('people/indiv.ejs', { locals: { indiv: indiv, title: indiv.given + ' ' + indiv.family }});
 	    }
 	} else {
 	    next();
@@ -524,7 +524,7 @@ app.get('/locations.:format?', function(req, res) {
 	     res.send(places);
 	     break;
            default:
-             res.render('locations/index.ejs', { locals: { places: places}});
+             res.render('locations/index.ejs', { locals: { places: places, title: 'Rooms'}});
            }
 	 }
       };})(places[p]));
@@ -630,11 +630,11 @@ app.all('/locations/:id.:format?', function(req, res) {
             res.send(placeData);
 	    break;
 	default:
-	    res.render('locations/place.ejs', { locals: { place: place, people: people}});
+	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name}});
 	}
       });
     } else {
-       res.render('locations/unknown.ejs', {locals: { shortname: req.params.id}});
+       res.render('locations/unknown.ejs', {locals: { shortname: req.params.id, title: 'Unknown location'}});
    }
   });
 
@@ -651,7 +651,7 @@ app.get('/people.:format?', function (req, res){
         res.send(people);
 	break;
       default:
-        res.render('people/index.ejs', { locals: { people: people}});
+        res.render('people/index.ejs', { locals: { people: people, title: 'People'}});
     }
   });
   
@@ -668,7 +668,7 @@ app.get('/orgs.:format?', function (req, res){
         res.send(orgs);
 	break;
       default:
-        res.render('orgs/index.ejs', { locals: { orgs: orgs}});
+        res.render('orgs/index.ejs', { locals: { orgs: orgs, title: 'Organizations' }});
     }
   });  
 });
@@ -685,7 +685,7 @@ app.get('/orgs/:id.:format?', function(req, res, next){
 		    res.send(org);
 		    break;
 		default:
-		    res.render('orgs/org.ejs', { locals: { org: org, people:employees}}); 
+		    res.render('orgs/org.ejs', { locals: { org: org, people:employees, title: org.name}}); 
 		}
 	    } else {
 		next();
