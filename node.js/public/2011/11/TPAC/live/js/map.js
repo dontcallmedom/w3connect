@@ -78,7 +78,7 @@ xhr.send();
 var tweetQueue = [];
 if (window.EventSource) {
     // Live update!
-    var evtSrc = new EventSource( "/locations/stream" );
+    var evtSrc = new EventSource( "/2011/11/TPAC/live/locations/stream" );
     evtSrc.onmessage = function( e ) {
 	// @@@ check origin
 	data = JSON.parse(e.data);
