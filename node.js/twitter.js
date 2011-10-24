@@ -124,7 +124,7 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth, attempt)  
     } catch(err) {
 	console.log(err);
     }
-    emitter.on("twitterListChange", function() {
+    emitter.on("twitterListChange", function(id) {
 	stream.abort();
     });
 };
