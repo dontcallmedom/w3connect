@@ -1,5 +1,5 @@
 <ul class='peopleList list-graphical group'>
 <% for (var p  in people) { %>
-  <li> <a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/<%= people[p].slug %>'><% if (people[p].picture_thumb) { %><img src="<%=people[p].picture_thumb%>" alt="Picture of <%= people[p].given + " " + people[p].family %>"><%}%><%= people[p].given + " " + people[p].family %></a></li>
+  <li> <a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/<%= people[p].slug %>'><% if (people[p].picture_thumb) { %><img src="<%=people[p].picture_thumb%>" alt="Picture of <%= people[p].given + " " + people[p].family %>"><%}%><%= people[p].family + ", " + people[p].given %></a></li>
 <% } %>
 </ul>
