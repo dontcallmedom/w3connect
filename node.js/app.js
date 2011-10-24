@@ -538,7 +538,7 @@ app.get('/locations/stream', function(req, res) {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
     res.writeHead(200);
-    setInterval(function() { res.write(":\n"); }, 30);
+    setInterval(function() { res.write(":\n"); }, 30000);
     emitter.on("checkin", function(user, left, entered) {
 	res.write("data: " + JSON.stringify({"user": user, "left": left, "entered": entered, "you": (req.user && JSON.stringify(user._id) == JSON.stringify(req.user._id))}) + "\n\n");
     });
@@ -700,7 +700,7 @@ app.get('/schedule/stream', function(req, res) {
     res.setHeader("Connection", "keep-alive");
     res.writeHead(200);
     // Heroku requires activity to avoid request timeout
-    setInterval(function() { res.write(":\n"); }, 30);
+    setInterval(function() { res.write(":\n"); }, 30000);
     emitter.on("interest", function(user, event) {
 	res.write("event: interest\n" + "data:  "+ JSON.stringify({"user": user, "event": event}) + "\n\n");
     });
