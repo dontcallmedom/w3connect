@@ -3,7 +3,7 @@ var xlinkns = "http://www.w3.org/1999/xlink";
 var xhtmlns = "http://www.w3.org/1999/xhtml";
 var roomsCounter = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
-youareherePoint.setAttribute( "r", "4px");
+youareherePoint.setAttribute( "r", "2px");
 youareherePoint.setAttribute( "id", "you");
 youareherePoint.setAttribute( "fill", "red");
 
