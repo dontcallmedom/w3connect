@@ -57,7 +57,7 @@ var mongooseSessionStore = new SessionMongoose({
     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
 });
 
-everyauth.everymodule.logoutPath('/2011/11/TPAC/live/logout');
+everyauth.everymodule.logoutPath(config.hosting.basepath + '/logout');
 
 everyauth.everymodule.moduleTimeout(40000);
 
@@ -75,11 +75,11 @@ everyauth.everymodule.findUserById( function (userId, callback) {
 
 // Adapted from everyauth ldap module
 everyauth.password
-  .getLoginPath('/2011/11/TPAC/live/login')
-  .postLoginPath('/2011/11/TPAC/live/login') // Uri path that your login form POSTs to
+  .getLoginPath(config.hosting.basepath + '/login')
+  .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
-  .loginSuccessRedirect('/2011/11/TPAC/live/')
+  .loginSuccessRedirect(config.hosting.basepath + '/')
   /*.respondToLoginSucceed( function (res, user, data) {
     if (user) {
       res.writeHead(303, {'Location': data.session.redirectTo});
@@ -112,8 +112,8 @@ everyauth.password
       });
       return promise;
   })
-  .getRegisterPath('/2011/11/TPAC/live/')
-  .postRegisterPath('/2011/11/TPAC/live/')
+  .getRegisterPath(config.hosting.basepath + '/')
+  .postRegisterPath(config.hosting.basepath + '/')
   .registerUser(function() {
       return null;
    });
@@ -128,7 +128,7 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.set('port', 3000);
   app.use(express.bodyParser());
-  app.use(express.static(__dirname + '/public', { maxAge: 86400}));
+  app.use(config.hosting.basepath, express.static(__dirname + '/public', { maxAge: 86400}));
   app.use(express.methodOverride());
  app.use(express.cookieParser()); 
   app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret}));
@@ -214,7 +214,7 @@ app.error(function(err, req, res, next){
   res.send(err.message, 500);
 });
 
-app.namespace('/2011/11/TPAC/live', function(){
+app.namespace(config.hosting.basepath, function(){
 app.get('/', function(req, res){
   // skipped by middleware at this point, need fixing @@@
   People.count({}, function(err, count) {
@@ -790,6 +790,7 @@ app.all('/taxi/to', function (req, res) {
 });
 
 everyauth.helpExpress(app);
+app.helpers({baseurl: config.hosting.basepath});
 app.dynamicHelpers({ messages: require('express-messages') , url: function(req, res) { return require("url").parse(req.url).pathname;} });
 app.listen(  app.set('port'));
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
