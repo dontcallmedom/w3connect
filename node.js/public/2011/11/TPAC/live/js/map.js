@@ -50,9 +50,9 @@ for (var r =0 ;r < room_links.length ; r++) {
     var backdrop = document.createElementNS(svgns, "rect");
     backdrop.setAttribute("id", room.getAttribute("id") + "-counter-backdrop");
     backdrop.setAttribute("x", bbox.x + 8);
-    backdrop.setAttribute("width", 20);
+    backdrop.setAttribute("width", 10);
     backdrop.setAttribute("y", bbox.y + bbox.height / 2 - 9);
-    backdrop.setAttribute("height", 20);
+    backdrop.setAttribute("height", 10);
     var t = document.createElementNS(svgns, "text");
     t.setAttribute("id", room.getAttribute("id") + "-counter");
     t.setAttribute( "x", bbox.x + 16);
