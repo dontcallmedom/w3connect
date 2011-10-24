@@ -49,14 +49,14 @@ for (var r =0 ;r < room_links.length ; r++) {
     var bbox = room.getBBox();
     var backdrop = document.createElementNS(svgns, "rect");
     backdrop.setAttribute("id", room.getAttribute("id") + "-counter-backdrop");
-    backdrop.setAttribute("x", bbox.x + 8);
+    backdrop.setAttribute("x", bbox.x + bbox.width - 12);
     backdrop.setAttribute("width", 10);
-    backdrop.setAttribute("y", bbox.y + bbox.height / 2 - 9);
+    backdrop.setAttribute("y", bbox.y + bbox.height - 12);
     backdrop.setAttribute("height", 10);
     var t = document.createElementNS(svgns, "text");
     t.setAttribute("id", room.getAttribute("id") + "-counter");
-    t.setAttribute( "x", bbox.x + 16);
-    t.setAttribute( "y", bbox.y + bbox.height / 2 + 5);
+    t.setAttribute( "x", bbox.x + bbox.width - 10);
+    t.setAttribute( "y", bbox.y + bbox.height - 10);
     t.setAttribute( "text-anchor", "middle");    
     room_links[r].appendChild(backdrop);
     room_links[r].appendChild(t);
