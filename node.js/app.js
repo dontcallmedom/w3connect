@@ -200,6 +200,34 @@ app.configure('production', function(){
 });
 
 
+// update twitter search on registering new twitter id
+emitter.on("twitterListChange", function (id) {
+    TwitterSettings.findOne(
+	{}, 
+	function(err, settings) {
+	    var ids = settings.ids;
+	    ids.push(id);
+	    settings.ids = ids;
+	    twitter.listenToTweets(emitter, ids, app.set('twitter_auth'));
+	    settings.save();
+	}
+    );
+});
+
+// Utility function
+// Parses YYYYMMDDTHHmm into a Date object
+function parseDate(datestring) {
+    var ret = new Date();
+    ret.setUTCFullYear(datestring.substr(0,4));
+    ret.setUTCMonth(datestring.substr(4,2) - 1);
+    ret.setUTCDate( datestring.substr(6,2));
+    ret.setUTCHours(parseInt(datestring.substr(9,2), 10));
+    ret.setUTCMinutes(datestring.substr(11,2));
+    ret.setUTCSeconds(0);
+    ret.setUTCMilliseconds(0);
+    return ret;
+};
+
 
 // Routes
 // if the _format parameter is set, we override req.params.format
@@ -247,6 +275,10 @@ app.post('/admin/', function(req, res, next){
 	// should find how to logout?
 	return res.redirect(everyauth.password.getLoginPath());
     }
+    var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
+    if (!isAdmin.test(req.user.login)) {
+	return res.render("403");
+    }    
       imports.importUserList(app.set("w3c_auth"), function(success, info, errors) {
 	  if (success) success.forEach(function(i) { req.flash('success',i);});
 	  if (info) info.forEach(function(i) { req.flash('info',i);});
@@ -279,7 +311,7 @@ app.post('/admin/', function(req, res, next){
 	  next();
       }
       if (http) {
-	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '')  + (url.hash ? url.hash : '')}, function (response) {
+	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
 	      response.setEncoding('utf8');
 	      var placesJSON = "", placesData;
 	      response.on('data', function (chunk) {
@@ -307,6 +339,103 @@ app.post('/admin/', function(req, res, next){
 	      });
 	  });
       }
+  } else if (req.body.twitterSetting) {
+      if (!req.body.username) {
+	  req.flash("error", "Missing Twitter username");
+	  next();
+      } else if (!req.body.password) {
+	  req.flash("error", "Missing Twitter password");
+	  next();
+      }
+      TwitterSettings.findOne(
+      {}, 
+      function(err, settings) {
+	  if (!settings) {
+	      settings = new TwitterSettings();
+	  }
+	  settings.username = req.body.username;
+	  settings.password = req.body.password;
+	  settings.save(function(err) {
+	      if (err)  { 
+		  req.flash("error", "Saving Twitter settings failed with error " + err);
+	      } else {
+		  req.flash("success", "Successfully saved Twitter settings");
+	      }
+	      next();
+	  });
+      });
+  } else if (req.body.updateSchedule) {
+      if (!req.body.schedule) {
+	  req.flash("error", "Missing URL of schedule");
+	  next();
+      }
+      var places = {};
+      Place.find({}, function(err, rooms) {
+	  if (err) {
+	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
+	      next();
+	  }
+	  for (i in rooms) {
+	      places[rooms[i].shortname] = rooms[i];
+	  }
+      var http;
+      var url = require("url").parse(req.body.schedule);
+      if (url.protocol == "http:") {
+	  http = require('http');
+      } else if (url.protocol == "https:") {
+	  http = require('https');
+      } else {
+	  req.flash("error", "Unrecognized protocol for room descriptions: " + config.map.rooms_json);
+	  next();
+      }
+      if (http) {
+	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
+	      response.setEncoding('utf8');
+	      var scheduleJSON = "", events;
+	      response.on('data', function (chunk) {
+		  scheduleJSON = scheduleJSON + chunk;
+	      });
+	      response.on('end', function () {
+		  Event.find({}).remove();
+		  try {
+		      events = JSON.parse(scheduleJSON);
+		  } catch (err) {
+		      req.flash("error", "Couldn't parse schedule as JSON: " + err);
+		      next();
+		  }
+		  for (i in events) {
+		      var e = events[i];
+		      var counter = 0;
+		      var addCounter = 0;
+		      var event = new Event(
+			  {timeStart: parseDate(e.timeStart),
+			   timeEnd: parseDate(e.timeEnd),
+			   name: e.name,
+			   presenters: e.presenters,
+			   slug: require("slug")(e.name)
+			  });
+		      if (places[e.room]) {
+			  event.room = places[e.room]._id;
+		      } else {
+			  req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
+		      }
+		      event.save(function (err) {
+			  counter++;
+			  if (err) {
+			      req.flash('error',err);
+			  } else {
+			      addCounter++;
+			  }
+			  if (counter == events.length) {
+			      req.flash("success", "Schedule successfully loaded");
+			      next();
+			  }
+		      });
+		  }
+	      });
+	  });
+      }
+      });
   } else {
       next();
   }
