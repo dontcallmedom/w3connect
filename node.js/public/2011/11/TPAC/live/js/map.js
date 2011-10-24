@@ -55,7 +55,7 @@ for (var r =0 ;r < room_links.length ; r++) {
     backdrop.setAttribute("height", 10);
     var t = document.createElementNS(svgns, "text");
     t.setAttribute("id", room.getAttribute("id") + "-counter");
-    t.setAttribute( "x", bbox.x + bbox.width - 10);
+    t.setAttribute( "x", bbox.x + bbox.width - 8);
     t.setAttribute( "y", bbox.y + bbox.height- 3);
     t.setAttribute( "text-anchor", "middle");    
     room_links[r].appendChild(backdrop);
