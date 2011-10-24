@@ -266,6 +266,10 @@ app.get('/', function(req, res){
   });
 });
 
+app.get('/about', function(req, res){
+	    res.render('about', {locals: {title: 'About W3Connect'}});
+});
+
 app.post('/admin/', function(req, res, next){
   if (req.body.peopleUpdate) {
     if (! req.loggedIn) {
