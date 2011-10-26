@@ -1,0 +1,6 @@
+<% for (var p  in places) { %>
+  <% var class = (typeof userCheckin != "undefined" && userCheckin == places[p].shortname ? " youarehere" : ""); %>
+  <li style='list-style:none'><a  style='display:block; float:left; width:10em; height:50px; border:thin solid gray; border-radius:10%; margin:2px;' <% if (typeof place=="undefined" || place.shortname != places[p].shortname ) { %>  href='/locations/<%= places[p].shortname %>' class='<% } else { %> class='self <% } %><%= class %>'>
+<%= places[p].name %> <%= (places[p].checkedin.length ? "(" + places[p].checkedin.length + " checked in)" : "")%></a></li>
+<% } %>
+
