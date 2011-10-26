@@ -251,6 +251,15 @@
        y="254.951"
        width="98.321"
        height="62.643" />
+    <a title="Sedona"
+       target="_parent"
+       xlink:href="../locations/sedona">
+      <rect id="sedona"
+	    x="549"
+	    y="358.6"
+	    width="100"
+	    height="19" />
+    </a>
     <a
        title="Monterey"
        target="_parent"
