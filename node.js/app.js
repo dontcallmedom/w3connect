@@ -627,6 +627,19 @@ app.all('/locations/:id.:format?', function(req, res) {
     if (place) {
       People.find({"lastKnownPosition.shortname": place.shortname}, ['slug', 'given', 'family', 'picture_thumb'], function(err, people) {
 	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
+	  var current = new Date();
+	  if (req.query.datetime) {
+	      current = parseDate(req.query.datetime);
+	      if (isNaN(current.getTime())) {
+		  current = new Date();
+	      }
+	  }
+	  Event.findOne({"room": place._id})
+	      .where('timeStart').lte(current)
+	      .where('timeEnd').gte(current)
+		.run( 
+		    function(err, event) {	  
+
         switch (req.params.format) {
 	    // When json, generate suitable data
 	case 'json':
@@ -638,6 +651,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name}});
 	}
       });
+     });
     } else {
        res.render('locations/unknown.ejs', {locals: { shortname: req.params.id, title: 'Unknown location'}});
    }
