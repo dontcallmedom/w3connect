@@ -653,13 +653,13 @@ app.all('/locations/:id.:format?', function(req, res) {
 	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places}});
 	}
       });
-     });
+    });
 
     } else {
        res.render('locations/unknown.ejs', {locals: { shortname: req.params.id, title: 'Unknown location'}});
    }
   });
-
+  });
 });
 
 
