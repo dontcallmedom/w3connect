@@ -230,6 +230,12 @@ function parseDate(datestring) {
 
 
 // Routes
+
+app.error(function(err, req, res, next){
+  res.send(err.message, 500);
+});
+
+app.namespace(config.hosting.basepath, function(){
 // if the _format parameter is set, we override req.params.format
 app.post(RegExp(".*"), function(req, res, next) {
     if (req.body && req.body._format) {
@@ -238,11 +244,7 @@ app.post(RegExp(".*"), function(req, res, next) {
     next();
 });
 
-app.error(function(err, req, res, next){
-  res.send(err.message, 500);
-});
 
-app.namespace(config.hosting.basepath, function(){
 app.get('/', function(req, res){
   // skipped by middleware at this point, need fixing @@@
   People.count({}, function(err, count) {
