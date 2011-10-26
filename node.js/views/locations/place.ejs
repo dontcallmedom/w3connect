@@ -33,7 +33,7 @@ if (window.EventSource) {
 	       li.append(a);
 	       $("#peopleList").append(li);
 	    } else if (data.left.shortname == '<%= place.shortname %>') {
-	       $("a[href='/people/profile/" + data.user.slug + "']",$("#peopleList").parent().remove();
+	       $("a[href='/people/profile/" + data.user.slug + "']",$("#peopleList")).parent().remove();
 	    }
 }
 }
