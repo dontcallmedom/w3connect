@@ -623,6 +623,8 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 });
 
 app.all('/locations/:id.:format?', function(req, res) {
+  Place.find({}, function (err, places) {
+    places.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
       People.find({"lastKnownPosition.shortname": place.shortname}, ['slug', 'given', 'family', 'picture_thumb'], function(err, people) {
@@ -648,10 +650,11 @@ app.all('/locations/:id.:format?', function(req, res) {
             res.send(placeData);
 	    break;
 	default:
-	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name}});
+	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places}});
 	}
       });
      });
+    });
     } else {
        res.render('locations/unknown.ejs', {locals: { shortname: req.params.id, title: 'Unknown location'}});
    }
