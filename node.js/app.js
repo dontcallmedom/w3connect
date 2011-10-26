@@ -450,7 +450,7 @@ app.all('/admin/', function(req, res){
 
 });
 
-app.post('/people/:id.:format?', function(req, res, next){
+app.post('/people/profile/:id.:format?', function(req, res, next){
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
     } else {
@@ -496,7 +496,7 @@ app.post('/people/:id.:format?', function(req, res, next){
 });
 
 
-app.all('/people/:id.:format?', function(req, res, next){
+app.all('/people/profile/:id.:format?', function(req, res, next){
     People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).run( function(err, indiv) {
 	if (indiv) {
 	    switch (req.params.format) {

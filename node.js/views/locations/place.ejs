@@ -28,12 +28,12 @@ if (window.EventSource) {
 	    var data = JSON.parse(e.data);
 	    if (data.entered.shortname == '<%= place.shortname %>') {
 	       var img = $("<img>").attr("src", data.user.picture_thumb).attr("alt", "Picture of " + data.user.given + " " + data.user.family);
-	       var a = $("<a></a>").attr("href", "/people/" + data.user.slug).text(data.user.given + " " + data.user.family).prepend(img);
+	       var a = $("<a></a>").attr("href", "/people/profile/" + data.user.slug).text(data.user.given + " " + data.user.family).prepend(img);
 	       var li = $("<li></li>");
 	       li.append(a);
 	       $("#peopleList").append(li);
 	    } else if (data.left.shortname == '<%= place.shortname %>') {
-	       $("a[href='/people/" + data.user.slug + "']",$("#peopleList").parent().remove();
+	       $("a[href='/people/profile/" + data.user.slug + "']",$("#peopleList").parent().remove();
 	    }
 }
 }
