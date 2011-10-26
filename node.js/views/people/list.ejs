@@ -1,14 +1,3 @@
-<ul class="inline">
-<% var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; %>
-<% for (var i =0; i<alphabet.length;  i++) { %>
-<li><% if (alphabet[i] != letter) { %>
-<a href='<%= alphabet[i].toLowerCase() %>' title='List of persons whose family name starts with <%= alphabet[i] %>'><%= alphabet[i] %></a>
-<% } else { %>
-<%= alphabet[i] %>
-<% } %>
-<%}%>
-<li> <a href="all" title="Full list of registered persons">All</a> </li>
-</ul>
 <ul id="peopleList" class='list-graphical group'>
 <% for (var p  in people) { %>
   <li> <a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/profile/<%= people[p].slug %>'><img src="<% if (people[p].picture_thumb) { %><%=people[p].picture_thumb%><% } else { %>http://www.w3.org/community/src/img/default-pic.png<% } %>" width='36' alt="Picture of <%= people[p].given + " " + people[p].family %>"><%= people[p].family + ", " + people[p].given %></a></li>

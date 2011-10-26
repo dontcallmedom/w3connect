@@ -1,2 +1,14 @@
 <h1>People</h1>
+<ul class="inline">
+<% var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; %>
+<% for (var i =0; i<alphabet.length;  i++) { %>
+<li><% if (alphabet[i] != letter) { %>
+<a href='<%= alphabet[i].toLowerCase() %>' title='List of persons whose family name starts with <%= alphabet[i] %>'><%= alphabet[i] %></a>
+<% } else { %>
+<%= alphabet[i] %>
+<% } %>
+<%}%>
+<li> <a href="all" title="Full list of registered persons">All</a> </li>
+</ul>
+
 <%- partial('people/list.ejs') %>
