@@ -1087,3 +1087,7 @@ dl.list-accordion dd.placeholder {
 
 ul.five-piece li {
   width: 20%; }
+
+ul.inline li { display: inline;}
+
+ul.inline li:after { content:"|"};
