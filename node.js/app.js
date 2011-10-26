@@ -664,8 +664,21 @@ app.all('/locations/:id.:format?', function(req, res) {
 
 
 
-app.get('/people.:format?', function (req, res){
-  var people = People.find({}, function (err, people) {
+app.get('/people/:letter?.:format?', function (req, res){
+  var letter = req.params.letter;
+  if (!letter) {
+      letter = "a";
+  } 
+  if  (!(letter=='all' || letter.match(/^[a-z]$/))) {
+      next();
+  }
+  var filter = new RegExp('^' + letter, 'i');
+  if (letter=='all') {
+      filter = new RegExp('.*');
+  }
+  var people = People.find({})
+	        .where('family', filter)
+		.run(function (err, people) {
     people.sort(function (a,b) { return (a.family > b.family ? 1 : (b.family > a.family ? -1 : 0));});
     switch (req.params.format) {
       // When json, generate suitable data
