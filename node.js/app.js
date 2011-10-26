@@ -654,7 +654,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 	}
       });
      });
-    });
+
     } else {
        res.render('locations/unknown.ejs', {locals: { shortname: req.params.id, title: 'Unknown location'}});
    }
