@@ -235,15 +235,16 @@ app.error(function(err, req, res, next){
   res.send(err.message, 500);
 });
 
-app.namespace(config.hosting.basepath, function(){
-// if the _format parameter is set, we override req.params.format
-app.post(RegExp(".*"), function(req, res, next) {
-    if (req.body && req.body._format) {
+// Would be better in a post(/.*/) route but that breaks with express-namespace
+// cf https://github.com/visionmedia/express-namespace/issues/5
+function setFormatOutput(req) {
+   // if the _format parameter is set, we set req.outputFormat
+   if (req.body && req.body._format) {
 	req.outputFormat = req.body._format;
-    }
-    next();
-});
+   }    
+}
 
+app.namespace(config.hosting.basepath, function(){
 
 app.get('/', function(req, res){
   // skipped by middleware at this point, need fixing @@@
@@ -453,6 +454,7 @@ app.all('/admin/', function(req, res){
 });
 
 app.post('/people/profile/:id.:format?', function(req, res, next){
+    setFormatOutput(req);
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
     } else {
@@ -565,6 +567,7 @@ app.get('/locations/stream', function(req, res) {
 
 
 app.post('/locations/:id.:format?', function(req, res, next) {
+  setFormatOutput(req);
   if (! req.loggedIn) {
     req.session.redirectTo = '/locations/' + req.params.id;
     return res.redirect(everyauth.password.getLoginPath());
@@ -666,7 +669,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 
 
 
-app.get('/people/:letter?.:format?', function (req, res){
+app.get('/people/:letter?.:format?', function (req, res, next){
   var letter = req.params.letter;
   if (!letter) {
       letter = "a";
@@ -747,6 +750,7 @@ app.get('/schedule/stream', function(req, res) {
 
 
 app.post("/schedule/events/:slug", function(req, res, next) {
+  setFormatOutput(req);
     if (req.user && (req.body.interested || req.body.uninterested)) {	
 	Event.findOne({slug: req.params.slug}, function(err, event) {
 	    if (err) {
