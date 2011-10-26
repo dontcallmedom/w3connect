@@ -686,7 +686,7 @@ app.get('/people/:letter?.:format?', function (req, res){
         res.send(people);
 	break;
       default:
-        res.render('people/index.ejs', { locals: { people: people, title: 'People'}});
+        res.render('people/index.ejs', { locals: { letter: letter, people: people, title: 'People — ' + letter}});
     }
   });
   
