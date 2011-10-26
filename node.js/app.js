@@ -650,7 +650,7 @@ app.all('/locations/:id.:format?', function(req, res) {
             res.send(placeData);
 	    break;
 	default:
-	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places}});
+	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places, event: event}});
 	}
       });
     });
