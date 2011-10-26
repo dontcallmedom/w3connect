@@ -1,15 +1,12 @@
 <h1>Places</h1>
 <p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="<%= baseurl %>/maps/main.svg#<% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
-<ul>
-
-<% for (var p  in places) { %>
-  <li style='list-style:none'><a  style='display:block; float:left; width:10em; height:50px; border:thin solid gray; border-radius:10%; margin:2px;' href='<%= baseurl %>/locations/<%= places[p].shortname %>'>
-<%= places[p].name %></a></li>
-<% } %>
-</ul>
 <img style="max-width:100%" src="<%= baseurl %>/maps/main.png" alt="Floor plan">
 </object>
 </p>
+<ul class="inline">
+<%- partial("locations/places-list.ejs", {places:places, userCheckin: (everyauth.loggedIn  && user.lastKnownPosition ? user.lastKnownPosition.shortname : undefined)}) %>
+</ul>
+
 <div id="messages">
 </div>
 <script>
