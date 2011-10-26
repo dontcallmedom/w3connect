@@ -15,6 +15,10 @@
 <p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="<%= baseurl %>/maps/main.svg#<%= place.shortname %><% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
 <img style="max-width:100%" src="<%= baseurl %>/maps/<%= place.shortname%>.png" alt="Floor plan with highlight on <%= place.name %>">
 </object></p>
+<ul class="inline">
+<%- partial("locations/places-list.ejs", {places:places, userCheckin: (everyauth.loggedIn  && user.lastKnownPosition ? user.lastKnownPosition.shortname : undefined)}) %>
+</ul>
+
 <h2>People whose last checkin was in <%= place.name %></h2>
 <%- partial('people/list.ejs') %>
 <script>
@@ -27,12 +31,17 @@ if (window.EventSource) {
 	       var a = $("<a></a>").attr("href", "/people/" + data.user.slug).text(data.user.given + " " + data.user.family).prepend(img);
 	       var li = $("<li></li>");
 	       li.append(a);
-	       $(".peopleList").eq(0).append(li);
+	       $("#peopleList").append(li);
 	    } else if (data.left.shortname == '<%= place.shortname %>') {
-	       $("a[href='/people/" + data.user.slug + "']",$(".peopleList").eq(0)).parent().remove();
+	       $("a[href='/people/" + data.user.slug + "']",$("#peopleList").parent().remove();
 	    }
 }
 }
 
 
 </script>
+<% if (typeof event != undefined && event) { %>
+<dl class="list-accordion">
+<dt class="expanded">Currently</dt>
+<dd><%- partial("schedule/event-desc.ejs",  {event: event, interestMarker: true}) %></dd>
+</dl><% } %>
