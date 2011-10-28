@@ -130,7 +130,12 @@ exports.importRegistrationData = function(auth, callback)  {
        registrantsJSON = registrantsJSON + chunk;
      });
      response.on('end', function () {
-        registrantsData = JSON.parse(registrantsJSON);
+        try {
+            registrantsData = JSON.parse(registrantsJSON);	    
+	} catch (x) {
+	    errors.push(x);
+	    callback(success, info, errors);
+	}
         var peopleCounter = 0;
         for (p in registrantsData.registrants) {
 	    peopleCounter++;
