@@ -168,7 +168,7 @@ exports.importRegistrationData = function(auth, callback)  {
 			    {slug: eventSlug},
 			    function(err, event) {
 				errors.push(err);
-				var alreadyInterested = event.interested.slice(0).join("|");
+				var alreadyInterested = new RegExp("^" + event.interested.slice(0).join("|") + "$");
 				if (!alreadyInterested.test(people._id)) {
 				    event.interested.push(people._id);
 				}
