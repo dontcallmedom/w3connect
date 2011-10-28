@@ -74,6 +74,9 @@ exports.importUserList = function(auth, callback)  {
   	  return function (err) {
                counter++;
 		// We ignore duplicate key errors
+	       if (err){
+		   console.log(err);
+	       }
 	       if (!err) {
                  counterAdded++;
                  success.push(people.given + ' ' + people.family + ' added');
