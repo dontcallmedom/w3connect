@@ -81,8 +81,8 @@ everyauth.password
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
 
-//  .loginSuccessRedirect(config.hosting.basepath + '/')
-  .respondToLoginSucceed( function (res, user, data) {
+  .loginSuccessRedirect(config.hosting.basepath + '/')
+/*  .respondToLoginSucceed( function (res, user, data) {
     var redirectTo = config.hosting.basepath + "/";
       if (data.params.redirectTo) {
 	  redirectTo = data.params.redirectTo;
@@ -91,7 +91,7 @@ everyauth.password
 	  res.writeHead(303, {'Location': redirectTo});
 	  res.end();
       }   
-  })
+  })*/
   .authenticate( function (login, password) {
     var promise = this.Promise();  
     var errors = [];
