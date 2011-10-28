@@ -477,11 +477,18 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
     People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).run( function(err, indiv) {
 	if (indiv) {
 	    Event.find({})
-		.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
+		//.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
 		.run(function(err, events) {
 		    var days, timeslots, schedule;
+		    var userEvents = [];
 		    if (events) {
-			var data = prepareEventsList(events);
+			for (var i = 0; i < events.length ; i++) {
+			    var isInterested = new RegExp("^"  + events[i].interested.join("|") + "$");
+			    if (isInterested.test(indiv._id)) {
+				userEvents.push(events[i]);
+			    }
+			}
+			var data = prepareEventsList(userEvents);
 			days = data[0];
 			timeslots = data[1];
 			schedule = data[2];
