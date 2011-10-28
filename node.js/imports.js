@@ -104,9 +104,9 @@ exports.importUserList = function(auth, callback)  {
 	    people.given = peopleData.given;
 	    people.family = peopleData.family;
 	    people.email = peopleData.email;
-	    people.login = peopleData.login;
 	    if (peopleData.w3cId > 0) {
 		people.slug = peopleData.w3cId;
+		people.login = peopleData.login;
 		loadPeopleData(people.slug);
 		if (peopleData.organization && peopleData.organization.w3cId) {
 		    people.affiliationId = peopleData.organization.w3cId;
@@ -119,7 +119,8 @@ exports.importUserList = function(auth, callback)  {
 		}
 	    } else {
 		console.log("non W3C account: " + people.given + " " + people.family);
-		people.slug = require("slug")(people.given + " " + people.family);
+		people.slug = people.w3cId;
+		people.login = peopleData.email;
 		people.save(addPeople(people));
 	    }
 	}
