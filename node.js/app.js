@@ -855,10 +855,8 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	  if (err) {
 	      req.flash("error", "No known room with shortname" + req.body.room);
 	  }
-          console.log("day: " + req.body.day.replace('-',''));
-          console.log("timeStart: " + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1'));
-	  event.timeStart =  parseDate(req.body.day.replace('-','') + 'T' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
-	  event.timeEnd =  parseDate(req.body.day.replace('-','') + 'T' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
+	  event.timeStart =  parseDate(req.body.day.replace(/-/g,'') + 'T' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
+	  event.timeEnd =  parseDate(req.body.day.replace(/-/g,'') + 'T' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
 	  event.name= req.body.name;
 	  event.presenters= req.body.presenters;
 	  event.confidentiality = req.body.confidentiality;
