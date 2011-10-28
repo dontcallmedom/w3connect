@@ -187,9 +187,9 @@ exports.importRegistrationData = function(auth, callback)  {
 						}
 						callback(success, info, errors);
 					    }
-					}
+					});
+						  
 				    }
-					
 			    });
 		    }
 		    }
