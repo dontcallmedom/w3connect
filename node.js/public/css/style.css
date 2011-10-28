@@ -1099,3 +1099,27 @@ ul.five-piece li {
 ul.inline li { display: inline;}
 
 ul.inline li:after { content:"|"};
+
+dl {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #d8d8d8;
+  /*definition container*/
+  /*definition term*/ }
+  dl dt {
+    padding-left: .5em;
+    line-height: 2.5em;
+    height: 2.5em;
+    border-top: 1px solid #d8d8d8; }
+  dl dd {
+    padding: 0.5em;
+    line-height: normal;
+    background-color: white;
+    /*content inside of definition container*/ }
+    dl dd p {
+      margin: 0;
+      padding: 0 0 0.4em 0; }
+  dl dt {
+    background-color: #f6f6f6;
+    /*container for expand/collapse icon*/ }
