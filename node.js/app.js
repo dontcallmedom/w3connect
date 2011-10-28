@@ -236,6 +236,28 @@ function parseDate(datestring) {
     return ret;
 };
 
+function prepareEventsList(events) {
+    var days = [];
+    var timeslots = [];
+    var schedule = {};
+    for (var i in events) {
+	var day = events[i].timeStart.toDateString();
+	events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
+	events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset,10));
+	var timeslot = {timeStart: events[i].timeStart , timeEnd: events[i].timeEnd}; 
+	if (!schedule[day]) {
+	    days.push(day);
+	    schedule[day] = {};
+	    timeslots[day] = [];
+	}
+	if (!schedule[day][JSON.stringify(timeslot)]) {
+	    schedule[day][JSON.stringify(timeslot)] = [];
+	    timeslots[day].push(timeslot);
+	}
+	schedule[day][JSON.stringify(timeslot)].push(events[i]);
+    }
+    return [days, timeslots, schedule];
+}
 
 // Routes
 
@@ -454,14 +476,25 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
 app.all('/people/profile/:id.:format?', function(req, res, next){
     People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).run( function(err, indiv) {
 	if (indiv) {
-	    switch (req.params.format) {
-		// When json, generate suitable data
-	    case 'json':
-		res.send(indiv);
-		break;
-	    default:
-		res.render('people/indiv.ejs', { locals: { indiv: indiv, title: indiv.given + ' ' + indiv.family }});
-	    }
+	    Event.find({})
+		.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
+		.run(function(err, events) {
+		    var days, timeslots, schedule;
+		    if (events) {
+			var data = prepareEventsList(events);
+			days = data[0];
+			timeslots = data[1];
+			schedule = data[2];
+		    }
+		    switch (req.params.format) {
+			// When json, generate suitable data
+		    case 'json':
+			res.send(indiv);
+			break;
+		    default:
+			res.render('people/indiv.ejs', { locals: { indiv: indiv, title: indiv.given + ' ' + indiv.family, days: days, timeslots: timeslots, schedule:schedule }});
+		    }
+		});
 	} else {
 	    next();
 	}
@@ -826,25 +859,8 @@ app.all('/schedule/admin', function(req,res) {
 		.populate('room', ['shortname','name'])
 		.run( 
 	function(err, events) {
-	    var days = [];
-	    var timeslots = [];
-	    var schedule = {};
-	    for (var i in events) {
-		var day = events[i].timeStart.toDateString();
-		events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
-		events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset,10));
-		var timeslot = {timeStart: events[i].timeStart , timeEnd: events[i].timeEnd}; 
-		if (!schedule[day]) {
-		    days.push(day);
-		    schedule[day] = {};
-		    timeslots[day] = [];
-		}
-		if (!schedule[day][JSON.stringify(timeslot)]) {
-		    schedule[day][JSON.stringify(timeslot)] = [];
-		    timeslots[day].push(timeslot);
-		}
-		schedule[day][JSON.stringify(timeslot)].push(events[i]);
-	    }
+	    var data = prepareEventsList(events);
+	    var days = data[0], timeslots = data[1], schedule = data[2];
         res.render("schedule/admin", { locals: {title: "Schedule update", places: places, days: days, timeslots: timeslots, schedule:schedule, expanded: true, interestMarker: false, admin: true}});
     });
   });
