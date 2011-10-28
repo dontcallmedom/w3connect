@@ -798,7 +798,32 @@ app.post('/schedule/admin', function(req,res, next) {
 
 app.all('/schedule/admin', function(req,res) {
   Place.find({}, function (err, places) {
-    res.render("schedule/admin", { locals: {title: "Schedule update", places: places}});
+    Event.find({})
+	        .asc('timeStart')
+		.populate('room', ['shortname','name'])
+		.run( 
+	function(err, events) {
+	    var days = [];
+	    var timeslots = [];
+	    var schedule = {};
+	    for (var i in events) {
+		var day = events[i].timeStart.toDateString();
+		events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
+		events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset,10));
+		var timeslot = {timeStart: events[i].timeStart , timeEnd: events[i].timeEnd}; 
+		if (!schedule[day]) {
+		    days.push(day);
+		    schedule[day] = {};
+		    timeslots[day] = [];
+		}
+		if (!schedule[day][JSON.stringify(timeslot)]) {
+		    schedule[day][JSON.stringify(timeslot)] = [];
+		    timeslots[day].push(timeslot);
+		}
+		schedule[day][JSON.stringify(timeslot)].push(events[i]);
+	    }
+        res.render("schedule/admin", { locals: {title: "Schedule update", places: places, days: days, timeslots: timeslots, schedule:schedule, expanded: true}});
+    });
   });
 });
 

@@ -25,3 +25,7 @@
 </form>
 
 <h3>Update existing event</h3>
+<p>Pick the event you want to edit:</p>
+<dl id="accordion" class="list-accordion">
+<%- partial("schedule/full-schedule.ejs", {days: days, timeslots: timeslots, schedule:schedule, expanded: expanded}) %>
+</dl>
