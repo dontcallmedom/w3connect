@@ -1,6 +1,6 @@
 <h1>Update data for <%= event.name %></h1>
 <%- messages() %>
-<% var day = event.timeStart.getUTCFullYear() + '-' + (event.timeStart.getUTCMonth() + 1) + '-' + event.timeStart.getUTCDate(); %>
+<% var day = event.timeStart.getUTCFullYear() + '-' + (event.timeStart.getUTCMonth() + 1).toString().replace(/^([0-9])$/, '0$1') + '-' + event.timeStart.getUTCDate().toString().replace(/^([0-9])$/, '0$1'); %>
 <% var timezone_string = "UTC" + timezone_offset.toString().replace(/^([0-9])/, '+$1'); %>
 <form action='' method='post'>
 <p><label>Name: <input name="name" value="<%= event.name%>" required></label></p>
