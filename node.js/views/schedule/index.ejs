@@ -32,7 +32,7 @@ addEvent("onload",init);
 <% var timeslotData = {timeStart: timeslot.timeStart, timeEnd: timeslot.timeEnd}; %>
 <% if (schedule[day][JSON.stringify(timeslot)].length == 1) { %>
 <dt><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %>
-— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: false}) %></dt>
+— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: true}) %></dt>
 <% } else { %>
 <dt title="tap/click to expand list of events at <%- partial("schedule/timeslot.ejs", timeslotData) %>" class="<%= (d == 0 && t==0 && !currentEvents.length ? "expanded" : "collapsed") %>"><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %></dt>
 <% for (var e in schedule[day][JSON.stringify(timeslot)]) {%>
