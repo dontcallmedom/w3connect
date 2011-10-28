@@ -855,8 +855,10 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	  if (err) {
 	      req.flash("error", "No known room with shortname" + req.body.room);
 	  }
-	  event.timeStart =  parseDate(req.body.day.replace('-','') + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00');
-	  event.timeEnd =  parseDate(req.body.day.replace('-','') + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00');
+          console.log("day: " + req.body.day.replace('-',''));
+          console.log("timeStart: " + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1'));
+	  event.timeStart =  parseDate(req.body.day.replace('-','') + 'T' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
+	  event.timeEnd =  parseDate(req.body.day.replace('-','') + 'T' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
 	  event.name= req.body.name;
 	  event.presenters= req.body.presenters;
 	  event.confidentiality = req.body.confidentiality;
@@ -871,12 +873,12 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	    next();
           });
     });
-   })
+   });
 });
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
   Place.find({}).asc('name').run( function (err, places) {
-    Event.findOne({slug: req.params.slug}, function(err, event) {
+    Event.findOne({slug: req.params.slug}).populate('room').run(function(err, event) {
 	if (err) {
 	    next();
 	}
