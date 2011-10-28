@@ -23,26 +23,6 @@ addEvent("onload",init);
 <% } else { %>
 <dd class="placeholder"><a href="<%= baseurl %>/login">Log in to build your schedule</a></dd>
 <% } %>
-<% for (var d in days) { %>
-<% var day = days[d];%>
-<dt class="<%= (d == 0 && !currentEvents.length ? "expanded" : "collapsed") %>"><span></span><strong><%= day %></strong></dt>
-<dd><dl>
-<% for (var t in timeslots[day]) { %>
-<% var timeslot = timeslots[day][t]; %>
-<% var timeslotData = {timeStart: timeslot.timeStart, timeEnd: timeslot.timeEnd}; %>
-<% if (schedule[day][JSON.stringify(timeslot)].length == 1) { %>
-<dt><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %>
-— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: true}) %></dt>
-<% } else { %>
-<dt title="tap/click to expand list of events at <%- partial("schedule/timeslot.ejs", timeslotData) %>" class="<%= (d == 0 && t==0 && !currentEvents.length ? "expanded" : "collapsed") %>"><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %></dt>
-<% for (var e in schedule[day][JSON.stringify(timeslot)]) {%>
-<% var event = schedule[day][JSON.stringify(timeslot)][e];%>
-<dd>
-<%- partial('schedule/event-desc.ejs', {event: event, interestMarker: true}) %>
-</dd>
-<% } %>
-<% } %>
-<% } %></dl></dd>
-<% } %>
+<% var expanded = !currentEvents.length; %>
+<%- partial('schedule/full-schedule.ejs', {days: days, timeslots: timeslots, schedule:schedule, expanded: expanded}) %>
 </dl>
-
