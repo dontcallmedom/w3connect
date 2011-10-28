@@ -1,1 +1,0 @@
-echo "select concat(choiceid,'-', QNo) as slug, concat(gloss, ' meeting') as name, 'meeting', concat('2011',QNo,'T080000'), concat('2011',QNo,'T180000') from choices where QaireNo='TPAC2011' and QNo in ('monday', 'tuesday','thrusday','friday') order by QNo;" |mysql wbs > schedule-tpac
