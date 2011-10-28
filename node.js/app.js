@@ -81,7 +81,7 @@ everyauth.password
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
 
-  .loginSuccessRedirect(config.hosting.basepath + '/')
+//  .loginSuccessRedirect(config.hosting.basepath + '/')
   .respondToLoginSucceed( function (res, user, data) {
     var redirectTo = config.hosting.basepath + "/";
       if (data.params.redirectTo) {
