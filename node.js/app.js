@@ -302,9 +302,12 @@ app.post('/admin/', function(req, res, next){
   } else if (req.body.clearInterested) {
       Event.find(
 	  {}, 
-	  function(err, event) {
-	      event.interested = [];
-	      event.save();
+	  function(err, events) {
+	      for (e in events) {
+		  var event = events[e];
+		  event.interested = [];
+		  event.save();
+	      }
 	      req.flash.info("Cleared");
 	      next();
 	  });
