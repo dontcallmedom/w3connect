@@ -8,7 +8,7 @@
 <p><label>Room: <select name='room'><option>Unknown</option>
 <% for (var p  in places) { %> 
   <option value="<%= places[p].shortname %>"
-<% if (event.room.shortname == places[p].shortname) {%> selected<% } %>><%= places[p].name %></option>
+<% if (typeof event.room != "undefined" && event.room && event.room.shortname == places[p].shortname) {%> selected<% } %>><%= places[p].name %></option>
 <% } %>
 </select></label></p>
 
