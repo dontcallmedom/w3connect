@@ -1,6 +1,6 @@
 <% if (user && typeof interestMarker != "undefined" && interestMarker) { %>
 <% var isInterested = new RegExp("^"  + event.interested.join("|") + "$"); %>
-<a class="interest" href="<%= baseurl %>/schedule/events/<%= event.slug %>" title="Toggle interest on talk"><img style='vertical-align: middle' src="<%= baseurl %>/img/star<%= ( isInterested.test(user._id) ?  "" : "-off" ) %>.png" alt="Not marked as interested"></a>
+<a class="interest" href="<%= baseurl %>/schedule/events/<%= event.slug %>/" title="Toggle interest on talk"><img style='vertical-align: middle' src="<%= baseurl %>/img/star<%= ( isInterested.test(user._id) ?  "" : "-off" ) %>.png" alt="Not marked as interested"></a>
 <% } %>
 <% if (typeof showTime != "undefined" && showTime) { %>
 <% var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; %>
