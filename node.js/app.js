@@ -834,7 +834,54 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
     if (!isAdmin.test(req.user.login)) {
 	return res.render("403");
     }    
-   next(); 
+    Event.findOne({slug: req.params.slug}, function(err, event) {
+      if (err) {
+	 next();
+      }
+      if (!req.body.name){
+	  req.flash("error", "Missing event name");
+	  next();
+      } else if (!req.body.day) {
+	  req.flash("error", "Missing event day");
+	  next();
+      } else if (!req.body.start) {
+	  req.flash("error", "Missing event start time");
+	  next();
+      } else if (!req.body.end) {
+	  req.flash("error", "Missing event end time");
+	  next();
+      } 
+      var places = {};
+      Place.find({}, function(err, rooms) {
+	  if (err) {
+	      req.flash("error", "No room known in the system");
+	      next();
+	  }
+	  for (i in rooms) {
+	      places[rooms[i].shortname] = rooms[i];
+	  }
+
+	  event.timeStart =  parseDate(req.body.day.replace('-','') + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00');
+	  event.timeEnd =  parseDate(req.body.day.replace('-','') + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00');
+	  event.name= req.body.name;
+	  event.presenters= req.body.presenters;
+	  event.confidentiality = req.body.confidentiality;
+	  event.observers = req.body.observers;
+	  });
+         if (places[req.body.room]) {
+	    event.room = places[req.body.room]._id;
+         } else {
+	    req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
+         }
+         event.save(function (err) {
+            if (err) {
+		req.flash('error',err);
+	    } else {
+		req.flash('info', req.body.name + ' successfully added to schedule')	 ;
+	    }
+	    next();
+         });
+    });
 });
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
