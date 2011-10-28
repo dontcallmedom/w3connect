@@ -151,15 +151,14 @@ exports.importRegistrationData = function(auth, callback)  {
 	}
         var peopleCounter = 0;
         for (p in registrantsData.registrants) {
-	    peopleCounter++;
             var peopleData = registrantsData.registrants[p];
 	    var slug = peopleData.w3cId;
 	    People.findOne(
 		{slug: peopleData.w3cId},
 		function(err, people) {
+		    peopleCounter++;
 		    if (err){
-			errors.push(err);			
-
+			errors.push(err);
 		    }
 		    if (people) {
 		    var eventCounter = 0;
