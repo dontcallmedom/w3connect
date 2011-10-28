@@ -160,35 +160,44 @@ exports.importRegistrationData = function(auth, callback)  {
 	    }
 	}
         var eventCounter = 0;
+	 function updateEvent(event) {
+	     event.save(
+		 eventCounter++;
+		 function(err) {
+		     errors.push(err);
+		     if ( eventCounter == eventRegistration.length) {
+			 if (!errors.length) {
+			     success.push("Registration data successfully imported");
+			 }
+			 callback(success, info, errors);
+		     }
+		 });
+	     
+	 }
 
 	for (var eventSlug in eventRegistration) {
 	    Event.findOne(
 		{slug: eventSlug}, function(err, event) {
+		    
 		    eventCounter++;
 		    if (event) {
-		    var peopleCounter = 0;
-		    for (var p in eventRegistration[eventSlug]) {
-			var peopleSlug = eventRegistration[eventSlug][p];
-			People.findOne(
-			    {slug: peopleSlug}, ["_id"],
-			    function(err, people) {
-				peopleCounter ++;
-				if (people) {
-				    var alreadyInterested = new RegExp("^" + event.interested.slice(0).join("|") + "$");
-				    if (!alreadyInterested.test(people._id)) {
-					event.interested.push(people._id);
-				}
-				    event.save(
-					function(err) {
-					    errors.push(err);
-					    if (peopleCounter == eventRegistration[eventSlug] && eventCounter == eventRegistration.length) {
-						if (!errors.length) {
-						    success.push("Registration data successfully imported");
-						}
-						callback(success, info, errors);
-					    }
-					});
-				}	
+			var peopleCounter = 0;
+			for (var p in eventRegistration[eventSlug]) {
+			    var peopleSlug = eventRegistration[eventSlug][p];
+			    People.findOne(
+				{slug: peopleSlug}, ["_id"],
+				function(err, people) {
+				    peopleCounter ++;
+				    if (people) {
+					var alreadyInterested = new RegExp("^" + event.interested.slice(0).join("|") + "$");
+					if (!alreadyInterested.test(people._id)) {
+					    event.interested.push(people._id);
+					}
+				    }
+				    if (peopleCounter == eventRegistration[eventSlug].length) {
+					updateEvent(event);
+				    }
+					
 			    });
 		    }
 		    }
