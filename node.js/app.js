@@ -299,6 +299,15 @@ app.post('/admin/', function(req, res, next){
 	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
 	  next();
       });    
+  } else if (req.body.clearInterested) {
+      Event.find(
+	  {}, 
+	  function(err, event) {
+	      event.interested = [];
+	      event.save();
+	      req.flash.info("Cleared");
+	      next();
+	  });
 
   } else  if (req.body.placeAdd) {
       var place = new Place();
