@@ -208,16 +208,18 @@ app.configure('production', function(){
 
 // update twitter search on registering new twitter id
 emitter.on("twitterListChange", function (id) {
-    TwitterSettings.findOne(
-	{}, 
-	function(err, settings) {
-	    var ids = settings.ids;
-	    ids.push(id);
-	    settings.ids = ids;
-	    twitter.listenToTweets(emitter, ids, app.set('twitter_auth'));
-	    settings.save();
-	}
-    );
+    if (id) {
+	TwitterSettings.findOne(
+	    {}, 
+	    function(err, settings) {
+		var ids = settings.ids;
+		ids.push(id);
+		settings.ids = ids;
+		twitter.listenToTweets(emitter, ids, app.set('twitter_auth'));
+		settings.save();
+	    }
+	);
+    }
 });
 
 // Utility function
@@ -430,17 +432,7 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
 			    indiv.twitterAccount = {"name": req.body.twitter, id: id};
 			    indiv.save(function(err) {
 				// re-start twitter listener
-				emitter.emit("twitterListChange");
-				TwitterSettings.findOne(
-				    {}, 
-				    function(err, settings) {
-					var ids = settings.ids;
-					ids.push(id);
-					settings.ids = ids;
-					twitter.listenToTweets(emitter, ids, app.set('twitter_auth'));
-					settings.save();
-				    }
-				);
+				emitter.emit("twitterListChange", id);
 				if (!err) {
 				    req.flash("success", "Successfully added your twitter account");
 				} else {
