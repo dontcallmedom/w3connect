@@ -13,6 +13,12 @@
 <% if (event.presenters) { %>
 , by <%= event.presenters %>
 <% } %>
+<% if (event.confidentiality && event.confidentiality == 'member') { %>
+ <strong>W3C Member-only</strong>
+<% } %>
+<% if (event.observers && event.observers == 'no') { %>
+, <strong>no observers allowed</strong>
+<% } %>
 <em class="interested" data-eventid="<%= event.slug %>"><% if (event.interested.length) { %>
  (<span class="counter"><%= event.interested.length %></span> interested to attend)
 <% } %></em>
