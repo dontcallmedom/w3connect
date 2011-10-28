@@ -877,7 +877,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
             if (err) {
 		req.flash('error',err);
 	    } else {
-		req.flash('info', req.body.name + ' successfully added to schedule')	 ;
+		req.flash('success', req.body.name + ' successfully updated')	 ;
 	    }
 	    next();
          });
