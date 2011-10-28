@@ -1,0 +1,21 @@
+<h1>Update data for <%= event.name %></h1>
+<% var day = event.timeStart.getUTCYear() + '-' + (event.timeStart.getUTCMonth() + 1) + '-' + event.timeStart.getUTCDate(); %>
+<form action='' method='post'>
+<p><label>Name: <input name="name" value="<%= event.name%>" required></label></p>
+<p><label>Day: <input type='date' value="<%= day %>" name="day" required></label>
+<p><label>Time start: <input value="<%= event.timeStart.getUTCHours().toString().replace(/^([0-9])$/, '0$1') + ':' + event.timeStart.getUTCMinutes().toString().replace(/^([0-9])$/, '0$1') %>" required name="start" placeholder="HH:MM" size="5"></label> (US Pacific Time)</p>
+<p><label>Time end: <input value="<%= event.timeEnd.getUTCHours().toString().replace(/^([0-9])$/, '0$1') + ':' + event.timeEnd.getUTCMinutes().toString().replace(/^([0-9])$/, '0$1') %>" required name="start" placeholder="HH:MM" size="5"></label> (US Pacific Time)</p>
+<p><label>Room: <select name='room'><option>Unknown</option>
+<% for (var p  in places) { %> 
+  <option value="<%= places[p].shortname %>"
+<% if (event.room.shortname == places[p].shortname) {%> selected<% } %>><%= places[p].name %></option>
+<% } %>
+</select></label></p>
+
+</label></p>
+<p><label>Confidentiality: <select name="confidentiality"><option>public</option><option <% if (event.confidentiality=="member") { %> selected<% } %>value="member">W3C Member-only</option></select></label></p>
+<p><label>Observers: <select name="observers"><option value="chairs">Allowed, to the Chairs discretion</option><option <% if (event.confidentiality=="no") { %> selected<% } %>value="no">Not allowed</option></select></label></p>
+<p><input value="Update event" type="submit" name="updateEvent"></p>
+</form>
+
+</form>

@@ -827,6 +827,26 @@ app.all('/schedule/admin', function(req,res) {
   });
 });
 
+app.post("/schedule/events/:slug/admin", function(req, res, next) {
+    if (! req.loggedIn) {
+      return res.redirect(everyauth.password.getLoginPath());
+    }
+    var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
+    if (!isAdmin.test(req.user.login)) {
+	return res.render("403");
+    }    
+   next(); 
+});
+
+app.all("/schedule/events/:slug/admin", function(req, res, next) {
+    Event.findOne({slug: req.params.slug}, function(err, event) {
+	if (err) {
+	    next();
+	}
+        res.render("schedule/event-admin", {locals: {title: "Update " + event.name, event: event}});
+    });
+});
+
 app.get('/schedule/stream', function(req, res) {
     res.setHeader("Content-Type", 'text/event-stream');
     res.setHeader("Cache-Control", "no-cache");
@@ -843,7 +863,7 @@ app.get('/schedule/stream', function(req, res) {
 });
 
 
-app.post("/schedule/events/:slug", function(req, res, next) {
+app.post("/schedule/events/:slug/", function(req, res, next) {
   setFormatOutput(req);
     if (req.user && (req.body.interested || req.body.uninterested)) {	
 	Event.findOne({slug: req.params.slug}, function(err, event) {
