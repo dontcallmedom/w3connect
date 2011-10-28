@@ -160,11 +160,14 @@ exports.importRegistrationData = function(auth, callback)  {
 	    }
 	}
         var eventCounter = 0;
+
 	for (var eventSlug in eventRegistration) {
 	    Event.findOne(
 		{slug: eventSlug}, function(err, event) {
 		    eventCounter++;
-		    for (var peopleSlug in eventRegistration[eventSlug]) {
+		    var peopleCounter = 0;
+		    for (var p in eventRegistration[eventSlug]) {
+			var peopleSlug = eventRegistration[eventSlug][p];
 			People.findOne(
 			    {slug: peopleSlug}, ["_id"],
 			    function(err, people) {
@@ -176,7 +179,7 @@ exports.importRegistrationData = function(auth, callback)  {
 				event.save(
 				    function(err) {
 					errors.push(err);
-					if (peopleCounter == registrantsData.registrants.length && eventCounter == eventRegistration.length) {
+					if (peopleCounter == eventRegistration[eventSlug] && eventCounter == eventRegistration.length) {
 					    if (!errors.length) {
 						success.push("Registration data successfully imported");
 					    }
