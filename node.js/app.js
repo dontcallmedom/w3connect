@@ -390,6 +390,7 @@ app.post('/admin/', function(req, res, next){
 		     } else {
 		         req.flash('info', req.body.name + ' successfully added to schedule')	 ;
 		     }
+		     next();
       });
     });
   } else if (req.body.twitterSetting) {
