@@ -838,6 +838,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
       if (err) {
 	 next();
       }
+      if (req.body.updateEvent){
       if (!req.body.name){
 	  req.flash("error", "Missing event name");
 	  next();
@@ -871,6 +872,21 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	    next();
           });
     });
+      } else if (req.body.deleteEvent) {
+	  if (!req.body.confirm){
+	      req.flash("error", "If you really want to delete the event, you need to confirm so by checking the checkbox");
+	      next();
+	  }
+	  event.remove(
+	      function(err) {
+		  if (err) {
+		      req.flash("error", err);
+		  } else {
+		      req.flash("success", "Event successfully deleted");
+		  }
+		  next();
+	      });
+      }
    });
 });
 
