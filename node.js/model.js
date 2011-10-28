@@ -53,6 +53,8 @@ var Event  = new Schema({
     registered: [{type: Schema.ObjectId, ref: 'People'}],
     interested: [{type: Schema.ObjectId, ref: 'People'}],
     eventType : {type: String, enum: ["meeting", "meal", "werewolf", "run"]},
+    confidentiality: {type: String, enum: ["member", "public"]},
+    observers: {type: String, enum: ["chairs", "member", "no"]},
     name: String,
     description: String,
     presenters: String,
