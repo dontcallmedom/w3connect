@@ -704,7 +704,7 @@ app.post('/schedule/admin', function(req,res, next) {
          if (places[req.body.room]) {
 	    event.room = places[req.body.room]._id;
          } else {
-	    req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
+	    req.flash('error', 'Failed to locate event “' + event.name + '” as it is set for a room with unknown shortname ' + req.body.room);			
          }
       event.save(function (err) {
 		     if (err) {
@@ -871,7 +871,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
          if (places[req.body.room]) {
 	    event.room = places[req.body.room]._id;
          } else {
-	    req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
+	    req.flash('error', 'Failed to locate event “' + event.name + '” as it is set for a room with unknown shortname ' + req.body.room);			
          }
          event.save(function (err) {
             if (err) {
