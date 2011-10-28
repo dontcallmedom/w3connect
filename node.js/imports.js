@@ -136,6 +136,7 @@ exports.importRegistrationData = function(auth, callback)  {
 	    errors.push(x);
 	    console.log(registrantsJSON);
 	    callback(success, info, errors);
+	    return;
 	}
         var peopleCounter = 0;
         for (p in registrantsData.registrants) {
