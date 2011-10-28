@@ -148,14 +148,15 @@ exports.importRegistrationData = function(auth, callback)  {
         for (p in registrantsData.registrants) {
 	    peopleCounter++;
             var peopleData = registrantsData.registrants[p];
+	    var slug = peopleData.w3cId;
 	    People.findOne(
 		{slug: peopleData.w3cId},
 		function(err, people) {
-		    if (err || !people){
+		    if (err){
 			errors.push(err);			
-			callback(success, info, errors);
-			return;
+
 		    }
+		    if (people) {
 		    var eventCounter = 0;
 		    for (var e in peopleData.registered) {
 			var eventSlug = peopleData.registered[e];
@@ -176,7 +177,7 @@ exports.importRegistrationData = function(auth, callback)  {
 				    });
 			    });
 		    }
-		    
+		    }		    
 		});
 	}
      });
