@@ -839,12 +839,14 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 });
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
+  Place.find({}, function (err, places) {
     Event.findOne({slug: req.params.slug}, function(err, event) {
 	if (err) {
 	    next();
 	}
-        res.render("schedule/event-admin", {locals: {title: "Update " + event.name, event: event}});
+        res.render("schedule/event-admin", {locals: {title: "Update " + event.name, event: event, places: places}});
     });
+  });
 });
 
 app.get('/schedule/stream', function(req, res) {
