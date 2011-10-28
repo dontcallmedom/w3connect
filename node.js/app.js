@@ -420,7 +420,7 @@ app.post('/admin/', function(req, res, next){
 			   timeEnd: parseDate(e.timeEnd),
 			   name: e.name,
 			   presenters: e.presenters,
-			   slug: require("slug")(e.name)
+			   slug: e.slug
 			  });
 		      if (places[e.room]) {
 			  event.room = places[e.room]._id;
