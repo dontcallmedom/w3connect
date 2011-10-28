@@ -445,8 +445,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 });
 
 app.get('/locations.:format?', function(req, res) {
-  Place.find({}, function (err, places) {
-    places.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
+  Place.find({}).asc('name').run( function (err, places) {
     var counter=0;
     for (p in places) {
       People.find({"lastKnownPosition.shortname": places[p].shortname}, ['slug', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
@@ -555,7 +554,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 });
 
 app.all('/locations/:id.:format?', function(req, res) {
-  Place.find({}, function (err, places) {
+  Place.find({}).asc('name').run( function (err, places) {
     places.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
@@ -797,7 +796,7 @@ app.post('/schedule/admin', function(req,res, next) {
 });
 
 app.all('/schedule/admin', function(req,res) {
-  Place.find({}, function (err, places) {
+  Place.find({}).asc('name').run( function (err, places) {
     Event.find({})
 	        .asc('timeStart', 'name')
 		.populate('room', ['shortname','name'])
@@ -839,7 +838,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 });
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
-  Place.find({}, function (err, places) {
+  Place.find({}).asc('name').run( function (err, places) {
     Event.findOne({slug: req.params.slug}, function(err, event) {
 	if (err) {
 	    next();
