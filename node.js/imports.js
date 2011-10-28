@@ -165,6 +165,7 @@ exports.importRegistrationData = function(auth, callback)  {
 	    Event.findOne(
 		{slug: eventSlug}, function(err, event) {
 		    eventCounter++;
+		    if (event) {
 		    var peopleCounter = 0;
 		    for (var p in eventRegistration[eventSlug]) {
 			var peopleSlug = eventRegistration[eventSlug][p];
@@ -172,22 +173,24 @@ exports.importRegistrationData = function(auth, callback)  {
 			    {slug: peopleSlug}, ["_id"],
 			    function(err, people) {
 				peopleCounter ++;
-				var alreadyInterested = new RegExp("^" + event.interested.slice(0).join("|") + "$");
-				if (!alreadyInterested.test(people._id)) {
-				    event.interested.push(people._id);
+				if (people) {
+				    var alreadyInterested = new RegExp("^" + event.interested.slice(0).join("|") + "$");
+				    if (!alreadyInterested.test(people._id)) {
+					event.interested.push(people._id);
 				}
-				event.save(
-				    function(err) {
-					errors.push(err);
-					if (peopleCounter == eventRegistration[eventSlug] && eventCounter == eventRegistration.length) {
-					    if (!errors.length) {
-						success.push("Registration data successfully imported");
+				    event.save(
+					function(err) {
+					    errors.push(err);
+					    if (peopleCounter == eventRegistration[eventSlug] && eventCounter == eventRegistration.length) {
+						if (!errors.length) {
+						    success.push("Registration data successfully imported");
+						}
+						callback(success, info, errors);
 					    }
-					    callback(success, info, errors);
-					}
-				    });
-				
+					});
+				}	
 			    });
+		    }
 		    }
 		});
 	}
