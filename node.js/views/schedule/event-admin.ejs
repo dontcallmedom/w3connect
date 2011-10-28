@@ -7,6 +7,7 @@
 <p><label>Day: <input type='date' value="<%= day %>" name="day" required></label>
 <p><label>Time start: <input value="<%= ((24 + event.timeStart.getUTCHours()  + timezone_offset) % 24).toString().replace(/^([0-9])$/, '0$1') + ':' + event.timeStart.getUTCMinutes().toString().replace(/^([0-9])$/, '0$1') %>" required name="start" placeholder="HH:MM" size="5"></label> (<%= timezone_string %>)</p>
 <p><label>Time end: <input value="<%= ((24 + event.timeEnd.getUTCHours() + timezone_offset) % 24).toString().replace(/^([0-9])$/, '0$1') + ':' + event.timeEnd.getUTCMinutes().toString().replace(/^([0-9])$/, '0$1') %>" required name="end" placeholder="HH:MM" size="5"></label> (<%= timezone_string %>)</p>
+<p><label>Presenters: <input value='<%= event.presenters %>' name='presenters'></label></p>
 <p><label>Room: <select name='room'><option>Unknown</option>
 <% for (var p  in places) { %> 
   <option value="<%= places[p].shortname %>"
