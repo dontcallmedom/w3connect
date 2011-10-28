@@ -6,7 +6,7 @@
     "express": "2.4.2",
     "ejs": "0.4.3",
     "mongoose": ">= 2.0.0",
-    "everyauth": "0.2.20",
+    "everyauth": "0.2.23",
     "session-mongoose": "0.0.1",
     "express-form":"0.6.1",
     "express-messages":"0.0.2",
