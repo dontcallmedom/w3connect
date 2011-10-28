@@ -1,4 +1,5 @@
 <h1>Update data for <%= event.name %></h1>
+<%- messages() ->
 <% var day = event.timeStart.getUTCFullYear() + '-' + (event.timeStart.getUTCMonth() + 1) + '-' + event.timeStart.getUTCDate(); %>
 <% var timezone_string = "UTC" + timezone_offset.toString().replace(/^([0-9])/, '+$1'); %>
 <form action='' method='post'>
