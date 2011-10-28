@@ -134,6 +134,7 @@ exports.importRegistrationData = function(auth, callback)  {
             registrantsData = JSON.parse(registrantsJSON);	    
 	} catch (x) {
 	    errors.push(x);
+	    console.log(registrantsJSON);
 	    callback(success, info, errors);
 	}
         var peopleCounter = 0;
