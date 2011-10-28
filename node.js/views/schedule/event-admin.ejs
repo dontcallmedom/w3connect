@@ -1,5 +1,5 @@
 <h1>Update data for <%= event.name %></h1>
-<% var day = event.timeStart.getUTCYear() + '-' + (event.timeStart.getUTCMonth() + 1) + '-' + event.timeStart.getUTCDate(); %>
+<% var day = event.timeStart.getUTCFullYear() + '-' + (event.timeStart.getUTCMonth() + 1) + '-' + event.timeStart.getUTCDate(); %>
 <form action='' method='post'>
 <p><label>Name: <input name="name" value="<%= event.name%>" required></label></p>
 <p><label>Day: <input type='date' value="<%= day %>" name="day" required></label>
