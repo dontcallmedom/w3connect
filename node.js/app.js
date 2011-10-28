@@ -851,29 +851,18 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	  req.flash("error", "Missing event end time");
 	  next();
       } 
-      var places = {};
-      Place.find({}, function(err, rooms) {
+      Place.findOne({shortname: req.body.room}, function(err, room) {
 	  if (err) {
-	      req.flash("error", "No room known in the system");
-	      next();
+	      req.flash("error", "No known room with shortname" + req.body.room);
 	  }
-	  for (i in rooms) {
-	      places[rooms[i].shortname] = rooms[i];
-	  }
-
 	  event.timeStart =  parseDate(req.body.day.replace('-','') + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00');
 	  event.timeEnd =  parseDate(req.body.day.replace('-','') + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00');
 	  event.name= req.body.name;
 	  event.presenters= req.body.presenters;
 	  event.confidentiality = req.body.confidentiality;
 	  event.observers = req.body.observers;
-	  });
-         if (places[req.body.room]) {
-	    event.room = places[req.body.room]._id;
-         } else {
-	    req.flash('error', 'Failed to locate event “' + event.name + '” as it is set for a room with unknown shortname ' + req.body.room);			
-         }
-         event.save(function (err) {
+	  event.room = room._id;
+          event.save(function (err) {
             if (err) {
 		req.flash('error',err);
 	    } else {
