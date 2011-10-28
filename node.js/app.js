@@ -308,7 +308,7 @@ app.post('/admin/', function(req, res, next){
 		  event.interested = [];
 		  event.save();
 	      }
-	      req.flash.info("Cleared");
+	      req.flash("info", "Cleared");
 	      next();
 	  });
 
