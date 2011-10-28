@@ -375,7 +375,7 @@ app.post('/admin/', function(req, res, next){
 	   timeEnd: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
 	   name: req.body.name,
 	   presenters: req.body.presenters,
-	   slug: require("slug").slug(req.body.name),
+	   slug: require("slug")(req.body.name),
 	   confidentiality: req.body.confidentiality,
 	   observers: req.body.observers
 	  });
