@@ -408,6 +408,7 @@ app.post('/admin/', function(req, res, next){
 		      events = JSON.parse(scheduleJSON);
 		  } catch (err) {
 		      req.flash("error", "Couldn't parse schedule as JSON: " + err);
+		      console.log(scheduleJSON);
 		      next();
 		  }
 		  for (i in events) {
