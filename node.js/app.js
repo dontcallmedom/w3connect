@@ -881,10 +881,11 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	      function(err) {
 		  if (err) {
 		      req.flash("error", err);
+		      next();
 		  } else {
 		      req.flash("success", "Event successfully deleted");
+		      return res.redirect(config.hosting.basepath + '/schedule/admin');
 		  }
-		  next();
 	      });
       }
    });
