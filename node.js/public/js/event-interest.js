@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
   });
 
 if (window.EventSource) {
-	  var evtSrc = new EventSource( "/schedule/stream" );
+	  var evtSrc = new EventSource( "stream" );
     evtSrc.addEventListener("interest", function( e ) {
 	    var data = JSON.parse(e.data);
 	      $("em[data-eventid='" + data.event.slug + "']").each(function() {
