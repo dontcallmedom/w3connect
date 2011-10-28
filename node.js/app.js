@@ -452,8 +452,9 @@ app.post('/admin/', function(req, res, next){
 });
 
 app.all('/admin/', function(req, res){
-    res.render('admin/index', {locals: { title: 'Administration'}});
-
+  Place.find({}, function (err, places) {
+    res.render('admin/index', {locals: { title: 'Administration', places: places}});
+  });
 });
 
 app.post('/people/profile/:id.:format?', function(req, res, next){
