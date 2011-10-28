@@ -115,6 +115,7 @@ exports.importUserList = function(auth, callback)  {
   		    people.save(addPeople(people));		
 		}
 	    } else {
+		console.log("non W3C account: " + people.given + " " + people.family);
 		people.slug = require("slug")(people.given + " " + people.family);
 		people.save(addPeople(people));
 	    }
