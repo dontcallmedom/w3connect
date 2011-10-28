@@ -149,25 +149,26 @@ exports.importRegistrationData = function(auth, callback)  {
 	    callback(success, info, errors);
 	    return;
 	}
-        var peopleCounter = 0;
+        var eventRegistration = {};
         for (p in registrantsData.registrants) {
             var peopleData = registrantsData.registrants[p];
-	    var slug = peopleData.w3cId;
-	    People.findOne(
-		{slug: peopleData.w3cId},
-		function(err, people) {
-		    peopleCounter++;
-		    if (err){
-			errors.push(err);
-		    }
-		    if (people) {
-		    var eventCounter = 0;
-		    for (var e in peopleData.registered) {
-			var eventSlug = peopleData.registered[e];
-			Event.findOne(
-			    {slug: eventSlug},
-			    function(err, event) {
-				errors.push(err);
+	    for (var e in peopleData.registered) {
+		if (!eventRegistration[peopleData.registered[e]]) {
+		    eventRegistration[peopleData.registered[e]] = [];
+		}
+		eventRegistration[peopleData.registered[e]].push(peopleData.w3cId);
+	    }
+	}
+        var eventCounter = 0;
+	for (var eventSlug in eventRegistration) {
+	    Event.findOne(
+		{slug: eventSlug}, function(err, event) {
+		    eventCounter++;
+		    for (var peopleSlug in eventRegistration[eventSlug]) {
+			People.findOne(
+			    {slug: peopleSlug}, ["_id"],
+			    function(err, people) {
+				peopleCounter ++;
 				var alreadyInterested = new RegExp("^" + event.interested.slice(0).join("|") + "$");
 				if (!alreadyInterested.test(people._id)) {
 				    event.interested.push(people._id);
@@ -175,16 +176,16 @@ exports.importRegistrationData = function(auth, callback)  {
 				event.save(
 				    function(err) {
 					errors.push(err);
-					if (peopleCounter == registrantsData.registrants.length && eventCounter == peopleData.registered.length) {
+					if (peopleCounter == registrantsData.registrants.length && eventCounter == eventRegistration.length) {
 					    if (!errors.length) {
 						success.push("Registration data successfully imported");
 					    }
 					    callback(success, info, errors);
 					}
 				    });
+				
 			    });
 		    }
-		    }		    
 		});
 	}
      });
