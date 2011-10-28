@@ -300,16 +300,22 @@ app.post('/admin/', function(req, res, next){
 	  next();
       });    
   } else if (req.body.clearInterested) {
+      var counter = 0;
       Event.find(
 	  {}, 
 	  function(err, events) {
 	      for (e in events) {
 		  var event = events[e];
 		  event.interested = [];
-		  event.save();
+		  event.save(
+		      function(err) {
+			  counter++;
+			  if (counter == events.length) {
+			      req.flash("info", "Cleared");
+			      next();			      
+			  }
+		      });
 	      }
-	      req.flash("info", "Cleared");
-	      next();
 	  });
 
   } else  if (req.body.placeAdd) {
