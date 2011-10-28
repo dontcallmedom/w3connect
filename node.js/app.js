@@ -361,7 +361,6 @@ app.post('/admin/', function(req, res, next){
 	  next();
       } 
       var places = {};
-      }
       Place.find({}, function(err, rooms) {
 	  if (err) {
 	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
