@@ -869,8 +869,9 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 		req.flash('success', req.body.name + ' successfully updated')	 ;
 	    }
 	    next();
-         });
+          });
     });
+   })
 });
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
