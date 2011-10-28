@@ -20,29 +20,4 @@
 <input type='submit' name='placeAdd' value='Add to list of places' />
 </form>
 
-<h2>Schedule</h2>
-<form action='' method='post'>
-<p><label>URI of JSON schedule: <input type="url" name="schedule"></label></p>
-<p><input type="submit" name="updateSchedule"></p>
-</form>
-
-<h2>Events</h2>
-<h3>Add new event</h3>
-<form action='' method='post'>
-<p><label>Name: <input name="name" required></label></p>
-<p><label>Day: <select name='day'><option value='20111031'>Monday</option><option value='20111101'>Tuesday</option><option value='20111102'>Wednesday</option><option value='20111103'>Thursday</option><option value='20111104'>Friday</option></select></label>
-<p><label>Time start: <input required name="start" placeholder="HH:MM" size="5"></label> (US Pacific Time)</p>
-<p><label>Time end: <input name="end" required placeholder="HH:MM" size="5"></label> (US Pacific Time)</p>
-<p><label>Room: <select name='room'><option>Unknown</option>
-<% for (var p  in places) { %> 
-  <option value="<%= places[p].shortname %>"><%= places[p].name %></option>
-<% } %>
-</select></label></p>
-
-</label></p>
-<p><label>Confidentiality: <select name="confidentiality"><option>public</option><option value="member">W3C Member-only</option></select></label></p>
-<p><label>Observers: <select name="observers"><option value="chairs">Allowed, to the Chairs discretion</option><option value="no">Not allowed</option></select></label></p>
-<p><input value="Add a new event" type="submit" name="addEvent"></p>
-</form>
-
-<h3>Update existing event</h3>
+<p>See also <a href="<%= baseurl %>/schedule/admin">the admin interface to update the schedule</a>.</p>

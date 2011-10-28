@@ -346,53 +346,6 @@ app.post('/admin/', function(req, res, next){
 	      });
 	  });
       }
-  } else if (req.body.addEvent) { 
-      if (!req.body.name){
-	  req.flash("error", "Missing event name");
-	  next();
-      } else if (!req.body.day) {
-	  req.flash("error", "Missing event day");
-	  next();
-      } else if (!req.body.start) {
-	  req.flash("error", "Missing event start time");
-	  next();
-      } else if (!req.body.end) {
-	  req.flash("error", "Missing event end time");
-	  next();
-      } 
-      var places = {};
-      Place.find({}, function(err, rooms) {
-	  if (err) {
-	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
-	      next();
-	  }
-	  for (i in rooms) {
-	      places[rooms[i].shortname] = rooms[i];
-	  }
-
-      var event = new Event(
-	  {timeStart: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
-	   timeEnd: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
-	   name: req.body.name,
-	   presenters: req.body.presenters,
-	   slug: require("slug")(req.body.name),
-	   confidentiality: req.body.confidentiality,
-	   observers: req.body.observers
-	  });
-         if (places[req.body.room]) {
-	    event.room = places[req.body.room]._id;
-         } else {
-	    req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
-         }
-      event.save(function (err) {
-		     if (err) {
-			 req.flash('error',err);
-		     } else {
-		         req.flash('info', req.body.name + ' successfully added to schedule')	 ;
-		     }
-		     next();
-      });
-    });
   } else if (req.body.twitterSetting) {
       if (!req.body.username) {
 	  req.flash("error", "Missing Twitter username");
@@ -418,90 +371,13 @@ app.post('/admin/', function(req, res, next){
 	      next();
 	  });
       });
-  } else if (req.body.updateSchedule) {
-      if (!req.body.schedule) {
-	  req.flash("error", "Missing URL of schedule");
-	  next();
-      }
-      var places = {};
-      Place.find({}, function(err, rooms) {
-	  if (err) {
-	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
-	      next();
-	  }
-	  for (i in rooms) {
-	      places[rooms[i].shortname] = rooms[i];
-	  }
-      var http;
-      var url = require("url").parse(req.body.schedule);
-      if (url.protocol == "http:") {
-	  http = require('http');
-      } else if (url.protocol == "https:") {
-	  http = require('https');
-      } else {
-	  req.flash("error", "Unrecognized protocol for room descriptions: " + config.map.rooms_json);
-	  next();
-      }
-      if (http) {
-	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
-	      response.setEncoding('utf8');
-	      var scheduleJSON = "", events;
-	      response.on('data', function (chunk) {
-		  scheduleJSON = scheduleJSON + chunk;
-	      });
-	      response.on('end', function () {
-		  Event.find({}).remove();
-		  try {
-		      events = JSON.parse(scheduleJSON);
-		  } catch (err) {
-		      req.flash("error", "Couldn't parse schedule as JSON: " + err);
-		      console.log(scheduleJSON);
-		      next();
-		  }
-		  for (i in events) {
-		      var e = events[i];
-		      var counter = 0;
-		      var addCounter = 0;
-		      var event = new Event(
-			  {timeStart: parseDate(e.timeStart),
-			   timeEnd: parseDate(e.timeEnd),
-			   name: e.name,
-			   presenters: e.presenters,
-			   slug: e.slug,
-			   confidentiality: e.confidentiality,
-			   observers: e.observers
-			  });
-		      if (places[e.room]) {
-			  event.room = places[e.room]._id;
-		      } else {
-			  req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
-		      }
-		      event.save(function (err) {
-			  counter++;
-			  if (err) {
-			      req.flash('error',err);
-			  } else {
-			      addCounter++;
-			  }
-			  if (counter == events.length) {
-			      req.flash("success", "Schedule successfully loaded");
-			      next();
-			  }
-		      });
-		  }
-	      });
-	  });
-      }
-      });
-  } else {
+   } else {
       next();
   }
 });
 
 app.all('/admin/', function(req, res){
-  Place.find({}, function (err, places) {
-    res.render('admin/index', {locals: { title: 'Administration', places: places}});
-  });
+    res.render('admin/index', {locals: { title: 'Administration'}});
 });
 
 app.post('/people/profile/:id.:format?', function(req, res, next){
@@ -782,6 +658,148 @@ app.get('/orgs/:id.:format?', function(req, res, next){
 		next();
 	    }
 	});  
+});
+
+app.post('/schedule/admin', function(req,res, next) {
+    if (! req.loggedIn) {
+      return res.redirect(everyauth.password.getLoginPath());
+    }
+    var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
+    if (!isAdmin.test(req.user.login)) {
+	return res.render("403");
+    }    
+
+  if (req.body.addEvent) { 
+      if (!req.body.name){
+	  req.flash("error", "Missing event name");
+	  next();
+      } else if (!req.body.day) {
+	  req.flash("error", "Missing event day");
+	  next();
+      } else if (!req.body.start) {
+	  req.flash("error", "Missing event start time");
+	  next();
+      } else if (!req.body.end) {
+	  req.flash("error", "Missing event end time");
+	  next();
+      } 
+      var places = {};
+      Place.find({}, function(err, rooms) {
+	  if (err) {
+	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
+	      next();
+	  }
+	  for (i in rooms) {
+	      places[rooms[i].shortname] = rooms[i];
+	  }
+
+      var event = new Event(
+	  {timeStart: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
+	   timeEnd: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
+	   name: req.body.name,
+	   presenters: req.body.presenters,
+	   slug: require("slug")(req.body.name),
+	   confidentiality: req.body.confidentiality,
+	   observers: req.body.observers
+	  });
+         if (places[req.body.room]) {
+	    event.room = places[req.body.room]._id;
+         } else {
+	    req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
+         }
+      event.save(function (err) {
+		     if (err) {
+			 req.flash('error',err);
+		     } else {
+		         req.flash('info', req.body.name + ' successfully added to schedule')	 ;
+		     }
+		     next();
+      });
+    });
+  } else if (req.body.updateSchedule) {
+      if (!req.body.schedule) {
+	  req.flash("error", "Missing URL of schedule");
+	  next();
+      }
+      var places = {};
+      Place.find({}, function(err, rooms) {
+	  if (err) {
+	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
+	      next();
+	  }
+	  for (i in rooms) {
+	      places[rooms[i].shortname] = rooms[i];
+	  }
+      var http;
+      var url = require("url").parse(req.body.schedule);
+      if (url.protocol == "http:") {
+	  http = require('http');
+      } else if (url.protocol == "https:") {
+	  http = require('https');
+      } else {
+	  req.flash("error", "Unrecognized protocol for room descriptions: " + config.map.rooms_json);
+	  next();
+      }
+      if (http) {
+	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
+	      response.setEncoding('utf8');
+	      var scheduleJSON = "", events;
+	      response.on('data', function (chunk) {
+		  scheduleJSON = scheduleJSON + chunk;
+	      });
+	      response.on('end', function () {
+		  Event.find({}).remove();
+		  try {
+		      events = JSON.parse(scheduleJSON);
+		  } catch (err) {
+		      req.flash("error", "Couldn't parse schedule as JSON: " + err);
+		      console.log(scheduleJSON);
+		      next();
+		  }
+		  for (i in events) {
+		      var e = events[i];
+		      var counter = 0;
+		      var addCounter = 0;
+		      var event = new Event(
+			  {timeStart: parseDate(e.timeStart),
+			   timeEnd: parseDate(e.timeEnd),
+			   name: e.name,
+			   presenters: e.presenters,
+			   slug: e.slug,
+			   confidentiality: e.confidentiality,
+			   observers: e.observers
+			  });
+		      if (places[e.room]) {
+			  event.room = places[e.room]._id;
+		      } else {
+			  req.flash('error', 'Failed to locate event “' + e.name + '” as it is set for a room with unknown shortname ' + e.room);			
+		      }
+		      event.save(function (err) {
+			  counter++;
+			  if (err) {
+			      req.flash('error',err);
+			  } else {
+			      addCounter++;
+			  }
+			  if (counter == events.length) {
+			      req.flash("success", "Schedule successfully loaded");
+			      next();
+			  }
+		      });
+		  }
+	      });
+	  });
+      }
+  });
+ } else {
+     next();
+ }
+});
+
+app.all('/schedule/admin', function(req,res) {
+  Place.find({}, function (err, places) {
+    res.render("schedule/admin", { locals: {title: "Schedule update", places: places}});
+  });
 });
 
 app.get('/schedule/stream', function(req, res) {
