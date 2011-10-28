@@ -168,7 +168,10 @@ exports.importRegistrationData = function(auth, callback)  {
 			    {slug: eventSlug},
 			    function(err, event) {
 				errors.push(err);
-				event.interested.push(people._id);
+				var alreadyInterested = event.interested.slice(0).join("|");
+				if (!alreadyInterested.test(people._id)) {
+				    event.interested.push(people._id);
+				}
 				event.save(
 				    function(err) {
 					errors.push(err);
