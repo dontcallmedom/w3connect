@@ -102,16 +102,21 @@ exports.importUserList = function(auth, callback)  {
 	    people.family = peopleData.family;
 	    people.email = peopleData.email;
 	    people.login = peopleData.login;
-	    people.slug = peopleData.w3cId;
-	    loadPeopleData(people.slug);
-	    if (peopleData.organization && peopleData.organization.w3cId) {
-		     people.affiliationId = peopleData.organization.w3cId;
-  		     org = new Organization();
-		     org.slug = peopleData.organization.w3cId;
-		     org.name = peopleData.organization.name;
-		     org.save(addOrg(org, people));		       
+	    if (peopleData.w3cId) {
+		people.slug = peopleData.w3cId;
+		loadPeopleData(people.slug);
+		if (peopleData.organization && peopleData.organization.w3cId) {
+		    people.affiliationId = peopleData.organization.w3cId;
+  		    org = new Organization();
+		    org.slug = peopleData.organization.w3cId;
+		    org.name = peopleData.organization.name;
+		    org.save(addOrg(org, people));		       
+		} else {
+  		    people.save(addPeople(people));		
+		}
 	    } else {
-  	      people.save(addPeople(people));		
+		people.slug = require("slug")(people.given + " " + people.family);
+		people.save(addPeople(people));
 	    }
 	}
      });
@@ -146,7 +151,11 @@ exports.importRegistrationData = function(auth, callback)  {
 	    People.findOne(
 		{slug: peopleData.w3cId},
 		function(err, people) {
-		    errors.push(err);
+		    if (err || !people){
+			errors.push(err);			
+			callback(success, info, errors);
+			return;
+		    }
 		    var eventCounter = 0;
 		    for (var e in peopleData.registered) {
 			var eventSlug = peopleData.registered[e];
