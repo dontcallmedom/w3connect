@@ -80,13 +80,18 @@ everyauth.password
   .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
+
   .loginSuccessRedirect(config.hosting.basepath + '/')
-  /*.respondToLoginSucceed( function (res, user, data) {
-    if (user) {
-      res.writeHead(303, {'Location': data.session.redirectTo});
-      res.end();
-    }   
-  })*/
+  .respondToLoginSucceed( function (res, user, data) {
+    var redirectTo = config.hosting.basepath + "/";
+      if (data.params.redirectTo) {
+	  redirectTo = data.params.redirectTo;
+      }
+      if (user) {
+	  res.writeHead(303, {'Location': redirectTo});
+	  res.end();
+      }   
+  })
   .authenticate( function (login, password) {
     var promise = this.Promise();  
     var errors = [];
