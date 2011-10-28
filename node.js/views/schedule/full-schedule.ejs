@@ -7,13 +7,13 @@
 <% var timeslotData = {timeStart: timeslot.timeStart, timeEnd: timeslot.timeEnd}; %>
 <% if (schedule[day][JSON.stringify(timeslot)].length == 1) { %>
 <dt><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %>
-— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: true}) %></dt>
+— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %></dt>
 <% } else { %>
 <dt title="tap/click to expand list of events at <%- partial("schedule/timeslot.ejs", timeslotData) %>" class="<%= (d == 0 && t==0 && expanded ? "expanded" : "collapsed") %>"><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %></dt>
 <% for (var e in schedule[day][JSON.stringify(timeslot)]) {%>
 <% var event = schedule[day][JSON.stringify(timeslot)][e];%>
 <dd>
-<%- partial('schedule/event-desc.ejs', {event: event, interestMarker: true}) %>
+<%- partial('schedule/event-desc.ejs', {event: event, interestMarker: interestMarker}) %>
 </dd>
 <% } %>
 <% } %>

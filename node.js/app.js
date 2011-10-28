@@ -822,7 +822,7 @@ app.all('/schedule/admin', function(req,res) {
 		}
 		schedule[day][JSON.stringify(timeslot)].push(events[i]);
 	    }
-        res.render("schedule/admin", { locals: {title: "Schedule update", places: places, days: days, timeslots: timeslots, schedule:schedule, expanded: true}});
+        res.render("schedule/admin", { locals: {title: "Schedule update", places: places, days: days, timeslots: timeslots, schedule:schedule, expanded: true, interestMarker: false, admin: true}});
     });
   });
 });

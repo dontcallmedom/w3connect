@@ -9,7 +9,13 @@
 <% if (event.room && event.room.shortname) { %>
 <a href="<%= baseurl %>/locations/<%= event.room.shortname %>"><%= event.room.name %></a>: 
 <% } %> 
+<% if (typeof admin != "undefined" && admin) { %>
+<a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin">
+<% } %>
 <strong><%= event.name %></strong>
+<% if (typeof admin != "undefined" && admin) { %>
+</a>
+<% } %>
 <% if (event.presenters) { %>
 , by <%= event.presenters %>
 <% } %>
