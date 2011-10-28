@@ -162,8 +162,8 @@ exports.importRegistrationData = function(auth, callback)  {
         var eventCounter = 0;
 	 function updateEvent(event) {
 	     event.save(
-		 eventCounter++;
 		 function(err) {
+		     eventCounter++;
 		     errors.push(err);
 		     if ( eventCounter == eventRegistration.length) {
 			 if (!errors.length) {
