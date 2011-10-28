@@ -36,7 +36,6 @@ function loadPeopleData(id) {
   });
 }
 
-
 exports.importUserList = function(auth, callback)  {
    var https = require('https');
     var success = [];
@@ -118,6 +117,56 @@ exports.importUserList = function(auth, callback)  {
    });
 
 };
+
+exports.importRegistrationData = function(auth, callback)  {
+   var https = require('https');
+    var success = [];
+    var info = [];
+    var errors = [];
+   var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-schedule.php?wgid=35125&qaireno=TPAC2011', headers: {Authorization: 'Basic ' + auth}}, function (response) {
+     response.setEncoding('utf8');
+     var registrantsJSON = "", registrantsData;
+     response.on('data', function (chunk) {
+       registrantsJSON = registrantsJSON + chunk;
+     });
+     response.on('end', function () {
+        registrantsData = JSON.parse(registrantsJSON);
+        var peopleCounter = 0;
+        for (p in registrantsData.registrants) {
+	    peopleCounter++;
+            var peopleData = registrantsData.registrants[p];
+	    People.findOne(
+		{slug: peopleData.w3cId},
+		function(err, people) {
+		    errors.push(err);
+		    var eventCounter = 0;
+		    for (var e in peopleData.registered) {
+			var eventSlug = peopleData.registered[e];
+			Event.findOne(
+			    {slug: eventSlug},
+			    function(err, event) {
+				errors.push(err);
+				event.interested.push(people._id);
+				event.save(
+				    function(err) {
+					errors.push(err);
+					if (peopleCounter == registrantsData.registrants.length && eventCounter == peopleData.registered.length) {
+					    if (!errors.length) {
+						success.push("Registration data successfully imported");
+					    }
+					    callback(success, info, errors);
+					}
+				    });
+			    });
+		    }
+		    
+		});
+	}
+     });
+   });
+
+};
+
 
 exports.importRooms = function() {
 

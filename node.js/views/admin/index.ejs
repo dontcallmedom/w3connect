@@ -9,6 +9,16 @@
 <p><a href='<%= baseurl %>/login'>Log in</a> to update list of registrants.</p>
 <%}%>
 
+<h2>Registration data</h2>
+<% if (everyauth.loggedIn) {%>
+<form action='' method='post'>
+<input type='submit' name='registrationUpdate' value='Update list of registrants' />
+</form>
+<% } else {%>
+<p><a href='<%= baseurl %>/login'>Log in</a> to update list of registrants.</p>
+<%}%>
+
+
 <h2>Places</h2>
 <form action='' method='post'>
 <input type='submit' name='placesUpdate' value='Update list of pre-defined rooms'>

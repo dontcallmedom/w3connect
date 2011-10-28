@@ -292,6 +292,14 @@ app.post('/admin/', function(req, res, next){
 	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
 	  next();
       });
+  } else if (req.body.registrationUpdate) {
+      imports.importRegistrationData(app.set("w3c_auth"), function(success, info, errors) {
+	  if (success) success.forEach(function(i) { req.flash('success',i);});
+	  if (info) info.forEach(function(i) { req.flash('info',i);});
+	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
+	  next();
+      });    
+
   } else  if (req.body.placeAdd) {
       var place = new Place();
       place.shortname = req.body.shortname;
