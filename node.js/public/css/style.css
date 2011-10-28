@@ -1085,6 +1085,14 @@ dl.list-accordion dd.placeholder {
   font-style:italic;
 }
 
+dl.list-accordion dt span.counter {
+    width: inherit;
+    height: auto;
+    margin-right: inherit;
+    display: inline;
+    float: none; }
+
+
 ul.five-piece li {
   width: 20%; }
 
