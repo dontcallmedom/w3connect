@@ -102,7 +102,7 @@ exports.importUserList = function(auth, callback)  {
 	    people.family = peopleData.family;
 	    people.email = peopleData.email;
 	    people.login = peopleData.login;
-	    if (peopleData.w3cId) {
+	    if (peopleData.w3cId > 0) {
 		people.slug = peopleData.w3cId;
 		loadPeopleData(people.slug);
 		if (peopleData.organization && peopleData.organization.w3cId) {
