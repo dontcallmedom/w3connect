@@ -799,7 +799,7 @@ app.post('/schedule/admin', function(req,res, next) {
 app.all('/schedule/admin', function(req,res) {
   Place.find({}, function (err, places) {
     Event.find({})
-	        .asc('timeStart')
+	        .asc('timeStart', 'name')
 		.populate('room', ['shortname','name'])
 		.run( 
 	function(err, events) {
@@ -961,7 +961,7 @@ app.get('/schedule/?(:datetime)?', function (req, res, next){
 	}
     }
     Event.find({})
-	        .asc('timeStart')
+	        .asc('timeStart', 'name')
 		.populate('room', ['shortname','name'])
 		.run( 
 	function(err, events) {
