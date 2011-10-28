@@ -16,7 +16,7 @@ addEvent("onload",init);
 <% } %>
 <dt id="mySchedule" class="expanded"><span></span><strong>My schedule</strong></dt>
 <% if (user) { %>
-<dd class="placeholder">Star talks below to have them appear in your schedule</dd>
+<dd class="placeholder">Star meetings below to have them appear in your schedule</dd>
 <% if (myEvents.length) {%>
 <%- partial('schedule/event-list.ejs', {eventList: myEvents, showTime: true, className: "mySchedule"}) %>
 <% } %>
