@@ -2,10 +2,10 @@
 <ul class="inline">
 <% var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; %>
 <% for (var i =0; i<alphabet.length;  i++) { %>
-<li><% if (alphabet[i] != letter) { %>
+<li><% if (alphabet[i].toLowerCase() != letter) { %>
 <a href='<%= alphabet[i].toLowerCase() %>' title='List of persons whose family name starts with <%= alphabet[i] %>'><%= alphabet[i] %></a>
 <% } else { %>
-<%= alphabet[i] %>
+<strong><%= alphabet[i] %></strong>
 <% } %>
 <%}%>
 <li> <a href="all" title="Full list of registered persons">All</a> </li>
