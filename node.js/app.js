@@ -667,7 +667,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 		   if (!err) { 
                        res.send(JSON.stringify({success: (req.body.checkin ? 'Checked in at ' + newPosition.name : "Checked out")}));
 		   } else {
-		     res.send({error: err});
+		       res.send(JSON.stringify({error: err}));
 		   }
     	           break;
                  default:
@@ -1085,7 +1085,7 @@ app.post("/schedule/events/:slug/", function(req, res, next) {
 			if (!err) {
 			    res.send(JSON.stringify({success: 'Interest ' + (req.body.interested ? "recorded for" : "removed from") + event.name}));
 			} else { 
-			    res.send({error: err});                   
+			    res.send(JSON.stringify({error: err}));                   
 			}
 			break;
 		    default:
@@ -1108,7 +1108,7 @@ app.post("/schedule/events/:slug/", function(req, res, next) {
 app.all('/schedule/events/:slug.:format?', function(req, res, next) {
     Event.findOne({slug: req.params.slug})
 	.populate('room', ['shortname', 'name'])
-	.populate('proposedBy')
+	    .populate('proposedBy')
 	.run(
 	    function(err, event) {
 		if (err) {
