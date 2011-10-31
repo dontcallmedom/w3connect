@@ -8,7 +8,7 @@
 <h2>Events</h2>
 <h3>Add new event</h3>
 <form action='' method='post'>
-<%- partial('schedule/addEvent.ejs') %>
+<%- partial('schedule/addEvent.ejs', {includeDetails: true}) %>
 </form>
 
 <h3>Update existing event</h3>
