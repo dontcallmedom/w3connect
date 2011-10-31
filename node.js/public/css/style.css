@@ -1098,7 +1098,7 @@ ul.five-piece li {
 
 ul.inline li { display: inline;}
 
-ul.inline li a { padding: 0 0.5em;}
+ul.inline li a { padding: 0.2em 0.5em;}
 
 ul.inline li:after { content:"|"};
 
