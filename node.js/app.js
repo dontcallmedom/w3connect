@@ -595,7 +595,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 				name: indiv.lastKnownPosition.name,
 				time: indiv.lastKnownPosition.time};
 	    var newPosition = {shortname: null, name: null, time: Date.now()};
-	    if (req.body.checkink) {
+	    if (req.body.checkin) {
 		newPosition.shortname = place.shortname;
 		newPosition.name = place.name;
 	    }
