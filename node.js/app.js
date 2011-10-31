@@ -563,49 +563,67 @@ app.post('/locations/:id.:format?', function(req, res, next) {
   }
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
-	if (req.body.checkin && req.user) {
+	if ((req.body.checkin || req.body.checkout) && req.user) {
 	    // the user is already checked in in that place
 	    if (req.user.lastKnownPosition.shortname == place.shortname) {
-		switch (req.outputFormat) {
-		case "json":
-		    res.send(JSON.stringify({success: "Already checked in at " + place.name}));
-		    break;
-		default:
-		    req.flash('info', "You’re already checked in at " + place.name);
-		    next();
+		if (req.body.checkin) {
+		    switch (req.outputFormat) {
+		    case "json":
+			res.send(JSON.stringify({success: "Already checked in at " + place.name}));
+		    
+			break;
+		    default:
+			req.flash('info', "You’re already checked in at " + place.name);
+			next();
+		    }
 		}
 	    } else {
-	   var indiv = req.user ;
+		if (req.body.checkout) {
+		    switch (req.outputFormat) {
+		    case "json":
+			res.send(JSON.stringify({error: "You’re not checked in at " + place.name + ", so you can’t checkout from it"}));
+		    
+			break;
+		    default:
+			req.flash('info', "You’re not checked in at " + place.name + ", so you can’t checkout from it");
+			next();
+		    }
+		}
+	    }
+	    var indiv = req.user ;
 	    var prevPosition = {shortname: indiv.lastKnownPosition.shortname,
 				name: indiv.lastKnownPosition.name,
 				time: indiv.lastKnownPosition.time};
-	   indiv.lastKnownPosition = {};		      
-	   indiv.lastKnownPosition.shortname = place.shortname; 
-	   indiv.lastKnownPosition.name = place.name; 
-	   indiv.lastKnownPosition.time = Date.now();
+	    var newPosition = {};
+	    if (req.body.checkink) {
+		newPosition.shortname = place.shortname;
+		newPosition.name = place.name;
+		newPosition.time = Date.now();
+	    }
+	    indiv.lastKnownPosition = newPosition; 
 	   indiv.save(function(err) {
              req.flash('error',err);
 	       if (!err) {
-		   emitter.emit("checkin", req.user, prevPosition, place);
+		   emitter.emit("checkin", req.user, prevPosition, newPosition);
 	       }
                switch (req.outputFormat) {
                  case 'json':
 		   if (!err) { 
-                     res.send(JSON.stringify({success: 'Checked in at ' + place.name}));
+                       res.send(JSON.stringify({success: (req.body.checkin ? 'Checked in at ' + newPosition.name : "Checked out")}));
 		   } else {
 		     res.send({error: err});
 		   }
     	           break;
                  default:
 		   if (!err) {
-		     req.flash('info', 'Checked in at '  + place.name);
+		       req.flash('info', (req.body.checkin ? 'Checked in at '  + newPosition.name : "Checked out");
 		   } else {
 		       req.flash('error', err);
 		   }
 		   next();
 	       }
 	   });
-	    }
+
 	} else {
 	    next();
 	}

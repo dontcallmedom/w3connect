@@ -2,13 +2,15 @@
 <h2>Check in</h2>
 <%- messages()%>
 <% if (everyauth.loggedIn) {%>
-<% if (user.lastKnownPosition.shortname != place.shortname) { %>
 <form class='client' action="" method="post">
+<% if (user.lastKnownPosition.shortname != place.shortname) { %>
 <input  type="submit" name="checkin" value="Check in at <%= place.name %>">
-</form>
 <% } else { %>
 <p>You are already checked in at <%= place.name %>.</p>
+<p><input type="submit" name="checkout" value="Check out from <%= place.name %>"></p>
 <%}
+
+</form>
 } else {%>
 <p><a href='<%= baseurl %>/login'>Log in</a> to check in at <%= place.name %>.</p>
 <%}%>
