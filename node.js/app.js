@@ -347,7 +347,6 @@ app.post('/admin/', function(req, res, next){
 		      });
 	      }
 	  });
-
   } else  if (req.body.placeAdd) {
       var place = new Place();
       place.shortname = req.body.shortname;
@@ -617,6 +616,8 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 
 });
 
+
+
 app.all('/locations/:id.:format?', function(req, res) {
   Place.find({}).asc('name').run( function (err, places) {
     places.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
@@ -657,7 +658,47 @@ app.all('/locations/:id.:format?', function(req, res) {
   });
 });
 
-
+    app.post("/locations/:id/admin", function(req,res, next) {
+	if (req.body.placeUpdate) {
+	    if (!req.body.name) {
+		req.flash("error", "Missing name of room to update");
+		next();
+	    }
+	    Place.findOne(
+		{shortname: req.params.id},
+		function (err, place) {
+		    if (err) {
+			req.flash("error", err);
+		    }
+		    if (!place) {
+			req.flash("error", "No room found with shortname " + req.params.id);
+			next();
+		    }
+		    place.name = req.body.name;
+		    place.save(
+			function(err) {
+			    if (err) {
+				req.flash("error", err);
+			    } else {
+				req.flash("success", "Room successfully updated");
+			    }
+			    next();
+			});
+		});
+	}
+    });
+	    
+    app.all("/locations/:id/admin", function(req,res, next) {
+	Place.findOne(
+	    {shortname: req.params.id},
+	    function (err, place) {
+		if (place) {
+		    res.render("locations/admin.ejs", {locals: {place: place}});
+		} else {
+		    next();
+		}
+	    });
+    });
 
 app.get('/people/:letter?.:format?', function (req, res, next){
   var letter = req.params.letter;
