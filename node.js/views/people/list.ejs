@@ -1,6 +1,10 @@
 <ul id="peopleList" class='list-graphical group'>
 <% for (var p  in people) { %>
-  <li> <a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/profile/<%= people[p].slug %>'><img src="<% if (people[p].picture_thumb) { %><%=people[p].picture_thumb%><% } else { %>http://www.w3.org/community/src/img/default-pic.png<% } %>" width='36' alt="Picture of <%= people[p].given + " " + people[p].family %>"><%= people[p].family + ", " + people[p].given %></a></li>
+  <li> <a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/profile/<%= people[p].slug %>'><img src="<% if (people[p].picture_thumb) { %><%=people[p].picture_thumb%><% } else { %>http://www.w3.org/community/src/img/default-pic.png<% } %>" width='36' alt="Picture of <%= people[p].given + " " + people[p].family %>"><%= people[p].family + ", " + people[p].given %></a>
+<% if (typeof showCheckin != "undefined" && showCheckin && people[p].lastKnownPosition && people[p].lastKnownPosition.shortname) { %>
+ — last checkin: <a href="<%= baseurl %>/locations/<%= people[p].lastKnownPosition.shortname %>"><%= people[p].lastKnownPosition.name %></a>
+<% } %>
+</li>
 <% } %>
 </ul>
 
