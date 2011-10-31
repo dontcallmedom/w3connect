@@ -1247,7 +1247,8 @@
        x="649.83722"
        y="126.33325">Elevators</tspan></text>
   <text x="361" y="180">Lobby</text>
-
+  <text x="197" y="157">Pool</text>
+  <path d="m 357.30252,248.65451 0,16.78603" style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"/>
   <script
      xlink:href="../js/map.js"
      id="script261" />
