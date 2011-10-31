@@ -259,6 +259,55 @@ function prepareEventsList(events) {
     return [days, timeslots, schedule];
 }
 
+function addEvent(req, res, next, eventType) {
+    if (!req.body.name){
+	req.flash("error", "Missing event name");
+	next();
+    } else if (!req.body.day) {
+	req.flash("error", "Missing event day");
+	next();
+    } else if (!req.body.start) {
+	req.flash("error", "Missing event start time");
+	next();
+    } else if (!req.body.end) {
+	req.flash("error", "Missing event end time");
+	next();
+    } 
+    var places = {};
+    Place.find({}, function(err, rooms) {
+	if (err) {
+	    req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
+	    next();
+	}
+	for (i in rooms) {
+	    places[rooms[i].shortname] = rooms[i];
+	}
+	
+	var event = new Event(
+	    {timeStart: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
+	     timeEnd: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
+	     name: req.body.name,
+	     presenters: req.body.presenters,
+	     slug: require("slug")(req.body.name),
+	     confidentiality: req.body.confidentiality,
+	     observers: req.body.observers
+	    });
+        if (places[req.body.room]) {
+	    event.room = places[req.body.room]._id;
+        } else {
+	    req.flash('error', 'Failed to locate event “' + event.name + '” as it is set for a room with unknown shortname ' + req.body.room);			
+        }
+	event.save(function (err) {
+	    if (err) {
+		req.flash('error',err);
+	    } else {
+		req.flash('info', req.body.name + ' successfully added to schedule')	 ;
+		     }
+	    next();
+	});
+    });
+}
+
 // Routes
 
 app.error(function(err, req, res, next){
@@ -793,52 +842,7 @@ app.post('/schedule/admin', function(req,res, next) {
     }    
 
   if (req.body.addEvent) { 
-      if (!req.body.name){
-	  req.flash("error", "Missing event name");
-	  next();
-      } else if (!req.body.day) {
-	  req.flash("error", "Missing event day");
-	  next();
-      } else if (!req.body.start) {
-	  req.flash("error", "Missing event start time");
-	  next();
-      } else if (!req.body.end) {
-	  req.flash("error", "Missing event end time");
-	  next();
-      } 
-      var places = {};
-      Place.find({}, function(err, rooms) {
-	  if (err) {
-	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
-	      next();
-	  }
-	  for (i in rooms) {
-	      places[rooms[i].shortname] = rooms[i];
-	  }
-
-      var event = new Event(
-	  {timeStart: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
-	   timeEnd: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
-	   name: req.body.name,
-	   presenters: req.body.presenters,
-	   slug: require("slug")(req.body.name),
-	   confidentiality: req.body.confidentiality,
-	   observers: req.body.observers
-	  });
-         if (places[req.body.room]) {
-	    event.room = places[req.body.room]._id;
-         } else {
-	    req.flash('error', 'Failed to locate event “' + event.name + '” as it is set for a room with unknown shortname ' + req.body.room);			
-         }
-      event.save(function (err) {
-		     if (err) {
-			 req.flash('error',err);
-		     } else {
-		         req.flash('info', req.body.name + ' successfully added to schedule')	 ;
-		     }
-		     next();
-      });
-    });
+      addEvent(req, res, next, 'meeting');
   } else if (req.body.updateSchedule) {
       if (!req.body.schedule) {
 	  req.flash("error", "Missing URL of schedule");

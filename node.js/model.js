@@ -52,7 +52,7 @@ var Event  = new Schema({
     slug: String,
     registered: [{type: Schema.ObjectId, ref: 'People'}],
     interested: [{type: Schema.ObjectId, ref: 'People'}],
-    eventType : {type: String, enum: ["meeting", "meal", "werewolf", "run"]},
+    eventType : {type: String, enum: ["meeting", "adhoc", "meal", "werewolf", "run"]},
     confidentiality: {type: String, enum: ["member", "public"]},
     observers: {type: String, enum: ["chairs", "member", "no"]},
     name: String,
