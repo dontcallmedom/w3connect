@@ -616,7 +616,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
     	           break;
                  default:
 		   if (!err) {
-		       req.flash('info', (req.body.checkin ? 'Checked in at '  + newPosition.name : "Checked out");
+		       req.flash('info', (req.body.checkin ? 'Checked in at '  + newPosition.name : "Checked out"));
 		   } else {
 		       req.flash('error', err);
 		   }
