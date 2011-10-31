@@ -496,7 +496,7 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
       return res.redirect(everyauth.password.getLoginPath());
     } else {
 	if (req.body.updateProfile && req.body.twitter && req.user.slug == req.params.id) {
-	    twitterAccount = req.body.twitter.(/^@/, '');
+	    twitterAccount = req.body.twitter.replace(/^@/, '');
 	    twitter.getTwitterId(twitterAccount, function(err, id) {
 		if (err) {
 		    req.flash("error", err);
