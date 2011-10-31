@@ -21,7 +21,7 @@ addEvent("onload",init);
 <%- partial('schedule/event-list.ejs', {eventList: myEvents, showTime: true, className: "mySchedule"}) %>
 <% } %>
 <dd><form action='' method='post'><fieldset><legend>Add ad-hoc event</legend>
-<%- partial('schedule/addEvent.ejs') %>
+<%- partial('schedule/addEvent.ejs', {places: places}) %>
 </form></dd>
 <% } else { %>
 <dd class="placeholder"><a href="<%= baseurl %>/login">Log in to build your schedule</a></dd>
