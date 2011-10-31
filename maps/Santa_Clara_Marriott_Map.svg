@@ -273,6 +273,7 @@
          y="203.027"
          width="20.434"
          height="22.278" />
+      <text x="180" y="215">Monterey</text>
     </a>
     <a
        title="Sequoia"
@@ -285,6 +286,7 @@
          y="202.861"
          width="20.77"
          height="22.444" />
+      <text x="247" y="200">Sequoia</text>
     </a>
     <a
        title="Sierra"
@@ -297,6 +299,7 @@
          y="232.506"
          width="20.435"
          height="22.108" />
+      <text x="247" y="263">Sierra</text>
     </a>
     <a
        title="Ponderosa"
@@ -309,6 +312,7 @@
          y="232.506"
          width="20.769"
          height="22.108" />
+      <text x="177" y="245">Ponderosa</text>
     </a>
     <a
        title="Seattle"
@@ -385,6 +389,7 @@
          y="391.628"
          width="19.764"
          height="23.95" />
+      <text x="376" y="423" style="text-align:center;text-anchor:middle">Prospector</text>
     </a>
     <a
        title="Prospector Suite B"
@@ -1242,6 +1247,7 @@
        x="649.83722"
        y="126.33325">Elevators</tspan></text>
   <text x="361" y="180">Lobby</text>
+
   <script
      xlink:href="../js/map.js"
      id="script261" />
