@@ -496,7 +496,8 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
       return res.redirect(everyauth.password.getLoginPath());
     } else {
 	if (req.body.updateProfile && req.body.twitter && req.user.slug == req.params.id) {
-	    twitter.getTwitterId(req.body.twitter, function(err, id) {
+	    twitterAccount = req.body.twitter.(/^@/, '');
+	    twitter.getTwitterId(twitterAccount, function(err, id) {
 		if (err) {
 		    req.flash("error", err);
 		    next();
@@ -505,7 +506,7 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
 			if (err) {
 			    next();
 			} else {
-			    indiv.twitterAccount = {"name": req.body.twitter, id: id};
+			    indiv.twitterAccount = {"name": twitterAccount, id: id};
 			    indiv.save(function(err) {
 				// re-start twitter listener
 				emitter.emit("twitterListChange", id);
