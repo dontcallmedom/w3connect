@@ -19,6 +19,9 @@
 <% if (event.presenters) { %>
 , by <%= event.presenters %>
 <% } %>
+<% if (event.eventType == 'adhoc') { %>
+(ad-hoc meeting<%= (event.proposedBy ? "proposed by " + event.proposedBy.name : "")%>)
+<% } %>
 <% if (event.confidentiality && event.confidentiality == 'member') { %>
  — W3C Member-only
 <% } %>
