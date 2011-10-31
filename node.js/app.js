@@ -259,7 +259,7 @@ function prepareEventsList(events) {
     return [days, timeslots, schedule];
 }
 
-function addEvent(req, res, next, eventType) {
+function addEvent(req, res, next, eventType, proposedBy) {
     if (!req.body.name){
 	req.flash("error", "Missing event name");
 	next();
@@ -290,8 +290,12 @@ function addEvent(req, res, next, eventType) {
 	     presenters: req.body.presenters,
 	     slug: require("slug")(req.body.name),
 	     confidentiality: req.body.confidentiality,
-	     observers: req.body.observers
+	     observers: req.body.observers,
+	     eventType: req.body.eventType
 	    });
+	if (proposedBy) {
+	    event.proposedBy = proposedBy._id;
+	}
         if (places[req.body.room]) {
 	    event.room = places[req.body.room]._id;
         } else {
@@ -842,7 +846,7 @@ app.post('/schedule/admin', function(req,res, next) {
     }    
 
   if (req.body.addEvent) { 
-      addEvent(req, res, next, 'meeting');
+      addEvent(req, res, next, 'meeting', null);
   } else if (req.body.updateSchedule) {
       if (!req.body.schedule) {
 	  req.flash("error", "Missing URL of schedule");
@@ -1114,7 +1118,16 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
 	    });
 });
 
-app.get('/schedule/?(:datetime)?', function (req, res, next){
+    app.post('/schedule/', function (req, res, next) {
+	if (! req.loggedIn) {
+	    return res.redirect(everyauth.password.getLoginPath());
+	}
+	if (req.body.addEvent) { 
+	    addEvent(req, res, next, 'adhoc', req.user);
+	}
+    });
+
+app.all('/schedule/?(:datetime)?', function (req, res, next){
     var current = new Date();
     current.setUTCHours(current.getUTCHours() + config.schedule.timezone_offset);
     if (req.params.datetime) {
