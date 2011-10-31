@@ -531,6 +531,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
     People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).run( function(err, indiv) {
 	if (indiv) {
 	    Event.find({})
+	    	.populate('proposedBy')
 		//.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
 	        .asc('timeStart')
 		.run(function(err, events) {
@@ -708,6 +709,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 	  Event.findOne({"room": place._id})
 	      .where('timeStart').lte(current)
 	      .where('timeEnd').gte(current)
+	      .populate('proposedBy')
 		.run( 
 		    function(err, event) {	  
 
@@ -935,6 +937,7 @@ app.all('/schedule/admin', function(req,res) {
     Event.find({})
 	        .asc('timeStart', 'name')
 		.populate('room', ['shortname','name'])
+	  .populate('proposedBy')
 		.run( 
 	function(err, events) {
 	    var data = prepareEventsList(events);
@@ -1011,7 +1014,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
   Place.find({}).asc('name').run( function (err, places) {
-    Event.findOne({slug: req.params.slug}).populate('room').run(function(err, event) {
+      Event.findOne({slug: req.params.slug}).populate('room').populate('proposedBy').run(function(err, event) {
 	if (err) {
 	    next();
 	}
@@ -1105,6 +1108,7 @@ app.post("/schedule/events/:slug/", function(req, res, next) {
 app.all('/schedule/events/:slug.:format?', function(req, res, next) {
     Event.findOne({slug: req.params.slug})
 	.populate('room', ['shortname', 'name'])
+	.populate('proposedBy')
 	.run(
 	    function(err, event) {
 		if (err) {
@@ -1144,6 +1148,7 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
     Event.find({})
 	        .asc('timeStart', 'name')
 		.populate('room', ['shortname','name'])
+	    .populate('proposedBy')
 		.run( 
 	function(err, events) {
 	    var days = [];
