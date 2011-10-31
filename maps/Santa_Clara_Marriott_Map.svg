@@ -273,7 +273,7 @@
          y="203.027"
          width="20.434"
          height="22.278" />
-      <text x="180" y="215">Monterey</text>
+      <text x="199" y="215">Monterey</text>
     </a>
     <a
        title="Sequoia"
@@ -286,7 +286,7 @@
          y="202.861"
          width="20.77"
          height="22.444" />
-      <text x="247" y="200">Sequoia</text>
+      <text x="263" y="200">Sequoia</text>
     </a>
     <a
        title="Sierra"
@@ -299,7 +299,7 @@
          y="232.506"
          width="20.435"
          height="22.108" />
-      <text x="247" y="263">Sierra</text>
+      <text x="259" y="263">Sierra</text>
     </a>
     <a
        title="Ponderosa"
@@ -312,7 +312,7 @@
          y="232.506"
          width="20.769"
          height="22.108" />
-      <text x="177" y="245">Ponderosa</text>
+      <text x="198" y="245">Ponderosa</text>
     </a>
     <a
        title="Seattle"
