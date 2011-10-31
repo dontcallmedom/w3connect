@@ -1138,6 +1138,7 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 	    next();
 	}
     }
+    Places.find({}, function(err, places) {
     Event.find({})
 	        .asc('timeStart', 'name')
 		.populate('room', ['shortname','name'])
@@ -1177,8 +1178,9 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 		}
 		schedule[day][JSON.stringify(timeslot)].push(events[i]);
 	    }
-	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, myEvents: myEvents, title: "Schedule", script:"/js/event-interest.js"}});
+	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, myEvents: myEvents, places: places, title: "Schedule", script:"/js/event-interest.js"}});
 	});
+    });
 });
 
 /*
