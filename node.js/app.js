@@ -282,13 +282,15 @@ function addEvent(req, res, next, eventType, proposedBy) {
 	for (i in rooms) {
 	    places[rooms[i].shortname] = rooms[i];
 	}
-	
+	// uuid generation from http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+	slug = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
+
 	var event = new Event(
 	    {timeStart: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
 	     timeEnd: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
 	     name: req.body.name,
 	     presenters: req.body.presenters,
-	     slug: require("slug")(req.body.name),
+	     slug: slug,
 	     confidentiality: req.body.confidentiality,
 	     observers: req.body.observers,
 	     eventType: req.body.eventType
