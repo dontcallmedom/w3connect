@@ -1123,3 +1123,5 @@ dl {
   dl dt {
     background-color: #f6f6f6;
     /*container for expand/collapse icon*/ }
+
+  ul.list-graphical a.supp { display: inline;}
