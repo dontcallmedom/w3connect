@@ -622,8 +622,10 @@ app.post('/locations/:id.:format?', function(req, res, next) {
     if (place) {
 	if ((req.body.checkin || req.body.checkout) && req.user) {
 	    // the user is already checked in in that place
+	    var actionNeeded = true;
 	    if (req.user.lastKnownPosition.shortname == place.shortname) {
 		if (req.body.checkin) {
+		    actionNeeded = false;
 		    switch (req.outputFormat) {
 		    case "json":
 			res.send(JSON.stringify({success: "Already checked in at " + place.name}));
@@ -636,6 +638,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 		}
 	    } else {
 		if (req.body.checkout) {
+		    actionNeeded = false;
 		    switch (req.outputFormat) {
 		    case "json":
 			res.send(JSON.stringify({error: "You’re not checked in at " + place.name + ", so you can’t checkout from it"}));
@@ -647,6 +650,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 		    }
 		}
 	    }
+	    if (actionNeeded) {
 	    var indiv = req.user ;
 	    var prevPosition = {shortname: indiv.lastKnownPosition.shortname,
 				name: indiv.lastKnownPosition.name,
@@ -679,7 +683,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 		   next();
 	       }
 	   });
-
+	    }
 	} else {
 	    next();
 	}
