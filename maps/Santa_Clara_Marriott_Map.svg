@@ -51,8 +51,7 @@
   <title
      id="title3">Santa Clara Marriott Schematic</title>
   <style
-     type="text/css"
-     id="style5">
+     type="text/css">
     .room.youarehere {
        stroke:red;
        stroke-width:4px;
