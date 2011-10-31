@@ -685,6 +685,8 @@ app.all('/locations/:id.:format?', function(req, res) {
 			    next();
 			});
 		});
+	} else {
+	    next();
 	}
     });
 	    
