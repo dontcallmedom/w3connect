@@ -1,4 +1,5 @@
 <h1>People</h1>
+<nav>
 <ul class="inline">
 <% var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; %>
 <% for (var i =0; i<alphabet.length;  i++) { %>
@@ -9,6 +10,6 @@
 <% } %>
 <%}%>
 <li> <a href="all" title="Full list of registered persons">All</a> </li>
-</ul>
+</ul></nav>
 
 <%- partial('people/list.ejs', {showCheckin: true}) %>
