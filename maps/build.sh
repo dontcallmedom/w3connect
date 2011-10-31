@@ -13,4 +13,4 @@ do cat "$1" |sed -e 's/"text\/css">/"text\/css">#'`basename $i .svg`' { fill: ye
 done
 
 cp "$1" "$DESTDIR"/main.svg
-inkscape "$DESTDIR"/main.svg -e "$DESTDIR"/maps/main.png
+inkscape "$DESTDIR"/main.svg -e "$DESTDIR"/main.png
