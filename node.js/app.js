@@ -594,11 +594,10 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 	    var prevPosition = {shortname: indiv.lastKnownPosition.shortname,
 				name: indiv.lastKnownPosition.name,
 				time: indiv.lastKnownPosition.time};
-	    var newPosition = {};
+	    var newPosition = {shortname: null, name: null, time: Date.now()};
 	    if (req.body.checkink) {
 		newPosition.shortname = place.shortname;
 		newPosition.name = place.name;
-		newPosition.time = Date.now();
 	    }
 	    indiv.lastKnownPosition = newPosition; 
 	   indiv.save(function(err) {
