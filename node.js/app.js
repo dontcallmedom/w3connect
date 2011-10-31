@@ -530,6 +530,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 	if (indiv) {
 	    Event.find({})
 		//.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
+	        .asc('timeStart')
 		.run(function(err, events) {
 		    var days, timeslots, schedule;
 		    var userEvents = [];
