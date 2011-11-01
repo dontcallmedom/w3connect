@@ -44,6 +44,7 @@ var Place = new Schema({
 
 var StatusUpdate = new Schema({
     author: {type: Schema.ObjectId, ref: 'People'},
+    statusType: {type: String, enum: ["tweet", "checkin", "checkout", "interest"]},
     content: String,
     time: Date
 });
@@ -55,6 +56,7 @@ var Event  = new Schema({
     eventType : {type: String, enum: ["meeting", "adhoc", "meal", "werewolf", "run"]},
     confidentiality: {type: String, enum: ["member", "public"]},
     observers: {type: String, enum: ["chairs", "member", "no"]},
+    proposedBy: {type: Schema.ObjectId, ref: 'People'},
     name: String,
     description: String,
     presenters: String,
