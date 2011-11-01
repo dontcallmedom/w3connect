@@ -373,6 +373,7 @@ app.get('/', function(req, res){
 	      .run(function(err, statuses) { 
 		  res.render('index', {locals: {statuses: []}});
 
+	      });
       }
   });
 });
