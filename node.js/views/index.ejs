@@ -9,7 +9,7 @@
 <h2>Recent Activity</h2>
 <div id="messages">
 <% for (var s = 0; s < statusupdates.length; s++) { %>
-<p class="info"><a href="/people/profile/<%= statusupdates[s].author.slug %>"><%= statusupdates[s].author.given + " " + statusupdates[s].author.family %></a>: <%= statusupdates[s].content %></p>
+<p class="info"><a href="<%= baseurl %>/people/profile/<%= statusupdates[s].author.slug %>"><%= statusupdates[s].author.given + " " + statusupdates[s].author.family %></a>: <%= statusupdates[s].content %></p>
 <% } %>
 </div>
 <% } %>
