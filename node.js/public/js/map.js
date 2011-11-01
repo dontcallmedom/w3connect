@@ -125,7 +125,7 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	box.setAttribute("height","60");
 	box.setAttribute("fill", "black");
 	var div =  document.createElementNS(xhtmlns, "div");
-	div.setAttribute("style", "font-size:20px");
+	div.setAttribute("style", "font-size:10px");
 	var img = document.createElementNS(svgns, "image");
 	img.setAttributeNS(xlinkns, "href", profile_image);
 	img.setAttribute("x", bbox.x + bbox.width / 2 - 36 );
