@@ -80,7 +80,7 @@ everyauth.password
   .getLoginPath(config.hosting.basepath + '/login')
   .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
-  .registerView('register.ejs') // @@@ need fixing
+  .registerView('index.ejs') // @@@ need fixing
 
   .loginSuccessRedirect(config.hosting.basepath + '/')
 /*  .respondToLoginSucceed( function (res, user, data) {
