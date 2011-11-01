@@ -31,3 +31,11 @@
 <dl>
 <%- partial("schedule/full-schedule.ejs", {days: days, timeslots: timeslots, schedule:schedule, expanded: true, interestMarker: false}) %>
 </dl>
+<% if (statusupdates.length) { %>
+<h2>Recent activity</h2>
+<ul>
+<% for (var s=0; s<statusupdates.length; s++) { %>
+<li><%= statusupdates[s].content %> (<%= statusupdates[s].time %>)</li>
+<% } %>
+</ul>
+<% } %>

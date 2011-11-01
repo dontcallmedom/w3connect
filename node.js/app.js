@@ -577,14 +577,19 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 			timeslots = data[1];
 			schedule = data[2];
 		    }
-		    switch (req.params.format) {
-			// When json, generate suitable data
-		    case 'json':
-			res.send(indiv);
-			break;
-		    default:
-			res.render('people/indiv.ejs', { locals: { indiv: indiv, title: indiv.given + ' ' + indiv.family, days: days, timeslots: timeslots, schedule:schedule }});
-		    }
+		    Status.find({author._id: indiv._id})
+			.desc("time")
+			.limit(20)
+			.run(function(err, statusupdates) {
+			    switch (req.params.format) {
+				// When json, generate suitable data
+			    case 'json':
+				res.send(indiv);
+				break;
+			    default:
+				res.render('people/indiv.ejs', { locals: { indiv: indiv, title: indiv.given + ' ' + indiv.family, days: days, timeslots: timeslots, schedule:schedule, statusupdates: statusupdates }});
+			    }
+			});
 		});
 	} else {
 	    next();
