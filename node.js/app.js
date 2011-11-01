@@ -234,7 +234,7 @@ emitter.on("twitterListChange", function (id) {
 
 // Record events as statusupdates
 emitter.on("checkin", function(user, left, entered) {
-    var status  = new Status({author: user, time: Date.now(), statusType: "checkin", content: user.given + " " + user.family + (left ? " left " + left.name + (entered ? " and " : "") : "") + (entered ? " entered " + entered.name : "") + "."});
+    var status  = new Status({author: user, time: Date.now(), statusType: "checkin", content: user.given + " " + user.family + (left && left.name ? " left " + left.name + (entered && entered.name ? " and " : "") : "") + (entered && entered.name ? " entered " + entered.name : "") + "."});
     status.save();
 });
 
