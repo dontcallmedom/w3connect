@@ -367,7 +367,12 @@ app.get('/', function(req, res){
 	      });
 	  }
       } else {
-	  res.render('index');
+	  Status.find({})
+	      .desc('time')
+	      .limit(20)
+	      .run(function(err, statuses) {
+		  res.render('index', {locals: {statuses: statuses}});
+	      });
       }
   });
 });
