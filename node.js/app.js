@@ -161,10 +161,7 @@ app.configure(function(){
 		  console.log("Incomplete twitter settings found, won't get updates from Twitter: " + JSON.stringify(settings));
 	      } else {
 		  app.set('twitter_auth', new Buffer(settings.username + ':' + settings.password).toString('base64')); 	  
-		  if (!settings.ids || !settings.ids.length) {
-		      if (!settings.ids) {
-			  settings.ids = [];
-		      }
+		  if (true) {
 		      People.find({}, ['twitterAccount'], function(err, people) {
 			  for (p in people) {
 			      if (people[p].twitterAccount && people[p].twitterAccount.id) {
