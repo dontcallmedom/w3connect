@@ -5,3 +5,11 @@
 <li><a href="schedule/">Schedule</a></li>
 <li><a href="orgs/">List of represented organizations</a></li>
 </ul>
+<% if (statuses && statuses.length > 0) { %>
+<h2>Recent Activity</h2>
+<div id="messages">
+<% for (s in statuses) { %>
+<p class="info"><a href="/people/profile/<%= statuses[s].author.slug %>"><%= statuses[s].author.given + " " + statuses[s].author.family %></a>: <%= statuses[s].content %></p>
+<% } %>
+</div>
+<% } %>
