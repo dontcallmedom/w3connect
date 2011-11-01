@@ -225,7 +225,8 @@ emitter.on("twitterListChange", function (id) {
 
 // Record events as statusupdates
 emitter.on("checkin", function(user, left, entered) {
-    Status.save({author: user, time: Date.now(), statusType: "checkin", content: user.given + " " + user.family + (left ? " left " + left.name + (entered ? " and " : "") : "") + (entered ? " entered " + entered.name : "") + "."});
+    var status  = new Status({author: user, time: Date.now(), statusType: "checkin", content: user.given + " " + user.family + (left ? " left " + left.name + (entered ? " and " : "") : "") + (entered ? " entered " + entered.name : "") + "."});
+    status.save();
 });
 
 emitter.on("tweet", function(tweet) {
@@ -233,7 +234,8 @@ emitter.on("tweet", function(tweet) {
 	{"twitterAccount.id":tweet.user.id},
 	function(err, indiv) {
 	    if (indiv) {
-		Status.save({author: indiv, time: Date.now(), statusType: "tweet", content: indiv.given + " " + indiv.family + " tweeted: “" + tweet.text+ "”"});
+		var status = new Status({author: indiv, time: Date.now(), statusType: "tweet", content: indiv.given + " " + indiv.family + " tweeted: “" + tweet.text+ "”"});
+		status.save();
 	    }
 	});
 });
