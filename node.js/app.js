@@ -85,6 +85,7 @@ everyauth.password
 	Status.find({})
 	    .desc('time')
 	    .limit(20)
+	    .populate('author')
 	    .run(function(err, statusupdates) { 
 		if (err) return done(err);
 		done(null, {statusupdates: statusupdates});
