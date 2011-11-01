@@ -22,7 +22,7 @@
 <% if (event.eventType == 'adhoc') { %>
 (ad-hoc meeting
 <% if (event.proposedBy) { %>
-proposed by <a href='<%= baseurl %>/people/profile/<%= event.proposedBy.slug  %>'><%= event.proposedBy.name %></a><% } %>)
+proposed by <a href='<%= baseurl %>/people/profile/<%= event.proposedBy.slug  %>'><%= event.proposedBy.given + " " + event.proposedBy.family %></a><% } %>)
 <% } %>
 <% if (event.confidentiality && event.confidentiality == 'member') { %>
  — W3C Member-only
