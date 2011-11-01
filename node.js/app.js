@@ -367,12 +367,12 @@ app.get('/', function(req, res){
 	      });
 	  }
       } else {
-	  Status.find({})
+	  /* Status.find({})
 	      .desc('time')
 	      .limit(20)
-	      .run(function(err, statuses) {
-		  res.render('index', {locals: {statuses: statuses}});
-	      });
+	      .run(function(err, statuses) { */
+		  res.render('index', {locals: {statuses: []}});
+/*	      }); */
       }
   });
 });
