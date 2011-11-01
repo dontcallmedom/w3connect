@@ -241,9 +241,9 @@ function prepareEventsList(events) {
     var timeslots = [];
     var schedule = {};
     for (var i in events) {
-	var day = events[i].timeStart.toDateString();
 	events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
 	events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset,10));
+	var day = events[i].timeStart.toDateString();
 	var timeslot = {timeStart: events[i].timeStart , timeEnd: events[i].timeEnd}; 
 	if (!schedule[day]) {
 	    days.push(day);
