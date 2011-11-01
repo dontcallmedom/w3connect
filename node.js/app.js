@@ -232,7 +232,9 @@ emitter.on("tweet", function(tweet) {
     People.findOne(
 	{"twitterAccount.id":tweet.user.id},
 	function(err, indiv) {
-	    Status.save({author: indiv, time: Date.now(), statusType: "tweet", content: indiv.given + " " + indiv.family + " tweeted: “" + tweet.text+ "”"});
+	    if (indiv) {
+		Status.save({author: indiv, time: Date.now(), statusType: "tweet", content: indiv.given + " " + indiv.family + " tweeted: “" + tweet.text+ "”"});
+	    }
 	});
 });
 
