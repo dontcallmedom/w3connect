@@ -44,7 +44,7 @@ var Place = new Schema({
 
 var StatusUpdate = new Schema({
     author: {type: Schema.ObjectId, ref: 'People'},
-    statusType: {type: String, enum: ["tweet", "checkin", "checkout", "interest"]},
+    statusType: {type: String, enum: ["tweet", "checkin", "interest", "profile"]},
     content: String,
     time: Date
 });
