@@ -238,6 +238,14 @@ emitter.on("checkin", function(user, left, entered) {
     status.save();
 });
 
+emitter.on("newevent", function(event) {
+    var time = event.time;
+    time.setUTCHours(time.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
+    var status  = new Status({author: event.proposedBy, time: Date.now(), statusType: "event", content: user.given + " " + user.family + " scheduled a new ad-hoc event: " + event.name + " at " + time + " in " + event.room.name + "."});
+    status.save();
+});
+
+
 emitter.on("tweet", function(tweet) {
     People.findOne(
 	{"twitterAccount.id":tweet.user.id},
@@ -248,6 +256,8 @@ emitter.on("tweet", function(tweet) {
 	    }
 	});
 });
+
+
 
 // Utility function
 // Parses YYYYMMDDTHHmm into a Date object
@@ -334,6 +344,9 @@ function addEvent(req, res, next, eventType, proposedBy) {
 	    if (err) {
 		req.flash('error',err);
 	    } else {
+		if (event.proposedBy) {
+		    emitter.emit("newevent", event);
+		}
 		req.flash('info', req.body.name + ' successfully added to schedule')	 ;
 		     }
 	    next();
