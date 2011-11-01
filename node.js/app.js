@@ -577,7 +577,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 			timeslots = data[1];
 			schedule = data[2];
 		    }
-		    Status.find({"author._id": indiv._id})
+		    Status.find({"author": indiv})
 			.desc("time")
 			.limit(20)
 			.run(function(err, statusupdates) {
