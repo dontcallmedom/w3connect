@@ -371,7 +371,7 @@ app.get('/', function(req, res){
 	      .desc('time')
 	      .limit(20)
 	      .run(function(err, statusupdates) { 
-		  res.render('index', {locals: {statusupdatees: statusupdatees}});
+		  res.render('index', {locals: {statusupdates: statusupdates}});
 
 	      });
       }
