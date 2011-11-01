@@ -73,6 +73,7 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth, attempt)  
     if (!attempt) {
 	attempt = 1;
     }
+    emitter.emit("twitterRestart");
     var stream = https.request(
 	{
 	    host: 'stream.twitter.com'
@@ -124,7 +125,7 @@ exports.listenToTweets = function(emitter, twitter_ids, twitter_auth, attempt)  
     } catch(err) {
 	console.log(err);
     }
-    emitter.on("twitterListChange", function(id) {
+    emitter.on("twitterRestart", function(id) {
 	stream.abort();
     });
 };
