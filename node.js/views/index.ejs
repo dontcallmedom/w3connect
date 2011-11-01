@@ -10,5 +10,6 @@
 <div id="messages">
 <% for (s in statuses) { %>
 <p class="info"><a href="/people/profile/<%= statuses[s].author.slug %>"><%= statuses[s].author.given + " " + statuses[s].author.family %></a>: <%= statuses[s].content %></p>
+<% } %>
 </div>
 <% } %>
