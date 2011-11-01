@@ -44,6 +44,7 @@ var People = require('./model.js').People(db);
 var Organization = require('./model.js').Organization(db);
 var Place = require('./model.js').Place(db);
 var Event = require('./model.js').Event(db);
+var StatusUpdate = require('./model.js').StatusUpdate(db);
 var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
 var TaxiToAirport = require('./model.js').TaxiToAirport(db);
 var TwitterSettings = require('./model.js').TwitterSettings(db);
@@ -220,6 +221,19 @@ emitter.on("twitterListChange", function (id) {
 	    }
 	);
     }
+});
+
+// Record events as statusupdates
+emitter.on("checkin", function(user, left, entered) {
+    Status.save({author: user, time: Date.now(), statusType: "checkin", content: user.given + " " + user.family + (left ? " left " + left.name + (entered ? " and " : "") : "") + (entered ? " entered " + entered.name : "") + "."});
+});
+
+emitter.on("tweet", function(tweet) {
+    People.findOne(
+	{"twitterAccount.id":tweet.user.id},
+	function(err, indiv) {
+	    Status.save({author: indiv, time: Date.now(), statusType: "tweet", content: indiv.given + " " + indiv.family + " tweeted: “" + tweet.text+ "”"});
+	});
 });
 
 // Utility function
