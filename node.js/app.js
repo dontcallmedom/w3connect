@@ -370,8 +370,8 @@ app.get('/', function(req, res){
 	   Status.find({})
 	      .desc('time')
 	      .limit(20)
-	      .run(function(err, statuses) { 
-		  res.render('index', {locals: {statuses: []}});
+	      .run(function(err, statusupdates) { 
+		  res.render('index', {locals: {statusupdatees: statusupdatees}});
 
 	      });
       }
