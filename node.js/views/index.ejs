@@ -8,5 +8,8 @@
 <% if (typeof statuses != "undefined" && statuses && statuses.length > 0) { %>
 <h2>Recent Activity</h2>
 <div id="messages">
+<% for (var s = 0; s < statuses.length; s++) { %>
+<p class="info"><a href="/people/profile/<%= statuses[s].author.slug %>"><%= statuses[s].author.given + " " + statuses[s].author.family %></a>: <%= statuses[s].content %></p>
+<% } %>
 </div>
 <% } %>
