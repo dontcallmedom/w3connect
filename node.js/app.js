@@ -332,7 +332,7 @@ function addEvent(req, res, next, eventType, proposedBy) {
 	     slug: slug,
 	     confidentiality: req.body.confidentiality,
 	     observers: req.body.observers,
-	     eventType: req.body.eventType
+	     eventType: eventType
 	    });
 	if (proposedBy) {
 	    event.proposedBy = proposedBy._id;
