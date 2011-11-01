@@ -81,7 +81,15 @@ everyauth.password
   .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
-
+    .registerLocals(function (req, res, done) {
+	Status.find({})
+	    .desc('time')
+	    .limit(20)
+	    .run(function(err, statusupdates) { 
+		if (err) return done(err);
+		done(null, {statusupdates: statusupdates});
+	    });
+    })
   .loginSuccessRedirect(config.hosting.basepath + '/')
 /*  .respondToLoginSucceed( function (res, user, data) {
     var redirectTo = config.hosting.basepath + "/";
@@ -367,13 +375,7 @@ app.get('/', function(req, res){
 	      });
 	  }
       } else {
-	   Status.find({})
-	      .desc('time')
-	      .limit(20)
-	      .run(function(err, statusupdates) { 
-		  res.render('index', {locals: {statusupdates: statusupdates}});
-
-	      });
+	  res.render('index');
       }
   });
 });
