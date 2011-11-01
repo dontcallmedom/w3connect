@@ -240,9 +240,11 @@ emitter.on("checkin", function(user, left, entered) {
 
 emitter.on("newevent", function(event) {
     var time = event.time;
-    time.setUTCHours(time.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
-    var status  = new Status({author: event.proposedBy, time: Date.now(), statusType: "event", content: user.given + " " + user.family + " scheduled a new ad-hoc event: " + event.name + " at " + time + " in " + event.room.name + "."});
-    status.save();
+    if (time) {
+	time.setUTCHours(time.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
+	var status  = new Status({author: event.proposedBy, time: Date.now(), statusType: "event", content: user.given + " " + user.family + " scheduled a new ad-hoc event: " + event.name + " at " + time + " in " + event.room.name + "."});
+	status.save();
+    }
 });
 
 
