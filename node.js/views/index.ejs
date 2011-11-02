@@ -9,7 +9,10 @@
 <h2>Recent Activity</h2>
 <div id="messages">
 <% for (var s = 0; s < statusupdates.length; s++) { %>
-<p class="info"><a href="<%= baseurl %>/people/profile/<%= statusupdates[s].author.slug %>"><% if (statusupdates[s].author.picture_thumb) { %><img src="<%= statusupdates[s].author.picture_thumb %>" alt="<%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>’s picture" width="36"> <% } %><%= statusupdates[s].author.given + " " + statusupdates[s].author.family %></a>: <%= statusupdates[s].content %></p>
+<% var elapsedTime = Date.now() - statusupdates[s].time ; %>
+<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
+
+<p class="info"><a href="<%= baseurl %>/people/profile/<%= statusupdates[s].author.slug %>"><% if (statusupdates[s].author.picture_thumb) { %><img src="<%= statusupdates[s].author.picture_thumb %>" alt="<%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>’s picture" width="36"> <% } %><%= statusupdates[s].author.given + " " + statusupdates[s].author.family %></a> <%= nowString %>: <%= statusupdates[s].content %> </p>
 <% } %>
 </div>
 <% } %>
