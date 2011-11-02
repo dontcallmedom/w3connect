@@ -748,7 +748,7 @@ app.all('/locations/:id.:format?', function(req, res) {
     if (place) {
 	People.find({"lastKnownPosition.shortname": place.shortname}, ['slug', 'given', 'family', 'picture_thumb', 'lastKnownPosition'])
 	    .run(function(err, people) {
-	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? 1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? -1 : 0));});
+	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? -1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? 1 : 0));});
 	  var current = new Date();
 	  if (req.query.datetime) {
 	      current = parseDate(req.query.datetime);
