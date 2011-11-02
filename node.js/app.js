@@ -1195,8 +1195,8 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
     }
     Place.find({}).asc('name').run(function(err, places) {
     Event.find({})
-	        .asc('timeStart', 'name')
 		.populate('room', ['shortname','name'])
+	    .asc('timeStart', 'room.name')
 	    .populate('proposedBy')
 		.run( 
 	function(err, events) {
