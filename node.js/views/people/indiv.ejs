@@ -24,7 +24,7 @@
 <% if (everyauth.loggedIn && user.login == indiv.login && !(indiv.twitterAccount && indiv.twitterAccount.name)) {%>
 <h2>Update profile</h2>
 <form action='' method='post'>
-<p><label>Twitter account: <input type="text" name="twitter"></label></p>
+<p><label>Twitter account: @<input type="text" name="twitter"></label></p>
 <p><input type="submit" name="updateProfile"></p>
 </form>
 <%}%>
