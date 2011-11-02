@@ -15,7 +15,9 @@
 <%}%>
 <dt>Latest check-in</dt>
 <dd><% if (indiv.lastKnownPosition && indiv.lastKnownPosition.shortname) { %>
-<a href="<%= baseurl %>/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> at <%= indiv.lastKnownPosition.time %>
+<% var elapsedTime = Date.now() - indiv.lastKnownPosition.time ; %>
+<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
+<a href="<%= baseurl %>/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> <%= nowString %>
 <% } else {%>Unknown<% } %></dd>
 </dl>
 <%- messages()%>
