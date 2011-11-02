@@ -22,7 +22,7 @@
 </ul>
 
 <h2>People whose last checkin was in <%= place.name %></h2>
-<%- partial('people/list.ejs') %>
+<%- partial('people/list.ejs', {showCheckin: true}) %>
 <script>
 if (window.EventSource) {
 	  var evtSrc = new EventSource( "<%= baseurl %>/locations/stream" );
