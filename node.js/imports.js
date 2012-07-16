@@ -42,7 +42,7 @@ exports.importUserList = function(auth, callback)  {
     var success = [];
     var info = [];
     var errors = [];
-   var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-json.php?wgid=35125&qaireno=TPAC2011', headers: {Authorization: 'Basic ' + auth}}, function (response) {
+   var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-json.php?wgid=35125&qaireno=TPAC2012', headers: {Authorization: 'Basic ' + auth}}, function (response) {
      response.setEncoding('utf8');
      var registrantsJSON = "", registrantsData;
      response.on('data', function (chunk) {
@@ -134,7 +134,7 @@ exports.importRegistrationData = function(auth, callback)  {
     var success = [];
     var info = [];
     var errors = [];
-   var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-schedule.php?wgid=35125&qaireno=TPAC2011', headers: {Authorization: 'Basic ' + auth}}, function (response) {
+   var request = https.get({host: 'www.w3.org', path:'/2002/09/wbs/tpRegistrants-schedule.php?wgid=35125&qaireno=TPAC2012', headers: {Authorization: 'Basic ' + auth}}, function (response) {
      response.setEncoding('utf8');
      var registrantsJSON = "", registrantsData;
      response.on('data', function (chunk) {
