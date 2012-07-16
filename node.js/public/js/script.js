@@ -49,12 +49,12 @@ function doHighlight(which) {
 	}
 	
 	ImagePreloader.add( [
-		"/2011/11/TPAC/live/img/global-hover.png",
-		"/2011/11/TPAC/live/img/sprite-expand-collapse.png",
-		"/2011/11/TPAC/live/img/toggle-button.png",
-		"/2011/11/TPAC/live/img/toggle-on.png",
-		"/2011/11/TPAC/live/img/toggle-off.png",
-		"/2011/11/TPAC/live/img/button.png"
+		"/2012/10/TPAC/live/img/global-hover.png",
+		"/2012/10/TPAC/live/img/sprite-expand-collapse.png",
+		"/2012/10/TPAC/live/img/toggle-button.png",
+		"/2012/10/TPAC/live/img/toggle-on.png",
+		"/2012/10/TPAC/live/img/toggle-off.png",
+		"/2012/10/TPAC/live/img/button.png"
 				
 		] );
 	
