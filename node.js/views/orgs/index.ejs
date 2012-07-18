@@ -1,3 +1,4 @@
+<h2>Organizations</h2>
 <ul class="nav nav-tabs nav-stacked">
 	<% for (var o  in orgs) { %>
 	<li><a <% if(everyauth.user && everyauth.user.affiliation && everyauth.user.affiliation._id == orgs[o]._id) {%>class='self'<%}%> href='<%= baseurl %>/orgs/<%= orgs[o].slug %>'>
