@@ -14,7 +14,7 @@ body {
 }
 
 .blue-grad {
-	color:whitesmoke;
+	color: #DCDCDC;
 	background-color: #0A5495;
 	background-image: -moz-linear-gradient(top,#0A5495,#094F8C);
 	background-image: -ms-linear-gradient(top,#0A5495,#094F8C);
@@ -45,7 +45,7 @@ body > footer p {
 	color: #DCDCDC;
 }
 
-h2 {
+h1 {
 	font: 1.9em 'LeagueGothicRegular', sans-serif;
 	text-transform: uppercase;
 	color: #004480;
