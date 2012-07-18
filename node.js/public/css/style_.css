@@ -4,10 +4,10 @@ body {
 
 .blue-grad {
 	background-color: #09579A;
-	background-image: -moz-linear-gradient(top,#0A5495,#0A599F);
-	background-image: -ms-linear-gradient(top,#0A5495,#0A599F);
-	background-image: -webkit-gradient(linear,0 0,0 100%,from(#0A5495),to(#0A599F));
-	background-image: -webkit-linear-gradient(top,#0A5495,#0A599F);
-	background-image: -o-linear-gradient(top,#0A5495,#0A599F);
-	background-image: linear-gradient(top,#0A5495,#0A599F);
+	background-image: -moz-linear-gradient(top,#0A5495,#06335A);
+	background-image: -ms-linear-gradient(top,#0A5495,#06335A);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#0A5495),to(#06335A));
+	background-image: -webkit-linear-gradient(top,#0A5495,#06335A);
+	background-image: -o-linear-gradient(top,#0A5495,#06335A);
+	background-image: linear-gradient(top,#0A5495,#06335A);
 }
