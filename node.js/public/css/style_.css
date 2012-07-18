@@ -41,10 +41,7 @@ body > footer p {
 }
 
 @media (max-width: 767px) {
-body {
-	padding: 0 !important;
-}
-body > container {
-	padding:0 20px !important;
+body > footer {
+	margin:0 -20px !important;
 }
 }
