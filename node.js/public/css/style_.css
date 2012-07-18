@@ -36,16 +36,15 @@ body > footer p {
 
 @media (max-width: 979px) {
 .navbar-fixed-top {
-	margin-bottom: 0px;
+	margin-bottom: 0px !important;
 }
 }
 
 @media (max-width: 767px) {
 body {
-	padding-right: 20px;
-	padding-left: 20px;
+	padding: 0 !important;
 }
 body > container {
-	padding:0 20px;
+	padding:0 20px !important;
 }
 }
