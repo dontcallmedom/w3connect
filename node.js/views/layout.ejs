@@ -13,13 +13,13 @@
 	<%- partial('nav-bar.ejs') %>
 	<div class ="container">
 		<%- body %>
-		<footer>
-			<p>Based on work done as part of one of W3C Staff “Geek Week” projects (<a href='<%= baseurl %>/about'>more</a>)</p>
-			<p>Please send feedback to Dom &lt;<a href="mailto:dom@w3.org">dom@w3.org</a>&gt;.</p>
-			<p>Copyright &copy 2011 W3C (MIT, ERCIM, Keio)</p>
-		</footer>
 		<p><% if (user) {%>Logged in as <a href='<%= baseurl %>/people/profile/<%= user.slug %>'><%=user.login%></a>. <a href="<%= baseurl %>/logout">Log out</a>?<%} else { %>Not logged in. <a href="<%= baseurl %>/login?redirectTo=<%= url %>">Log in</a><%}%></p>
 	</div>
+	<footer class="container">
+		<p>Based on work done as part of one of W3C Staff “Geek Week” projects (<a href='<%= baseurl %>/about'>more</a>)</p>
+		<p>Please send feedback to Dom &lt;<a href="mailto:dom@w3.org">dom@w3.org</a>&gt;.</p>
+		<p>Copyright &copy 2011 W3C (MIT, ERCIM, Keio)</p>
+	</footer>
 
 	<script src="<%= baseurl %>/js/libs/jquery-1.5.1.min.js"></script>
 	<script src="<%= baseurl %>/js/libs/jquery.form.js"></script>
