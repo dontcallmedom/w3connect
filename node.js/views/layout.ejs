@@ -15,7 +15,6 @@
 			<%- partial('nav-bar.ejs') %>
 			<%- body %>
 			<p><% if (user) {%>Logged in as <a href='<%= baseurl %>/people/profile/<%= user.slug %>'><%=user.login%></a>. <a href="<%= baseurl %>/logout">Log out</a>?<%} else { %>Not logged in. <a href="<%= baseurl %>/login?redirectTo=<%= url %>">Log in</a><%}%></p>
-			<%- partial('nav-bar.ejs') %>
 		</div>
 		<footer class="group">
 			<p>Based on work done as part of one of W3C Staff “Geek Week” projects (<a href='<%= baseurl %>/about'>more</a>)</p>
