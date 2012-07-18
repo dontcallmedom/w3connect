@@ -59,9 +59,6 @@ h1 {
 
 
 
-
-
-
 @media (max-width: 979px) {
 .navbar-fixed-top {
 	margin-bottom: 0px !important;
@@ -69,6 +66,10 @@ h1 {
 }
 
 @media (max-width: 767px) {
+body {
+	padding-right: 10px !important;
+	padding-left: 10px !important;
+}
 body > footer {
 	margin:0 -20px !important;
 }
