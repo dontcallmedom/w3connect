@@ -7,7 +7,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="419.80896"
@@ -16,7 +15,8 @@
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="rhone.svg">
-  <title>Floor plans of Level 1: Rhône</title>
+  <title
+     id="title135354">Floor plans of Level 1: Rhône</title>
   <defs
      id="defs49083">
     <marker
@@ -132,16 +132,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="117.91177"
-     inkscape:cy="232.94829"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="183.79593"
+     inkscape:cy="204.02812"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="993"
      inkscape:window-height="687"
-     inkscape:window-x="118"
-     inkscape:window-y="129"
+     inkscape:window-x="446"
+     inkscape:window-y="133"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -155,7 +155,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title>Floor plans of Level 1: Rhône</dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -835,5 +835,51 @@
          d="m 0,323.974 80.05,0 0,-81.475 79.534,0 0,-82.025 80.789,0 0,-80.5 80.241,0 0,-79.974 119.138,0 0,40.804 -79.202,0 0,80.278 -80.332,0 0,81.408 -80.168,0 0,80.984 -80.5,0 0,81.671 -119.55,0 0,-41.171 z"
          inkscape:connector-curvature="0" />
     </g>
+    <rect
+       style="opacity:0.5;fill:none;stroke:#000000;stroke-width:1.39609647;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rhone4"
+       width="59.334099"
+       height="56.342464"
+       x="351.77887"
+       y="163.35097"
+       transform="matrix(0.99981495,0.01923714,-0.01923714,0.99981495,0,0)"
+       inkscape:label="">
+      <title
+         id="title135541">Rhône 4</title>
+    </rect>
+    <rect
+       style="opacity:0.5;fill:none;stroke:#000000;stroke-width:1.39609647;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rhone5"
+       width="45.871742"
+       height="35.899624"
+       x="367.39291"
+       y="218.21542"
+       transform="matrix(0.99964775,0.02653992,-0.02653992,0.99964775,0,0)"
+       inkscape:label="">
+      <title
+         id="title135543">Rhône 5</title>
+    </rect>
+    <text
+       xml:space="preserve"
+       style="font-size:11px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       x="377.38101"
+       y="202.71318"
+       id="text65424-43-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="377.38101"
+         y="202.71318"
+         id="tspan65428-6-4">Rhône 4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:11px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       x="383.65201"
+       y="250.32983"
+       id="text65424-43-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="383.65201"
+         y="250.32983"
+         id="tspan65428-6-8">Rhône 5</tspan></text>
   </g>
 </svg>
