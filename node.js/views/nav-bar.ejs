@@ -1,9 +1,14 @@
-                <nav class="horizontal">
-		  <ul class="five-piece">
-		        <%- partial("nav-link.ejs", {url: url, link: baseurl + "/", text: "Home", className: "first"}) %>
-			<%- partial("nav-link.ejs", {url: url, link: baseurl + '/people/', text: 'People'}) %>
-			<%- partial("nav-link.ejs", {url: url, link: baseurl + '/schedule/', text: "Schedule"}) %>
-			<%- partial("nav-link.ejs", {url: url, link: baseurl + '/locations/', text: "Rooms"}) %>
-			<%- partial("nav-link.ejs", {url: url, link: baseurl + '/orgs/', text: "Orgs"}) %>
-		  </ul>
-                </nav>
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="#">TPAC Web App</a>
+			<ul class="nav">
+				<%- partial("nav-link.ejs", {url: url, link: baseurl + "/", text: "Home"}) %>
+				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/people/', text: 'People'}) %>
+				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/schedule/', text: "Schedule"}) %>
+				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/locations/', text: "Rooms"}) %>
+				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/orgs/', text: "Orgs"}) %>
+			</ul>
+		</div>
+	</div>
+</div>
