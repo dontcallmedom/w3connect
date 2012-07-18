@@ -9,6 +9,7 @@
 				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/locations/', text: "Rooms"}) %>
 				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/orgs/', text: "Orgs"}) %>
 			</ul>
+			<p class="navbar-text"><% if (user) {%>Logged in as <a href='<%= baseurl %>/people/profile/<%= user.slug %>'><%=user.login%></a>. <a href="<%= baseurl %>/logout">Log out</a>?<%} else { %>Not logged in. <a href="<%= baseurl %>/login?redirectTo=<%= url %>">Log in</a><%}%></p>
 		</div>
 	</div>
 </div>
