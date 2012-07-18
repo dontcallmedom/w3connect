@@ -2,7 +2,7 @@
 <% if (indiv.picture) {%>
 <p style='float:right'><img src="<%= indiv.picture %>" alt="Picture of <%= indiv.given + ' ' + indiv.family %>"></p>
 <% } %>
-<dl>
+<dl class="dl-horizontal">
 <% if (everyauth.loggedIn) {%>
 <dt>Email</dt>
 <dd><a href='mailto:<%=indiv.email %>'><%= indiv.email %></a></dd>
