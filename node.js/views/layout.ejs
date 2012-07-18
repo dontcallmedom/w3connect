@@ -10,19 +10,18 @@
 	<script type="text/javascript" src="<%= baseurl %>/js/script.js"></script>
 </head>
 <body>
-	<div id="wrap">
-		<div id="content">
-			<%- partial('nav-bar.ejs') %>
-			<%- body %>
-			<p><% if (user) {%>Logged in as <a href='<%= baseurl %>/people/profile/<%= user.slug %>'><%=user.login%></a>. <a href="<%= baseurl %>/logout">Log out</a>?<%} else { %>Not logged in. <a href="<%= baseurl %>/login?redirectTo=<%= url %>">Log in</a><%}%></p>
-		</div>
-		<footer class="group">
-			<p>Based on work done as part of one of W3C Staff “Geek Week” projects (<a href='<%= baseurl %>/about'>more</a>)</p>
-			<p>Please send feedback to Dom &lt;<a href="mailto:dom@w3.org">dom@w3.org</a>&gt;.</p>
-			<p>Copyright &copy 2011 W3C (MIT, ERCIM, Keio)</p>
-			<p><a href="http://www.developer.nokia.com/info/sw.nokia.com/id/ba4e3f4d-3c65-4bcf-997b-406ff08207f9/Mobile_Web_Templates_for_Smartphones.html">Mobile Web Template by Nokia</a></p>
-		</footer>
-	</div>
+	<%- partial('nav-bar.ejs') %>
+	
+	<%- body %>
+	
+	<footer class="group">
+		<p>Based on work done as part of one of W3C Staff “Geek Week” projects (<a href='<%= baseurl %>/about'>more</a>)</p>
+		<p>Please send feedback to Dom &lt;<a href="mailto:dom@w3.org">dom@w3.org</a>&gt;.</p>
+		<p>Copyright &copy 2011 W3C (MIT, ERCIM, Keio)</p>
+		<p><a href="http://www.developer.nokia.com/info/sw.nokia.com/id/ba4e3f4d-3c65-4bcf-997b-406ff08207f9/Mobile_Web_Templates_for_Smartphones.html">Mobile Web Template by Nokia</a></p>
+	</footer>
+	
+	<p><% if (user) {%>Logged in as <a href='<%= baseurl %>/people/profile/<%= user.slug %>'><%=user.login%></a>. <a href="<%= baseurl %>/logout">Log out</a>?<%} else { %>Not logged in. <a href="<%= baseurl %>/login?redirectTo=<%= url %>">Log in</a><%}%></p>
 
 	<script src="<%= baseurl %>/js/libs/jquery-1.5.1.min.js"></script>
 	<script src="<%= baseurl %>/js/libs/jquery.form.js"></script>

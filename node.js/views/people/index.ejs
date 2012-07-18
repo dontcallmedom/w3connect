@@ -1,15 +1,15 @@
-<h1>People</h1>
-<nav>
-<ul class="inline">
-<% var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; %>
-<% for (var i =0; i<alphabet.length;  i++) { %>
-<li><% if (alphabet[i].toLowerCase() != letter) { %>
-<a href='<%= alphabet[i].toLowerCase() %>' title='List of persons whose family name starts with <%= alphabet[i] %>'><%= alphabet[i] %></a>
-<% } else { %>
-<strong><%= alphabet[i] %></strong>
-<% } %>
-<%}%>
-<li> <a href="all" title="Full list of registered persons">All</a> </li>
-</ul></nav>
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<% var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; %>
+		<% for (var i =0; i < alphabet.length;  i++) { %>
+		<% if (alphabet[i].toLowerCase() != letter) { %>
+		<a class="btn" href='<%= alphabet[i].toLowerCase() %>' title='List of persons whose family name starts with <%= alphabet[i] %>'><%= alphabet[i] %></a>
+		<% } else { %>
+		<strong class="btn"><%= alphabet[i] %></strong>
+		<% } %>
+		<%}%>
+		<a class="btn" href="all" title="Full list of registered persons">All</a>
+	</div>
+</div>
 
 <%- partial('people/list.ejs', {showCheckin: true}) %>
