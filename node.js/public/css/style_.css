@@ -10,7 +10,7 @@
 }
 
 body {
-	padding-top: 40px;
+	padding-top: 50px;
 }
 
 .blue-grad {
@@ -46,10 +46,10 @@ body > footer p {
 }
 
 h2 {
-	font: 1.7em 'LeagueGothicRegular', sans-serif;
+	font: 1.9em 'LeagueGothicRegular', sans-serif;
 	text-transform: uppercase;
 	color: #004480;
-	margin-bottom: .5em;
+	margin: 10px 0;
 }
 
 
