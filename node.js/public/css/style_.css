@@ -27,10 +27,25 @@ body > footer p {
 
 .navbar .nav .active > a, .navbar .nav .active > a:hover {
 	color: #fff;
-	text-decoration: none;
 	background-color: #073965;
 }
 
 .navbar .nav > li > a {
 	color: #DCDCDC;
+}
+
+@media (max-width: 979px) {
+.navbar-fixed-top {
+	margin-bottom: 0px;
+}
+}
+
+@media (max-width: 767px) {
+body {
+	padding-right: 20px;
+	padding-left: 20px;
+}
+body > container {
+	padding:0 20px;
+}
 }
