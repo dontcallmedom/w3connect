@@ -1,5 +1,5 @@
 <% if ((link == baseurl + "/" && url == link) || (link != baseurl + "/" && url.match("^"+link) == link)) { %>
-<li class="active <%= (typeof className != "undefined" ? className : "") %>"><a><%= text %>
+<li class="active <%= (typeof className != "undefined" ? className : "") %>"><a href="<%= link %>"><%= text %>
 <% } else { %>
 <li class="<%= (typeof className != "undefined" ? className : "") %>"><a href="<%= link %>"><%= text %>
 <%} %>
