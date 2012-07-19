@@ -1,7 +1,7 @@
 <h1>People</h1>
 <div class="btn-toolbar">
 	<div class="btn-group">
-		<% var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; %>
+		<% var alphabet = Object.keys(activeLetters); %>
 		<% for (var i =0; i < alphabet.length;  i++) { %>
 		<% if (alphabet[i].toLowerCase() != letter) { %>
 		<a class="btn" href='<%= alphabet[i].toLowerCase() %>' title='List of persons whose family name starts with <%= alphabet[i] %>'><%= alphabet[i] %></a>
