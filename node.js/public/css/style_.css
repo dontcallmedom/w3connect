@@ -51,13 +51,17 @@ body > footer .container {
 
 .navbar-text a,
 body > footer a {
-	color: #E55300;
+	color: #E9DC00;
+	text-shadow: 0 0 0.1em white;
+	font-weight: bold;
 }
 
 .navbar-text a:hover,
 body > footer a:hover {
 	text-decoration:underline;
-	color: #E55300;
+	color: #E9DC00;
+	text-shadow: 0 0 0.1em white;
+	font-weight: bold;
 }
 
 .navbar-text.pull-right {
@@ -73,7 +77,7 @@ h1 {
 
 h2 {
 	font: 1.9em 'LeagueGothicRegular', sans-serif;
-	color: #004480;
+	color: #E55300;
 	margin: 10px 0;
 }
 
