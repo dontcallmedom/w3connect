@@ -294,7 +294,7 @@ function elapsedTime(time) {
     } else if (hours == 1) {
 	return '1 hour ago';
     } else {
-	return minutes.toString() + 'minute' + (minutes > 1 ? 's' : '') + ' ago';
+	return minutes.toString() + ' minute' + (minutes > 1 ? 's' : '') + ' ago';
     }
 }
 
