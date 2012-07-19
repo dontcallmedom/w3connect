@@ -12,7 +12,8 @@
     "express-messages":"0.0.2",
     "iniparser":"1.0.3",
     "optimist":"0.2.6",
-    "express-namespace":"0.0.4"
+    "express-namespace":"0.0.4",
+    "sanitizer":">=0.0.15"
   },
   "devDependencies": {},
   "engines": {
