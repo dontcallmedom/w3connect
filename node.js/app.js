@@ -349,8 +349,8 @@ function addEvent(req, res, next, eventType, proposedBy) {
 	slug = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
 
 	var event = new Event(
-	    {timeStart: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
-	     timeEnd: parseDate(req.body.day + 'T' + ('' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).replace(/^([0-9])$/, '0$1') + '00'),
+	    {timeStart: parseDate(req.body.day + 'T' + (String('0000' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(4)) + '00'),
+	     timeEnd: parseDate(req.body.day + 'T' + (String('0000' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(4)) + '00'),
 	     name: req.body.name,
 	     presenters: req.body.presenters,
 	     slug: slug,
@@ -1060,8 +1060,8 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	  if (err) {
 	      req.flash("error", "No known room with shortname" + req.body.room);
 	  }
-	  event.timeStart =  parseDate(req.body.day.replace(/-/g,'') + 'T' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
-	  event.timeEnd =  parseDate(req.body.day.replace(/-/g,'') + 'T' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10)).toString().replace(/^([0-9])$/, '0$1') + '00');
+	  event.timeStart =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000'  + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(4) + '00');
+	  event.timeEnd =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(4) + '00');
 	  event.name= req.body.name;
 	  event.presenters= req.body.presenters;
 	  event.confidentiality = req.body.confidentiality;
