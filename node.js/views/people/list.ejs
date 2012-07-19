@@ -6,9 +6,7 @@
 			<span><%= people[p].family + ", " + people[p].given %></span>
 		</a>
 		<% if (typeof showCheckin != "undefined" && showCheckin && people[p].lastKnownPosition && people[p].lastKnownPosition.shortname) { %>
-		<% var elapsedTime = Date.now() - people[p].lastKnownPosition.time ; %>
-		<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
-		last checkin: <a class="supp" href="<%= baseurl %>/locations/<%= people[p].lastKnownPosition.shortname %>"><%= people[p].lastKnownPosition.name %></a> <span class="label label-warning"><%= nowString %></span>
+		last checkin: <a class="supp" href="<%= baseurl %>/locations/<%= people[p].lastKnownPosition.shortname %>"><%= people[p].lastKnownPosition.name %></a> <span class="label label-warning"><%= elapsedTime(people[p].lastKnownPosition.time) %></span>
 		<% } %>
 	</li>
 	<% } %>
