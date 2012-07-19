@@ -43,15 +43,11 @@ body > footer .container {
 #messages p {
 	margin: 0;
 	padding: 5px 0;
-	border-bottom: 1px solid lightgrey;
+	border-top: 1px solid lightgrey;
 }
 
 #messages p:hover {
 	background-color: #eeeeee;
-}
-
-#messages p:first-child {
-	border-top: 1px solid lightgrey;
 }
 
 .navbar .nav .active > a, .navbar .nav .active > a:hover {
