@@ -1,19 +1,21 @@
 <h1><%= place.name %></h1>
-<h2>Check in</h2>
+<!--<h2>Check in</h2>-->
 <%- messages()%>
+
 <% if (everyauth.loggedIn) {%>
 <form class='client' action="" method="post">
-<% if (user.lastKnownPosition.shortname != place.shortname) { %>
-<input  type="submit" name="checkin" value="Check in at <%= place.name %>">
-<% } else { %>
-<p>You are already checked in at <%= place.name %>.</p>
-<p><input type="submit" name="checkout" value="Check out from <%= place.name %>"></p>
-<% } %>
-
+	<% if (user.lastKnownPosition.shortname != place.shortname) { %>
+	<button class="btn btn-success" type="submit" name="checkin">Check in<!-- at <%= place.name %>--></button>
+	<% } else { %>
+	<button class="btn btn-success" type="submit" name="checkout">Check out<!-- from <%= place.name %>--></button>
+	<!--<p>You are already checked in at <%= place.name %>.</p>
+	<p><input type="submit" name="checkout" value="Check out from <%= place.name %>"></p>-->
+	<% } %>
 </form>
 <% } else {%>
-<p><a href='<%= baseurl %>/login'>Log in</a> to check in at <%= place.name %>.</p>
+	<p><a href='<%= baseurl %>/login'>Log in</a> to check in at <%= place.name %>.</p>
 <%}%>
+
 <p><object type="image/svg+xml" data="<%= baseurl %>/maps/main.svg#<%= place.shortname %><% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
 <img style="max-width:100%" src="<%= baseurl %>/maps/<%= place.shortname%>.png" alt="Floor plan with highlight on <%= place.name %>">
 </object></p>
