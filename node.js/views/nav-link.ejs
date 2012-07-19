@@ -1,4 +1,4 @@
-<% if ((url == baseurl && url == link) || (url != baseurl && url.match("^"+link) == link)) { %>
+<% if ((link == baseurl && url == link) || (link != baseurl && url.match("^"+link) == link)) { %>
 <li class="active <%= (typeof className != "undefined" ? className : "") %>"><a><%= text %>
 <% } else { %>
 <li class="<%= (typeof className != "undefined" ? className : "") %>"><a href="<%= link %>"><%= text %>
