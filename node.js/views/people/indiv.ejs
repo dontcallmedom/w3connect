@@ -1,33 +1,46 @@
 <h1><%= indiv.given + ' ' + indiv.family %><%= (everyauth.loggedIn && user.login == indiv.login ? " (You)" : "")%></h1>
+
 <% if (indiv.picture) {%>
 <p style='float:right'><img src="<%= indiv.picture %>" alt="Picture of <%= indiv.given + ' ' + indiv.family %>"></p>
 <% } %>
+
 <dl class="dl-horizontal">
-<% if (everyauth.loggedIn) {%>
-<dt>Email</dt>
-<dd><a href='mailto:<%=indiv.email %>'><%= indiv.email %></a></dd>
-<% } %>
-<dt>Affiliation</dt>
-<dd><% if (indiv.affiliation) { %><a href='<%= baseurl %>/orgs/<%= indiv.affiliation.slug%>'><%= indiv.affiliation.name %></a><% } else {%>Unknown<%}%></dd>
-<% if (indiv.twitterAccount && indiv.twitterAccount.name) {%>
-<dt>Twitter account</dt>
-<dd><a href="http://twitter.com/<%= indiv.twitterAccount.name %>">@<%= indiv.twitterAccount.name %></a></dd>
-<%}%>
-<dt>Latest check-in</dt>
-<dd><% if (indiv.lastKnownPosition && indiv.lastKnownPosition.shortname) { %>
-<% var elapsedTime = Date.now() - indiv.lastKnownPosition.time ; %>
-<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
-<a href="<%= baseurl %>/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> <%= nowString %>
-<% } else {%>Unknown<% } %></dd>
+	<% if (everyauth.loggedIn) {%>
+	<dt>Email</dt>
+	<dd><a href='mailto:<%=indiv.email %>'><%= indiv.email %></a></dd>
+	<% } %>
+	
+	<dt>Affiliation</dt>
+	<dd><% if (indiv.affiliation) { %><a href='<%= baseurl %>/orgs/<%= indiv.affiliation.slug%>'><%= indiv.affiliation.name %></a><% } else {%>Unknown<%}%></dd>
+	
+	<% if (indiv.twitterAccount && indiv.twitterAccount.name) {%>
+	<dt>Twitter account</dt>
+	<dd><a href="http://twitter.com/<%= indiv.twitterAccount.name %>">@<%= indiv.twitterAccount.name %></a></dd>
+	<%}%>
+	
+	<dt>Latest check-in</dt>
+	<dd>
+		<% if (indiv.lastKnownPosition && indiv.lastKnownPosition.shortname) { %>
+		<% var elapsedTime = Date.now() - indiv.lastKnownPosition.time ; %>
+		<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? 	Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
+		<a href="<%= baseurl %>/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> <%= nowString %>
+		<% } else {%>Unknown<% } %>
+	</dd>
 </dl>
+
 <%- messages()%>
+
 <% if (everyauth.loggedIn && user.login == indiv.login && !(indiv.twitterAccount && indiv.twitterAccount.name)) {%>
 <h2>Update profile</h2>
-<form action='' method='post'>
-<p><label>Twitter account: @<input type="text" name="twitter"></label></p>
-<p><input type="submit" name="updateProfile"></p>
+<form class="form-inline" action='' method='post'>
+	<div class="input-prepend">
+		<label for="twitter">Twitter account:</label>
+		<span class="add-on">@</span><input class="span2" name="twitter" id="twitter" size="16" type="text">
+	</div>
+	<button type="submit" name="updateProfile" class="btn">Update</button>
 </form>
 <%}%>
+
 <h2>Schedule</h2>
 <p>Meetings that <%= indiv.given %> has marked as interesting:</p>
 <dl>
