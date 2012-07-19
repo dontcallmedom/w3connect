@@ -52,7 +52,6 @@ body > footer .container {
 .navbar-text a,
 body > footer a {
 	color: #E9DC00;
-	text-shadow: 0 0 0.1em white;
 	font-weight: bold;
 }
 
@@ -60,7 +59,6 @@ body > footer a {
 body > footer a:hover {
 	text-decoration:underline;
 	color: #E9DC00;
-	text-shadow: 0 0 0.1em white;
 	font-weight: bold;
 }
 
