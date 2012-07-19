@@ -868,14 +868,18 @@ app.get('/people/:letter?.:format?', function (req, res, next){
   var people = People.find({})
 	        .where('family', filter)
 		.run(function (err, people) {
+    var activeLetters = {};
     people.sort(function (a,b) { return (a.family > b.family ? 1 : (b.family > a.family ? -1 : 0));});
+    for (var p in people) {
+	activeLetters[people[p].family[0]]++;
+    }
     switch (req.params.format) {
       // When json, generate suitable data
       case 'json':
         res.send(people);
 	break;
       default:
-        res.render('people/index.ejs', { locals: { letter: letter, people: people, title: 'People — ' + letter}});
+        res.render('people/index.ejs', { locals: { activeLetters: activeLetters, letter: letter, people: people, title: 'People — ' + letter}});
     }
   });
   
