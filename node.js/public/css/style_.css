@@ -51,13 +51,13 @@ body > footer .container {
 
 .navbar-text a,
 body > footer a {
-	color: #FFAA2A;
+	color: #E55300;
 }
 
 .navbar-text a:hover,
 body > footer a:hover {
 	text-decoration:underline;
-	color: #FFAA2A;
+	color: #E55300;
 }
 
 .navbar-text.pull-right {
