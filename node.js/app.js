@@ -424,7 +424,7 @@ app.get('/about', function(req, res){
 });
 
 app.post('/admin/', function(req, res, next){
-  if (req.body.peopleUpdate) {
+  if (req.body.peopleUpdate !== undefined) {
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
     } else if (!app.set("w3c_auth")) {
@@ -442,14 +442,14 @@ app.post('/admin/', function(req, res, next){
 	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
 	  next();
       });
-  } else if (req.body.registrationUpdate) {
+  } else if (req.body.registrationUpdate !== undefined) {
       imports.importRegistrationData(app.set("w3c_auth"), function(success, info, errors) {
 	  if (success) success.forEach(function(i) { req.flash('success',i);});
 	  if (info) info.forEach(function(i) { req.flash('info',i);});
 	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
 	  next();
       });    
-  } else if (req.body.clearInterested) {
+  } else if (req.body.clearInterested !== undefined) {
       var counter = 0;
       Event.find(
 	  {}, 
@@ -467,7 +467,7 @@ app.post('/admin/', function(req, res, next){
 		      });
 	      }
 	  });
-  } else  if (req.body.placeAdd) {
+  } else  if (req.body.placeAdd !== undefined) {
       var place = new Place();
       place.shortname = req.body.shortname;
       place.name = req.body.name;
@@ -481,7 +481,7 @@ app.post('/admin/', function(req, res, next){
 	      next();
 	  }
       );
-  } else if (req.body.placesUpdate) {
+  } else if (req.body.placesUpdate !== undefined) {
       var url = require("url").parse(config.map.rooms_json);
       var http;
       if (url.protocol == "http:") {
@@ -521,7 +521,7 @@ app.post('/admin/', function(req, res, next){
 	      });
 	  });
       }
-  } else if (req.body.twitterSetting) {
+  } else if (req.body.twitterSetting !== undefined) {
       if (!req.body.username) {
 	  req.flash("error", "Missing Twitter username");
 	  next();
@@ -560,7 +560,7 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
     } else {
-	if (req.body.updateProfile && req.body.twitter && req.user.slug == req.params.id) {
+	if (req.body.updateProfile !== undefined && req.body.twitter && req.user.slug == req.params.id) {
 	    twitterAccount = req.body.twitter.replace(/^@/, '');
 	    twitter.getTwitterId(twitterAccount, function(err, id) {
 		if (err) {
@@ -691,11 +691,11 @@ app.post('/locations/:id.:format?', function(req, res, next) {
   }
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
-	if ((req.body.checkin || req.body.checkout) && req.user) {
+	if ((req.body.checkin !== undefined || req.body.checkout !== undefined) && req.user) {
 	    // the user is already checked in in that place
 	    var actionNeeded = true;
 	    if (req.user.lastKnownPosition.shortname == place.shortname) {
-		if (req.body.checkin) {
+		if (req.body.checkin !== undefined) {
 		    actionNeeded = false;
 		    switch (req.outputFormat) {
 		    case "json":
@@ -708,7 +708,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 		    }
 		}
 	    } else {
-		if (req.body.checkout) {
+		if (req.body.checkout !== undefined) {
 		    actionNeeded = false;
 		    switch (req.outputFormat) {
 		    case "json":
@@ -727,7 +727,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 				name: indiv.lastKnownPosition.name,
 				time: indiv.lastKnownPosition.time};
 	    var newPosition = {shortname: null, name: null, time: Date.now()};
-	    if (req.body.checkin) {
+	    if (req.body.checkin !== undefined) {
 		newPosition.shortname = place.shortname;
 		newPosition.name = place.name;
 	    }
@@ -740,14 +740,14 @@ app.post('/locations/:id.:format?', function(req, res, next) {
                switch (req.outputFormat) {
                  case 'json':
 		   if (!err) { 
-                       res.send(JSON.stringify({success: (req.body.checkin ? 'Checked in at ' + newPosition.name : "Checked out")}));
+                       res.send(JSON.stringify({success: (req.body.checkin !== undefined ? 'Checked in at ' + newPosition.name : "Checked out")}));
 		   } else {
 		       res.send(JSON.stringify({error: err}));
 		   }
     	           break;
                  default:
 		   if (!err) {
-		       req.flash('info', (req.body.checkin ? 'Checked in at '  + newPosition.name : "Checked out"));
+		       req.flash('info', (req.body.checkin !== undefined ? 'Checked in at '  + newPosition.name : "Checked out"));
 		   } else {
 		       req.flash('error', err);
 		   }
@@ -810,7 +810,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 });
 
     app.post("/locations/:id/admin", function(req,res, next) {
-	if (req.body.placeUpdate) {
+	if (req.body.placeUpdate !== undefined) {
 	    if (!req.body.name) {
 		req.flash("error", "Missing name of room to update");
 		next();
@@ -934,7 +934,7 @@ app.post('/schedule/admin', function(req,res, next) {
 
   if (req.body.addEvent) { 
       addEvent(req, res, next, 'meeting', null);
-  } else if (req.body.updateSchedule) {
+  } else if (req.body.updateSchedule !== undefined) {
       if (!req.body.schedule) {
 	  req.flash("error", "Missing URL of schedule");
 	  next();
@@ -1041,7 +1041,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
       if (err) {
 	 next();
       }
-      if (req.body.updateEvent){
+      if (req.body.updateEvent !== undefined){
       if (!req.body.name){
 	  req.flash("error", "Missing event name");
 	  next();
@@ -1075,7 +1075,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	    next();
           });
     });
-      } else if (req.body.deleteEvent) {
+      } else if (req.body.deleteEvent !== undefined) {
 	  if (!req.body.confirm){
 	      req.flash("error", "If you really want to delete the event, you need to confirm so by checking the checkbox");
 	      next();
@@ -1123,7 +1123,7 @@ app.get('/schedule/stream', function(req, res) {
 
 app.post("/schedule/events/:slug/", function(req, res, next) {
   setFormatOutput(req);
-    if (req.user && (req.body.interested || req.body.uninterested)) {	
+    if (req.user && (req.body.interested  !== undefined || req.body.uninterested  !== undefined)) {	
 	Event.findOne({slug: req.params.slug}, function(err, event) {
 	    if (err) {
 		next();
@@ -1135,7 +1135,7 @@ app.post("/schedule/events/:slug/", function(req, res, next) {
 	    for (var i in interestedList) {
 		if (interestedList[i].toString() == req.user._id.toString()) {
 		    userFound = true;
-		    if (!req.body.uninterested) {
+		    if (req.body.uninterested == undefined) {
 			success = false;
 		    } else {
 			emitter.emit("uninterest", req.user, event);
@@ -1145,7 +1145,7 @@ app.post("/schedule/events/:slug/", function(req, res, next) {
 		    interested.push(interestedList[i]);
 		}
 	    }
-	    if (!userFound && req.body.interested) {
+	    if (!userFound && req.body.interested !== undefined) {
 		interested.push(req.user._id);
 		emitter.emit("interest", req.user, event);
 		success = true;
@@ -1165,14 +1165,14 @@ app.post("/schedule/events/:slug/", function(req, res, next) {
 		    switch (req.outputFormat) {
 		    case "json":
 			if (!err) {
-			    res.send(JSON.stringify({success: 'Interest ' + (req.body.interested ? "recorded for" : "removed from") + event.name}));
+			    res.send(JSON.stringify({success: 'Interest ' + (req.body.interested !== undefined ? "recorded for" : "removed from") + event.name}));
 			} else { 
 			    res.send(JSON.stringify({error: err}));                   
 			}
 			break;
 		    default:
 			if (!err) {
-			    req.flash('success', 'Interest recorded in '  + (req.body.interested ? "recorded for " : "removed from ") + event.name);
+			    req.flash('success', 'Interest recorded in '  + (req.body.interested !== undefined ? "recorded for " : "removed from ") + event.name);
 			} else {
 			    req.flash('error', err);
 			}
@@ -1211,7 +1211,7 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
 	if (! req.loggedIn) {
 	    return res.redirect(everyauth.password.getLoginPath());
 	}
-	if (req.body.addEvent) { 
+	if (req.body.addEvent !== undefined) { 
 	    addEvent(req, res, next, 'adhoc', req.user);
 	}
     });
