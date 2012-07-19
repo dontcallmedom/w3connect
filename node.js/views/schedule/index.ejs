@@ -28,8 +28,12 @@ addEvent("onload",init);
 <% var interestMarker = true; %>
 <%- partial('schedule/full-schedule.ejs', {days: days, timeslots: timeslots, schedule:schedule, expanded: expanded, interestMarker: interestMarker}) %>
 </dl>
+
 <h2 id="add">Add an event</h2>
 <%- messages() %>
-<form action='#add' method='post'><fieldset><legend>Add an ad-hoc event</legend>
-<%- partial('schedule/addEvent.ejs', {places: places}) %>
+<form action='#add' method='post'>
+	<fieldset>
+		<!--<legend>Add an ad-hoc event</legend>-->
+		<%- partial('schedule/addEvent.ejs', {places: places}) %>
+	</fieldset>
 </form>
