@@ -932,7 +932,7 @@ app.post('/schedule/admin', function(req,res, next) {
 	return res.render("403");
     }    
 
-  if (req.body.addEvent) { 
+  if (req.body.addEvent !== undefined) { 
       addEvent(req, res, next, 'meeting', null);
   } else if (req.body.updateSchedule !== undefined) {
       if (!req.body.schedule) {
