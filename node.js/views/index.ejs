@@ -2,9 +2,6 @@
 <h1>Recent Activity</h1>
 <div id="messages">
 <% for (var s = 0; s < statusupdates.length; s++) { %>
-<% var elapsedTime = Date.now() - statusupdates[s].time ; %>
-<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
-
 <p>
 	<a href="<%= baseurl %>/people/profile/<%= statusupdates[s].author.slug %>">
 		<img src="<% if (statusupdates[s].author.picture_thumb) { %><%=statusupdates[s].author.picture_thumb%><% } else { %><%= baseurl %>/img/default-pic.png<% } %>" width='36' alt="Picture of <%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>">
@@ -15,7 +12,7 @@
 <% } else { %>
 	<%= statusupdates[s].content %>
 <% } %>
-	<span class="label label-warning"><%= nowString %></span>
+	<span class="label label-warning"><%= elapsedTime(statusupdates[s].time) %></span>
 </p>
 <% } %>
 </div>
