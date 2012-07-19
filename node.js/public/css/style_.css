@@ -60,7 +60,11 @@ body > footer a:hover {
 	color: #FFAA2A;
 }
 
-h1 {
+.navbar-text.pull-right {
+	margin-right: 10px;
+}
+
+h1, h2 {
 	font: 1.9em 'LeagueGothicRegular', sans-serif;
 	text-transform: uppercase;
 	color: #004480;
