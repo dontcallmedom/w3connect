@@ -48,17 +48,17 @@
 <% if (statusupdates.length) { %>
 
 <h2>Recent activity</h2>
-<ul>
+<ul class="activities">
 <% for (var s=0; s<statusupdates.length; s++) { %>
 <% var elapsedTime = Date.now() - statusupdates[s].time ; %>
 <% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
 	<li> 
+		<span class="label"><%= nowString %></span>
 		<% if (statusupdates[s].contentHTML) { %>
 		<%- statusupdates[s].contentHTML %>
 		<% } else { %>
 		<%= statusupdates[s].content %>
 		<% } %>
-		<span class="label label-warning"><%= nowString %></span>
 	</li>
 <% } %>
 </ul>

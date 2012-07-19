@@ -43,11 +43,7 @@ body > footer .container {
 #messages p {
 	margin: 0;
 	padding: 5px 0;
-	border-bottom: 1px solid lightgrey;
-}
-
-#messages p:hover {
-	background-color: #eeeeee;
+	border-top: 1px solid lightgrey;
 }
 
 #messages p:first-child {
@@ -102,6 +98,17 @@ h2 {
 legend {
 	font-size: 1.3em;
 	line-height: 1.8em;
+}
+
+.activities {
+	list-style-type: none;
+	margin-left: 0;
+}
+
+.activities .label {
+	min-width: 90px;
+	display: inline-block;
+	text-align: right;
 }
 
 @media (max-width: 979px) {
