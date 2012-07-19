@@ -64,9 +64,15 @@ body > footer a:hover {
 	margin-right: 10px;
 }
 
-h1, h2 {
+h1 {
 	font: 1.9em 'LeagueGothicRegular', sans-serif;
 	text-transform: uppercase;
+	color: #004480;
+	margin: 10px 0;
+}
+
+h2 {
+	font: 1.9em 'LeagueGothicRegular', sans-serif;
 	color: #004480;
 	margin: 10px 0;
 }

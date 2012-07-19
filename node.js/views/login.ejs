@@ -2,26 +2,33 @@
 
 <% if ('undefined' !== typeof errors && errors.length) {%>
 <ul id='error'>
-<% for (e in errors) {%>
-<li class="error"><%= errors[e]%></li>
-<%}%>
+	<% for (e in errors) {%>
+	<li class="error"><%= errors[e]%></li>
+	<%}%>
 </ul>
 <%}%>
+
 <% if (everyauth.loggedIn) {%>
-Logged in as <%=JSON.stringify(everyauth)%>
+	Logged in as <%=JSON.stringify(everyauth)%>
 <% } else {%>
-<form action='<%= baseurl %>/login' method='post'>
-<p>Please use your W3C account to log in:</p>
-<p id='login'>
-<label for='<%=everyauth.password.loginFormFieldName%>'>Login
-<input type="text" name="<%=everyauth.password.loginFormFieldName%>"></label>
-</p>
-<p id='password'>
-<label for='<%=everyauth.password.passwordFormFieldName%>'>Password
-<input type="password" name="<%=everyauth.password.passwordFormFieldName%>"></label>
-</p>
-<p id='submit'>
-<input type='submit' value='Login'>
-</p>
+<form action='<%= baseurl %>/login' method='post' class="form-horizontal">
+	<fieldset>
+		<legend>Please use your W3C account to log in:</legend>
+		<div class="control-group">
+			<label class="control-label" for='<%=everyauth.password.loginFormFieldName%>'>Login</label>
+			<div class="controls">
+				<input class="input-xlarge" type="text" name="<%=everyauth.password.loginFormFieldName%>">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for='<%=everyauth.password.passwordFormFieldName%>'>Password</label>
+			<div class="controls">
+				<input class="input-xlarge" type="password" name="<%=everyauth.password.passwordFormFieldName%>">
+			</div>
+		</div>
+		<div class="form-action">
+			<button type="submit" class="btn btn-primary">Login</button>
+		</div>
+	</fieldset>
 </form>
 <%}%>
