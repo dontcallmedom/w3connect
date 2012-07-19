@@ -31,7 +31,7 @@ addEvent("onload",init);
 
 <h2 id="add">Add an event</h2>
 <%- messages() %>
-<form action='#add' method='post'>
+<form action='#add' method='post' class="form-horizontal">
 	<fieldset>
 		<!--<legend>Add an ad-hoc event</legend>-->
 		<%- partial('schedule/addEvent.ejs', {places: places}) %>
