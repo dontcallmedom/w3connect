@@ -14,7 +14,7 @@
 <% } else {%>
 <p><a href='<%= baseurl %>/login'>Log in</a> to check in at <%= place.name %>.</p>
 <%}%>
-<p><object style="width:100%;min-height:180px; min-width:307px; max-width:725px;" type="image/svg+xml" data="<%= baseurl %>/maps/main.svg#<%= place.shortname %><% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
+<p><object type="image/svg+xml" data="<%= baseurl %>/maps/main.svg#<%= place.shortname %><% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
 <img style="max-width:100%" src="<%= baseurl %>/maps/<%= place.shortname%>.png" alt="Floor plan with highlight on <%= place.name %>">
 </object></p>
 <ul class="inline">

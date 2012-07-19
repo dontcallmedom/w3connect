@@ -49,15 +49,23 @@ body > footer .container {
 	color: #DCDCDC;
 }
 
+.navbar-text a,
+body > footer a {
+	color: #FFAA2A;
+}
+
+.navbar-text a:hover,
+body > footer a:hover {
+	text-decoration:underline;
+	color: #FFAA2A;
+}
+
 h1 {
 	font: 1.9em 'LeagueGothicRegular', sans-serif;
 	text-transform: uppercase;
 	color: #004480;
 	margin: 10px 0;
 }
-
-
-
 
 @media (max-width: 979px) {
 .navbar-fixed-top {
@@ -71,6 +79,10 @@ body {
 	padding-left: 10px !important;
 }
 body > footer {
-	margin:0 -20px !important;
+	margin:0 -10px !important;
+}
+.navbar-fixed-top {
+	margin-right: -10px !important;
+	margin-left: -10px !important;
 }
 }
