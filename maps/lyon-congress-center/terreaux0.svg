@@ -25,15 +25,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="243.70173"
-     inkscape:cy="260.6712"
+     inkscape:cx="273.91728"
+     inkscape:cy="174.95691"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="1045"
      inkscape:window-height="862"
-     inkscape:window-x="225"
-     inkscape:window-y="80"
+     inkscape:window-x="78"
+     inkscape:window-y="217"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -368,5 +368,185 @@
          x="274.22333"
          y="457.25806"
          id="tspan65428-55">Terreaux Hall</tspan></text>
+    <rect
+       style="opacity:0.5;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.45194927;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="terreauxoffice"
+       width="68.447136"
+       height="36.613979"
+       x="408.05582"
+       y="279.19669"
+       inkscape:label="">
+      <title
+         id="title3105">Terreaux Office</title>
+    </rect>
+    <text
+       xml:space="preserve"
+       style="font-size:10.22096062px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       x="442.31006"
+       y="294.72357"
+       id="text65424"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="442.31006"
+         y="294.72357"
+         id="tspan65428">Terreaux</tspan><tspan
+         sodipodi:role="line"
+         x="442.31006"
+         y="307.49979"
+         id="tspan3303">Office</tspan></text>
+    <rect
+       style="opacity:0.5;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.79047096;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="terreaux0rrw2"
+       width="49.506767"
+       height="20.760902"
+       x="426.43646"
+       y="339.4299"
+       inkscape:label="">
+      <desc
+         id="desc65616">Next to Terreaux Office</desc>
+      <title
+         id="title65614">Rest Room for Women</title>
+    </rect>
+    <rect
+       style="opacity:0.5;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.79047096;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="terreauxrrm"
+       width="49.506767"
+       height="20.760902"
+       x="425.638"
+       y="316.2735"
+       inkscape:label="">
+      <desc
+         id="desc65612">Next to Terreaux Office</desc>
+      <title
+         id="title65610">Rest Room for Men</title>
+    </rect>
+    <g
+       style="display:inline"
+       id="g68265-6"
+       transform="translate(81.052564,88.808618)">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 376.934,258.467 c 1.339,0 2.423,-1.083 2.423,-2.421 v -15.439 c 0,-1.339 -1.084,-2.425 -2.423,-2.425 h -15.439 c -1.339,0 -2.425,1.086 -2.425,2.425 v 15.439 c 0,1.338 1.086,2.421 2.425,2.421 h 15.439 z"
+         id="path68267-1" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff"
+         d="m 361.495,238.59 c -1.111,0 -2.015,0.906 -2.015,2.017 v 15.439 c 0,1.106 0.903,2.008 2.015,2.008 h 15.439 c 1.108,0 2.012,-0.901 2.012,-2.008 v -15.439 c 0,-1.11 -0.903,-2.017 -2.012,-2.017 h -15.439 z"
+         id="path68269-8" />
+      <rect
+         x="368.78601"
+         y="241.373"
+         width="1.077"
+         height="13.539"
+         id="rect68271-7" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 364.949,243.85 c 0.769,0 1.321,0.633 1.438,0.979 l 0.942,3.103 c 0.188,0.666 -0.659,0.942 -0.862,0.293 l -0.848,-2.847 h -0.49 l 1.422,5.06 h -1.355 v 3.949 c 0,0.673 -1.012,0.669 -1.012,0 v -3.973 h -0.515 v 3.965 c 0,0.681 -1.017,0.681 -1.017,0 v -3.941 h -1.359 l 1.407,-5.06 h -0.467 l -0.85,2.855 c -0.201,0.621 -1.056,0.368 -0.862,-0.301 l 0.944,-3.103 c 0.101,-0.353 0.548,-0.979 1.321,-0.979 h 2.163 z"
+         id="path68273-0" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 363.925,243.618 c 0.607,0 1.1,-0.493 1.1,-1.098 0,-0.609 -0.493,-1.103 -1.1,-1.103 -0.608,0 -1.099,0.494 -1.099,1.103 10e-4,0.605 0.491,1.098 1.099,1.098 z"
+         id="path68275-5" />
+      <circle
+         d="m 375.70801,242.49899 c 0,0.60696 -0.49204,1.099 -1.099,1.099 -0.60696,0 -1.099,-0.49204 -1.099,-1.099 0,-0.60696 0.49204,-1.099 1.099,-1.099 0.60696,0 1.099,0.49204 1.099,1.099 z"
+         sodipodi:ry="1.099"
+         sodipodi:rx="1.099"
+         sodipodi:cy="242.49899"
+         sodipodi:cx="374.60901"
+         cx="374.60901"
+         cy="242.49899"
+         r="1.099"
+         id="circle68277-2" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 373.119,254.262 c 0,0.341 0.275,0.617 0.615,0.617 0.342,0 0.618,-0.276 0.618,-0.617 v -5.172 h 0.518 v 5.172 c 0,0.341 0.274,0.617 0.615,0.617 0.341,0 0.615,-0.276 0.615,-0.617 l 0.004,-8.916 h 0.513 v 3.287 c 0,0.662 0.862,0.662 0.86,0 v -3.359 c 0,-0.729 -0.567,-1.443 -1.422,-1.443 l -2.917,-0.004 c -0.779,0 -1.404,0.638 -1.404,1.427 v 3.379 c 0,0.653 0.867,0.653 0.867,0 v -3.287 h 0.52 l -0.002,8.916 z"
+         id="path68279-1" />
+    </g>
+    <g
+       style="display:inline"
+       id="rhoneescalator"
+       transform="matrix(0.06612822,0,0,0.06612822,133.26816,558.34643)"
+       inkscape:label="">
+      <title
+         id="title5252">Escalator</title>
+      <g
+         id="g3925">
+        <g
+           id="g3927">
+          <path
+             style="fill:#000000;stroke:none"
+             id="path3929"
+             d="m 216.402,67.777 c 18.715,0 33.887,-15.174 33.887,-33.888 C 250.289,15.172 235.117,0 216.402,0 c -18.716,0 -33.888,15.172 -33.888,33.889 0,18.714 15.172,33.888 33.888,33.888 z"
+             inkscape:connector-curvature="0" />
+          <path
+             style="fill:#000000;stroke:none"
+             id="path3931"
+             d="M 216.402,33.889"
+             inkscape:connector-curvature="0" />
+        </g>
+        <path
+           style="fill:#000000;stroke:none"
+           id="path3933"
+           d="m 249.95,128.779 0,-21.353 c 0,-45.5 -67.095,-45 -67.095,0 l 0,87.109 0.132,0 -63.393,63.391 c -5.979,5.979 -6.708,6.239 -18.45,6.239 -0.01,0.01 -38.758,0 -38.758,0 -39,0 -62.386,35.048 -62.386,64.761 0,29.713 23.386,67.274 65.845,67.274 0,0 52.747,0 69.041,0 16.295,0 36.048,-6.229 52.343,-21.565 L 389.366,173.109 c 4.314,-3.834 6.71,-5.031 14.139,-5.031 0,0 27.867,0 49.913,0 24.025,0 58.025,-27.228 58.025,-66.478 0,-38.849 -34.25,-64.75 -60,-64.836 l -78.807,0 c -16.294,0 -37.25,6.662 -49.75,19.162 l -72.938,72.853 0.002,0 z"
+           inkscape:connector-curvature="0" />
+      </g>
+      <path
+         style="fill:#ffffff;stroke:none"
+         id="path3935"
+         d="m 377.429,70.311 70.905,0 c 17.253,0 28.859,19.287 28.859,30.789 0,11.502 -8.234,32.969 -29.321,32.969 l -42.629,0 c -18.05,0 -26.05,2.531 -36.441,12.922 l -203.68,203.68 c -8.236,8.255 -18.69,11.522 -32.109,11.522 l -67.168,0 c -17.253,0 -32.459,-14.597 -32.459,-33.767 0,-19.17 14.5,-29.911 29.5,-29.911 l 46.081,0 c 13.419,0 22.251,-3.834 29.919,-11.502 L 346.004,79.896 c 8.522,-8.52 16.941,-9.585 31.425,-9.585 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       style="display:inline"
+       id="rhonestairs1"
+       transform="matrix(0.08060007,0,0,0.08060007,133.17084,593.87393)"
+       inkscape:label="">
+      <title
+         id="title5246">Stairs</title>
+      <path
+         style="fill:#000000;stroke:none"
+         id="path1329"
+         d="m 0,323.974 80.05,0 0,-81.475 79.534,0 0,-82.025 80.789,0 0,-80.5 80.241,0 0,-79.974 119.138,0 0,40.804 -79.202,0 0,80.278 -80.332,0 0,81.408 -80.168,0 0,80.984 -80.5,0 0,81.671 -119.55,0 0,-41.171 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       style="display:inline"
+       id="rhonestairs1-5"
+       transform="matrix(0.08060007,0,0,0.08060007,68.170836,351.73107)"
+       inkscape:label="">
+      <title
+         id="title5246-9">Stairs</title>
+      <path
+         style="fill:#000000;stroke:none"
+         id="path1329-8"
+         d="m 0,323.974 80.05,0 0,-81.475 79.534,0 0,-82.025 80.789,0 0,-80.5 80.241,0 0,-79.974 119.138,0 0,40.804 -79.202,0 0,80.278 -80.332,0 0,81.408 -80.168,0 0,80.984 -80.5,0 0,81.671 -119.55,0 0,-41.171 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       style="display:inline"
+       id="rhonestairs1-1"
+       transform="matrix(0.08060007,0,0,0.08060007,261.74227,494.58822)"
+       inkscape:label="">
+      <title
+         id="title5246-7">Stairs</title>
+      <path
+         style="fill:#000000;stroke:none"
+         id="path1329-6"
+         d="m 0,323.974 80.05,0 0,-81.475 79.534,0 0,-82.025 80.789,0 0,-80.5 80.241,0 0,-79.974 119.138,0 0,40.804 -79.202,0 0,80.278 -80.332,0 0,81.408 -80.168,0 0,80.984 -80.5,0 0,81.671 -119.55,0 0,-41.171 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       style="display:inline"
+       id="rhonestairs1-9"
+       transform="matrix(0.08060007,0,0,0.08060007,358.88512,351.73107)"
+       inkscape:label="">
+      <title
+         id="title5246-0">Stairs</title>
+      <path
+         style="fill:#000000;stroke:none"
+         id="path1329-85"
+         d="m 0,323.974 80.05,0 0,-81.475 79.534,0 0,-82.025 80.789,0 0,-80.5 80.241,0 0,-79.974 119.138,0 0,40.804 -79.202,0 0,80.278 -80.332,0 0,81.408 -80.168,0 0,80.984 -80.5,0 0,81.671 -119.55,0 0,-41.171 z"
+         inkscape:connector-curvature="0" />
+    </g>
   </g>
 </svg>
