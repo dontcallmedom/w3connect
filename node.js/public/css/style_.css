@@ -129,6 +129,15 @@ legend {
 	text-align: right;
 }
 
+h1.inline,
+form.inline {
+	display: inline-block;
+	vertical-align: middle;
+}
+form.inline {
+	margin:10px 5px;
+}
+
 @media (max-width: 979px) {
 .navbar-fixed-top {
 	margin-bottom: 0px !important;

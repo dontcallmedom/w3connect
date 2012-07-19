@@ -1,9 +1,9 @@
-<h1><%= place.name %></h1>
+<h1 class="inline"><%= place.name %></h1>
 <!--<h2>Check in</h2>-->
 <%- messages()%>
 
 <% if (everyauth.loggedIn) {%>
-<form class='client' action="" method="post">
+<form class='client inline' action="" method="post">
 	<% if (user.lastKnownPosition.shortname != place.shortname) { %>
 	<button class="btn btn-success" type="submit" name="checkin">Check in<!-- at <%= place.name %>--></button>
 	<% } else { %>
