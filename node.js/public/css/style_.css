@@ -40,6 +40,13 @@ body > footer .container {
 	background: url("../img/w3-logo.png") no-repeat right center;
 }
 
+#messages p a:first-child:hover {
+	text-decoration: none;
+}
+#messages p a:first-child:hover span {
+	text-decoration: underline;
+}
+
 #messages p {
 	margin: 0;
 	padding: 5px 0;
