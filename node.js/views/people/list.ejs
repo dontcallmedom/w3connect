@@ -1,9 +1,9 @@
-<ul id="peopleList" class="nav nav-tabs nav-stacked">
+<ul id="peopleList" class="mainList">
 	<% for (var p  in people) { %>
 	<li>
 		<a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/profile/<%= people[p].slug %>'>
 			<img src="<% if (people[p].picture_thumb) { %><%=people[p].picture_thumb%><% } else { %><%= baseurl %>/img/default-pic.png<% } %>" width='36' alt="Picture of <%= people[p].given + " " + people[p].family %>">
-			<%= people[p].family + ", " + people[p].given %>
+			<span><%= people[p].family + ", " + people[p].given %></span>
 		</a>
 		<% if (typeof showCheckin != "undefined" && showCheckin && people[p].lastKnownPosition && people[p].lastKnownPosition.shortname) { %>
 		<% var elapsedTime = Date.now() - people[p].lastKnownPosition.time ; %>
