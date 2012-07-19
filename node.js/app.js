@@ -9,7 +9,7 @@ var everyauth = require('everyauth'),
     EventEmitter = require('events').EventEmitter;
 var imports = require("./imports.js"),
     twitter = require("./twitter.js");
-
+var sanitizer = require(‘sanitizer’);
 
 form = require("express-form"),
 filter = form.filter,
@@ -231,7 +231,7 @@ emitter.on("twitterListChange", function (id) {
 
 // Record events as statusupdates
 emitter.on("checkin", function(user, left, entered) {
-    var status  = new Status({author: user, time: Date.now(), statusType: "checkin", contentHTML: (left && left.name ? " left <a href='" + config.hosting.basepath + "/locations/" + left.shortname + "'>" + left.name + "</a>" + (entered && entered.name ? " and " : "") : "") + (entered && entered.name ? " entered <a href='" + config.hosting.basepath + "/locations/" + entered.shortname + "'>" + entered.name + "</a>" : "")});
+    var status  = new Status({author: user, time: Date.now(), statusType: "checkin", contentHTML: (left && left.name ? " left <a href='" + sanitizer.escape(config.hosting.basepath) + "/locations/" + sanitizer.escape(left.shortname) + "'>" + sanitizer.escape(left.name) + "</a>" + (entered && entered.name ? " and " : "") : "") + (entered && entered.name ? " entered <a href='" + sanitizer.escape(config.hosting.basepath) + "/locations/" + sanitizer.escape(entered.shortname) + "'>" + sanitizer.escape(entered.name) + "</a>" : "")});
     
     status.save();
 });
@@ -240,7 +240,7 @@ emitter.on("newevent", function(event) {
     var time = event.time;
     if (time) {
 	time.setUTCHours(time.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
-        var status  = new Status({author: event.proposedBy, time: Date.now(), statusType: "event", contentHTML: " scheduled a new ad-hoc event: " + event.name + " at " + time + " in <a href='" + config.hosting.basepath + "/locations/" + event.room.shortname + "'>" + event.room.name + "</a>"});
+        var status  = new Status({author: event.proposedBy, time: Date.now(), statusType: "event", contentHTML: " scheduled a new ad-hoc event: " + sanitizer.escape(event.name) + " at " + sanitizer.escape(time) + " in <a href='" + sanitizer.escape(config.hosting.basepath + "/locations/" + event.room.shortname) + "'>" + sanitizer.escape(event.room.name) + "</a>"});
 	status.save();
     }
 });
