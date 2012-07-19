@@ -11,10 +11,11 @@
 		<%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>
 	</a> 
 <% if (statusupdates[s].contentHTML) { %>
-<%- statusupdates[s].contentHTML %> (<%=  nowString %>)</li>
+<%- statusupdates[s].contentHTML %>
 <% } else { %>
-	<%= statusupdates[s].content %> <%= nowString %>
+	<%= statusupdates[s].content %>
 <% } %>
+<%=  nowString %>
 </p>
 <% } %>
 </div>
