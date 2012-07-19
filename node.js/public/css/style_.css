@@ -40,20 +40,27 @@ body > footer .container {
 	background: url("../img/w3-logo.png") no-repeat right center;
 }
 
-#messages p a:first-child:hover {
+#messages {
+	list-style-type: none;
+	margin-left: 0;
+}
+#messages li a:first-child:hover {
 	text-decoration: none;
 }
-#messages p a:first-child:hover span {
+#messages li a:first-child:hover span {
 	text-decoration: underline;
 }
+#messages img {
+	margin-right: 3px;
+}
 
-#messages p {
+#messages li {
 	margin: 0;
 	padding: 5px 0;
 	border-top: 1px solid lightgrey;
 }
 
-#messages p:first-child {
+#messages li:first-child {
 	border-top: 1px solid lightgrey;
 }
 
