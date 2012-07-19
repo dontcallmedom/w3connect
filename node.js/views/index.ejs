@@ -10,7 +10,11 @@
 		<img src="<% if (statusupdates[s].author.picture_thumb) { %><%=statusupdates[s].author.picture_thumb%><% } else { %><%= baseurl %>/img/default-pic.png<% } %>" width='36' alt="Picture of <%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>">
 		<%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>
 	</a> 
+<% if (statusupdates[s].contentHTML) { %>
+<%- statusupdates[s].contentHTML %> (<%= statusupdates[s].time %>)</li>
+<% } else { %>
 	<%= statusupdates[s].content %> <%= nowString %>
+<% } %>
 </p>
 <% } %>
 </div>
