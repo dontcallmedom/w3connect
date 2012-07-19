@@ -1,10 +1,12 @@
 [
 {"shortname":"terrauxhall","name":"Terreaux Hall", "level":0},
+{"shortname":"terrauxoffice","name":"Terreaux Office", "level":0},
 {"shortname":"placehaute","name":"Place Haute", "level":1},
 {"shortname":"forum3","name":"Forum 3","level":-2},
-{"shortname":"terrauxvip","name":"Terreaux VIP Lounge","level":0},
+{"shortname":"terrauxvip","name":"Terreaux VIP Lounge","level":0.5},
 {"shortname":"rhone1","name":"Rhône 1","level":1},
 {"shortname":"rhone2","name":"Rhône 2","level":1},
+{"shortname":"rhone3","name":"Rhône 3A+3B","level":1},
 {"shortname":"rhone3a","name":"Rhône 3A","level":1},
 {"shortname":"rhone3b","name":"Rhône 3B","level":1},
 {"shortname":"rhone4","name":"Rhône 4","level":1},
@@ -14,6 +16,7 @@
 {"shortname":"stclair3a","name":"Saint Clair 3A","level":2},
 {"shortname":"stclair3b","name":"Saint Clair 3B","level":2},
 {"shortname":"stclair4","name":"Saint Clair 4","level":2},
+{"shortname":"stclair5","name":"Saint Clair 4","level":2},
 {"shortname":"roseraie1","name":"Roseraie 1","level":3},
 {"shortname":"roseraie2","name":"Roseraie 2","level":3},
 {"shortname":"roseraie3","name":"Roseraie 3","level":3}
