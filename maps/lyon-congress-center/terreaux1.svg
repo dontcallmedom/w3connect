@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="417.73199"
+   height="115.08537"
+   id="svg3305"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="terreaux1.svg">
+  <defs
+     id="defs3307" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="207.10484"
+     inkscape:cy="72.378844"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="956"
+     inkscape:window-height="416"
+     inkscape:window-x="257"
+     inkscape:window-y="42"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata3310">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-189.5,-370.63396)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.92917824px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 309.43037,481.27254 -119.46578,3.9822 0,-111.5014 115.48358,-1.3274 180.52607,-1.32739 62.38767,2.65479 58.4055,1.3274 0,108.8466 -124.77537,-3.98219 3.9822,-84.95344 -180.52607,-1.32741 z"
+       id="path3097"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0.5;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.46458912;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="terreauxvip"
+       width="47.786308"
+       height="55.418846"
+       x="256.33444"
+       y="392.33691"
+       inkscape:label="">
+      <title
+         id="title3105">Salon VIP Terreaux</title>
+    </rect>
+    <text
+       xml:space="preserve"
+       style="font-size:10.22096062px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       x="280.25827"
+       y="417.38376"
+       id="text65424"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="280.25827"
+         y="417.38376"
+         id="tspan65428">Terreaux</tspan><tspan
+         sodipodi:role="line"
+         x="280.25827"
+         y="430.15997"
+         id="tspan3303">VIP</tspan></text>
+  </g>
+</svg>
