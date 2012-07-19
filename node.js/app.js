@@ -9,7 +9,7 @@ var everyauth = require('everyauth'),
     EventEmitter = require('events').EventEmitter;
 var imports = require("./imports.js"),
     twitter = require("./twitter.js");
-var sanitizer = require(‘sanitizer’);
+var sanitizer = require('sanitizer');
 
 form = require("express-form"),
 filter = form.filter,
