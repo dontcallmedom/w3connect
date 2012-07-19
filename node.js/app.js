@@ -273,6 +273,31 @@ function parseDate(datestring) {
     return ret;
 };
 
+function elapsedTime(time) {
+    var elapsedTime = Date.now() - time ;
+    var weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; 
+    var months = ["January", "February", "March", "April", "May",   
+		  "June", "July", "August", "September", "October", "November", "December"];
+    var days = Math.floor(elapsedTime / 86400);
+    var hours = Math.floor((elapsedTime - (days*86400)) / 3600);
+    var minutes = Math.floor((elapsedTime - (days * 86400) - (hours * 3600)) / 60);
+    if (days > 7) {
+	return time.getDate() + ' ' + months[time.getMonth()] + ' ' + time.getFullYear();
+    } else if (days > 1) {
+	return weekDays[time.getDay()] + ' (' + days.toString() + ' days ago)';
+    } else if (days == 2) {
+	return '2 days ago';
+    } else if (days == 1) {
+	return 'yesterday';
+    } else if (hours > 1) {
+	return hours.toString() + ' hours ago';
+    } else if (hours == 1) {
+	return '1 hour ago';
+    } else {
+	return minutes.toString() + 'minute' + (minutes > 1 ? 's' : '') . ' ago';
+    }
+}
+
 function prepareEventsList(events) {
     var days = [];
     var timeslots = [];
@@ -1315,7 +1340,7 @@ app.all('/taxi/to', function (req, res) {
 });
 
 everyauth.helpExpress(app);
-app.helpers({baseurl: config.hosting.basepath});
-app.dynamicHelpers({ messages: require('express-messages') , url: function(req, res) { return require("url").parse(req.url).pathname;} });
+app.helpers({baseurl: config.hosting.basepath, elapsedTime: elapsedTime});
+app.dynamicHelpers({ messages: require('express-messages') , url: function(req, res) { return require("url").parse(req.url).pathname;}  });
 app.listen(  app.set('port'));
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
