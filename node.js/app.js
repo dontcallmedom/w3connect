@@ -262,6 +262,7 @@ emitter.on("tweet", function(tweet) {
 // Utility function
 // Parses YYYYMMDDTHHmm into a Date object
 function parseDate(datestring) {
+    console.log("parsing date " + datestring);
     var ret = new Date();
     ret.setUTCFullYear(datestring.substr(0,4));
     ret.setUTCMonth(datestring.substr(4,2) - 1);
