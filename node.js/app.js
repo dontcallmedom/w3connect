@@ -231,7 +231,7 @@ emitter.on("twitterListChange", function (id) {
 
 // Record events as statusupdates
 emitter.on("checkin", function(user, left, entered) {
-    var status  = new Status({author: user, time: Date.now(), statusType: "checkin", content: (left && left.name ? " left <a href='" + config.hosting.basepath + "/locations/" + left.shortname + "'>" + left.name + "</a>" + (entered && entered.name ? " and " : "") : "") + (entered && entered.name ? " entered <a href='" + config.hosting.basepath + "/locations/" + entered.shortname + "'>" + entered.name + "</a>" : "")});
+    var status  = new Status({author: user, time: Date.now(), statusType: "checkin", content: /*user.given + " " + user.family + */(left && left.name ? " left " + left.name + (entered && entered.name ? " and " : "") : "") + (entered && entered.name ? " entered " + entered.name : "")/* + "."*/});
     status.save();
 });
 
@@ -239,7 +239,7 @@ emitter.on("newevent", function(event) {
     var time = event.time;
     if (time) {
 	time.setUTCHours(time.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
-	var status  = new Status({author: event.proposedBy, time: Date.now(), statusType: "event", content: " scheduled a new ad-hoc event: " + event.name + " at " + time + " in <a href='" + config.hosting.basepath + "/locations/" + event.room.shortname + "'>" + event.room.name + "</a>"});
+	var status  = new Status({author: event.proposedBy, time: Date.now(), statusType: "event", content: /*user.given + " " + user.family + */" scheduled a new ad-hoc event: " + event.name + " at " + time + " in " + event.room.name/* + "."*/});
 	status.save();
     }
 });
