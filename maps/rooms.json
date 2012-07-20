@@ -1,9 +1,9 @@
 [
-{"shortname":"terrauxhall","name":"Terreaux Hall", "level":0},
-{"shortname":"terrauxoffice","name":"Terreaux Office", "level":0},
+{"shortname":"terreauxhall","name":"Terreaux Hall", "level":0},
+{"shortname":"terreauxoffice","name":"Terreaux Office", "level":0},
 {"shortname":"placehaute","name":"Place Haute", "level":1},
 {"shortname":"forum3","name":"Forum 3","level":-2},
-{"shortname":"terrauxvip","name":"Terreaux VIP Lounge","level":0.5},
+{"shortname":"terreauxvip","name":"Terreaux VIP Lounge","level":0.5},
 {"shortname":"rhone1","name":"Rhône 1","level":1},
 {"shortname":"rhone2","name":"Rhône 2","level":1},
 {"shortname":"rhone3","name":"Rhône 3A+3B","level":1},
