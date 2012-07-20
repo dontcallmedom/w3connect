@@ -136,7 +136,19 @@
       <g
          transform="matrix(0.21544914,0,0,0.21544914,503.00275,687.25547)"
          inkscape:label="Calque"
-         id="layer2">
+         id="level0">
+        <path
+           inkscape:connector-curvature="0"
+           id="path3099"
+           d="m 68.135737,277.91334 2.597028,107.77667 116.866275,0 1.29851,138.94101 -124.657356,2.59704 2.597028,31.16433 11.686628,1.29852 0,71.41828 394.7483,1.29851 0,-72.71679 7.79108,0 -2.59702,-37.65691 -120.76182,1.29851 2.59703,-140.23952 115.56776,2.59702 2.59703,-107.77667 z"
+           style="fill:none;stroke:#000000;stroke-width:0.90895993px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="ccccccc"
+           inkscape:connector-curvature="0"
+           id="path3101"
+           d="m 188.85698,524.95565 -1.25794,-139.26564 0.30156,28.64608 32.1613,-0.0788 0,-32.46285 140.23952,1.37732 -2.53964,140.54108"
+           style="fill:none;stroke:#000000;stroke-width:0.90895993px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+
         <a
            xlink:href="../locations/terreauxhall"
            id="a9088"
@@ -166,17 +178,6 @@
                x="274.22333"
                sodipodi:role="line">Terreaux Hall</tspan></text>
         </a>
-        <path
-           inkscape:connector-curvature="0"
-           id="path3099"
-           d="m 68.135737,277.91334 2.597028,107.77667 116.866275,0 1.29851,138.94101 -124.657356,2.59704 2.597028,31.16433 11.686628,1.29852 0,71.41828 394.7483,1.29851 0,-72.71679 7.79108,0 -2.59702,-37.65691 -120.76182,1.29851 2.59703,-140.23952 115.56776,2.59702 2.59703,-107.77667 z"
-           style="fill:none;stroke:#000000;stroke-width:0.90895993px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-        <path
-           sodipodi:nodetypes="ccccccc"
-           inkscape:connector-curvature="0"
-           id="path3101"
-           d="m 188.85698,524.95565 -1.25794,-139.26564 0.30156,28.64608 32.1613,-0.0788 0,-32.46285 140.23952,1.37732 -2.53964,140.54108"
-           style="fill:none;stroke:#000000;stroke-width:0.90895993px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
         <g
            inkscape:label=""
            transform="matrix(0.07950115,0,0,0.07950115,191.30637,372.06667)"
@@ -1279,6 +1280,12 @@
       <g
          id="level3"
          transform="matrix(0.14739861,0,0,0.14739861,500.68018,326.96369)">
+        <path
+           style="fill:none;stroke:#000000;stroke-width:2.04064178;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+           id="path134305-9"
+           d="m 331.56685,620.67922 2.18639,45.91444 -44.45683,0.7288 -0.72881,-44.45684 -174.91214,3.64401 -3.64402,-200.42017 256.53783,-5.1016 1.4576,29.15202 91.10009,-1.45762 0.72879,-28.42321 258.72424,6.5592 -4.37281,199.69138 z"
+           inkscape:connector-curvature="0" />
+
         <a
            xlink:href="../locations/roseraie1"
            id="a10583"
@@ -1739,11 +1746,6 @@
              d="m 0,323.974 80.05,0 0,-81.475 79.534,0 0,-82.025 80.789,0 0,-80.5 80.241,0 0,-79.974 119.138,0 0,40.804 -79.202,0 0,80.278 -80.332,0 0,81.408 -80.168,0 0,80.984 -80.5,0 0,81.671 -119.55,0 0,-41.171 z"
              inkscape:connector-curvature="0" />
         </g>
-        <path
-           style="fill:none;stroke:#000000;stroke-width:2.04064178;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-           id="path134305-9"
-           d="m 331.56685,620.67922 2.18639,45.91444 -44.45683,0.7288 -0.72881,-44.45684 -174.91214,3.64401 -3.64402,-200.42017 256.53783,-5.1016 1.4576,29.15202 91.10009,-1.45762 0.72879,-28.42321 258.72424,6.5592 -4.37281,199.69138 z"
-           inkscape:connector-curvature="0" />
         <text
            style="font-size:16.07844543px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:FreeSans;-inkscape-font-specification:FreeSans"
            xml:space="preserve"
@@ -1805,6 +1807,12 @@
       <g
          id="level1"
          transform="matrix(0.2133189,0,0,0.2133189,530.71554,454.4759)">
+        <path
+           inkscape:connector-curvature="0"
+           id="path64600-5"
+           d="m 62.882944,730.73498 -3.55816,-136.1009 -112.972686,4.44776 -3.558165,-131.65321 176.130547,-7.11638 -0.88954,22.23873 59.59976,-0.88954 0.88954,-20.45965 174.35147,8.89552 -4.44775,131.65315 -113.86217,-7.11638 0.88954,140.54861 115.6413,1.77913 0.88954,125.42631 -180.57831,-6.22684 -3.55821,-26.68644 -33.80282,0.88954 0.88955,33.80282 -193.031988,4.44775 -1.779132,-131.65314 z"
+           style="fill:none;stroke:#000000;stroke-width:4.98147058px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+
         <a
            xlink:href="../locations/rhone1"
            id="a10703"
@@ -1914,11 +1922,6 @@
            width="192.14244"
            id="rect64598-8"
            style="fill:none" />
-        <path
-           inkscape:connector-curvature="0"
-           id="path64600-5"
-           d="m 62.882944,730.73498 -3.55816,-136.1009 -112.972686,4.44776 -3.558165,-131.65321 176.130547,-7.11638 -0.88954,22.23873 59.59976,-0.88954 0.88954,-20.45965 174.35147,8.89552 -4.44775,131.65315 -113.86217,-7.11638 0.88954,140.54861 115.6413,1.77913 0.88954,125.42631 -180.57831,-6.22684 -3.55821,-26.68644 -33.80282,0.88954 0.88955,33.80282 -193.031988,4.44775 -1.779132,-131.65314 z"
-           style="fill:none;stroke:#000000;stroke-width:4.98147058px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
         <a
            xlink:href="../locations/rhone3a"
            id="a10727"
