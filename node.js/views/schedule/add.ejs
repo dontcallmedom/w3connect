@@ -1,0 +1,8 @@
+<h1>Add an event</h1>
+<%- messages() %>
+<form action='#add' method='post' class="form-horizontal">
+	<fieldset>
+		<!--<legend>Add an ad-hoc event</legend>-->
+		<%- partial('schedule/addEvent.ejs', {places: places}) %>
+	</fieldset>
+</form>

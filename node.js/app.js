@@ -1176,14 +1176,24 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
 	    });
 });
 
-    app.post('/schedule/', function (req, res, next) {
+    app.post('/schedule/add', function (req, res, next) {
 	if (! req.loggedIn) {
 	    return res.redirect(everyauth.password.getLoginPath());
 	}
 	if (req.body.addEvent !== undefined) { 
 	    addEvent(req, res, next, 'adhoc', req.user);
+	} else {
+	    next();
 	}
     });
+
+    app.all('/schedule/add', function (req, res, next) {
+	if (! req.loggedIn) {
+	    return res.redirect(everyauth.password.getLoginPath());
+	}
+	res.render('schedule/add.ejs');
+    });
+
 
 app.all('/schedule/?(:datetime)?', function (req, res, next){
     var current = new Date();
