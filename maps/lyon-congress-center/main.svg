@@ -150,8 +150,7 @@
              height="141.42136"
              width="123.23861"
              id="terreauxhall"
-             class="space"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:0px">
+             class="space">
             <title
                id="title3623">Terreaux Hall</title>
           </rect>
@@ -467,8 +466,7 @@
              x="408.05582"
              height="36.613979"
              width="68.447136"
-             id="terreauxoffice"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="terreauxoffice">
             <title
                id="title3105">Terreaux Office</title>
           </rect>
@@ -669,8 +667,7 @@
              x="256.33444"
              height="55.418846"
              width="47.786308"
-             id="terreauxvip"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="terreauxvip">
             <title
                id="title3105-3">Terreaux VIP lounge</title>
           </rect>
@@ -1299,8 +1296,7 @@
              y="457.23682"
              x="209.6438"
              height="80.955116"
-             width="62.473972"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             width="62.473972">
             <title
                id="title56568">Roseraie 1</title>
           </rect>
@@ -1329,8 +1325,7 @@
              y="456.16953"
              x="264.29083"
              height="81.81517"
-             width="86.252579"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             width="86.252579">
             <title
                id="title56570">Roseraie 2</title>
           </rect>
@@ -1359,8 +1354,7 @@
              y="434.97937"
              x="480.58545"
              height="116.85536"
-             width="86.932899"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             width="86.932899">
             <title
                id="title56572">Roseraie 3</title>
           </rect>
@@ -1829,8 +1823,7 @@
              x="16.51152"
              height="97.850311"
              width="53.372902"
-             id="rhone1"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="rhone1">
             <title
                id="title64640-8">Rhône 1</title>
           </rect>
@@ -1858,8 +1851,7 @@
              x="70.130722"
              height="98.739861"
              width="51.5938"
-             id="rhone2"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="rhone2">
             <title
                id="title64642-1">Rhône 2</title>
           </rect>
@@ -1887,8 +1879,7 @@
              x="207.67659"
              height="101.40851"
              width="112.08309"
-             id="rhone3"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="rhone3">
             <title
                id="title64648-3">Rhône 3A + 3B</title>
           </rect>
@@ -1905,8 +1896,7 @@
              x="201.9669"
              height="78.280251"
              width="172.57237"
-             id="pasteurlounge"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="pasteurlounge">
             <title
                id="title64650-9">Pasteur Lounge</title>
           </rect>
@@ -2005,8 +1995,7 @@
              height="137.12323"
              width="118.25306"
              id="placehaute"
-             class="space"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:0px">
+             class="space">
             <title
                id="title64654-9">Place Haute</title>
           </rect>
@@ -2636,8 +2625,7 @@
              sodipodi:nodetypes="ccccc"
              inkscape:connector-curvature="0"
              id="Forum"
-             d="m -1258.1424,737.54361 8.8138,179.21407 c 238.6696,-12.24727 408.94488,-9.94257 524.91116,3.91725 l 3.91725,-182.15202 c -169.02678,-3.81188 -342.69211,-10.17633 -537.64221,-0.9793 z"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             d="m -1258.1424,737.54361 8.8138,179.21407 c 238.6696,-12.24727 408.94488,-9.94257 524.91116,3.91725 l 3.91725,-182.15202 c -169.02678,-3.81188 -342.69211,-10.17633 -537.64221,-0.9793 z">
             <title
                id="title6631">Forum</title>
           </path>
