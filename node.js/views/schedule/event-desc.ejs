@@ -15,8 +15,6 @@
 <strong><%= event.name %></strong>
 <% if (typeof admin != "undefined" && admin) { %>
 </a>
-<% } else if (event.proposedBy && user && event.proposedBy.login == user.login) { %> 
-<a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin"><i class="icon-edit"></i></a>
 <% } %>
 <% if (event.presenters) { %>
 , by <%= event.presenters %>
@@ -25,6 +23,9 @@
 (ad-hoc meeting
 <% if (event.proposedBy) { %>
 proposed by <a href='<%= baseurl %>/people/profile/<%= event.proposedBy.slug  %>'><%= event.proposedBy.given + " " + event.proposedBy.family %></a><% } %>)
+<% if (event.proposedBy && user && event.proposedBy.login == user.login) { %> 
+<a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin"><i class="icon-edit"></i></a>
+<% } %>
 <% } %>
 <% if (event.confidentiality && event.confidentiality == 'member') { %>
  — W3C Member-only
