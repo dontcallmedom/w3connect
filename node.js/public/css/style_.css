@@ -9,6 +9,10 @@
 	font-style: normal;
 }
 
+html {
+ overflow-y:scroll;
+}
+
 body {
 	padding-top: 40px;
 }
