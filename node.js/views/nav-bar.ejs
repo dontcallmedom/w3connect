@@ -10,6 +10,8 @@
 				<li class="dropdown <%= active %>">
 					<a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="<%= baseurl + '/locations/' %>">Rooms<b class="caret"></b></a>
 					<ul class="dropdown-menu">
+					<li><a href='<%= baseurl %>/locations/'>Floor plan</a></li>
+					<li class="divider"></li>
 						<% for (var p in places) { %>
 						<% var className = (typeof userCheckin != "undefined" && userCheckin == places[p].shortname ? " youarehere" : ""); %>
 						<li>
