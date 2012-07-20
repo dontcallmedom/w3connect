@@ -1,3 +1,38 @@
+// EcmaScript5 compatibility 
+if (!Object.keys) {  
+  Object.keys = (function () {  
+    var hasOwnProperty = Object.prototype.hasOwnProperty,  
+        hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),  
+        dontEnums = [  
+          'toString',  
+          'toLocaleString',  
+          'valueOf',  
+          'hasOwnProperty',  
+          'isPrototypeOf',  
+          'propertyIsEnumerable',  
+          'constructor'  
+        ],  
+        dontEnumsLength = dontEnums.length  ;
+  
+    return function (obj) {  
+      if (typeof obj !== 'object' && typeof obj !== 'function' || obj === null) throw new TypeError('Object.keys called on non-object')  
+  
+      var result = []  ;
+  
+      for (var prop in obj) {  
+        if (hasOwnProperty.call(obj, prop)) result.push(prop)  
+      }  
+  
+      if (hasDontEnumBug) {  
+        for (var i=0; i < dontEnumsLength; i++) {  
+          if (hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i])  
+        }  
+      }  
+      return result  ;
+    };  
+  })()  ;
+};
+
 var svgns = "http://www.w3.org/2000/svg";
 var xlinkns = "http://www.w3.org/1999/xlink";
 var xhtmlns = "http://www.w3.org/1999/xhtml";
@@ -69,7 +104,7 @@ xhr.open("GET","../locations.json", true);
 xhr.onreadystatechange = function() {
     if (4 == xhr.readyState) {
         var json = JSON.parse(xhr.responseText);
-        for ( var i = 0, len = json.length; len > i; i++ ) {
+        for ( var i = 0, len = Object.keys(json).length; len > i; i++ ) {
 	    if (json[i].checkedin.length) {
 		updateCounter( json[i].shortname, json[i].checkedin.length );
             } 
