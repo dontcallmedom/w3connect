@@ -7,6 +7,19 @@
 				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/people/', text: 'People'}) %>
 				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/schedule/', text: "Schedule"}) %>
 				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/locations/', text: "Rooms"}) %>
+				<li class="dropdown <%= active %>">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="<%= baseurl+'/locations/ %>">Rooms<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<% for (var p in places) { %>
+						<% var className = (typeof userCheckin != "undefined" && userCheckin == places[p].shortname ? " youarehere" : ""); %>
+						<li>
+							<a <% if (typeof place=="undefined" || place.shortname != places[p].shortname ) { %> href='<%= baseurl %>/locations/<%= places[p].shortname %>' class='<% } else { %> class='self <% } %><%= className %>'>
+								<%= places[p].name %> <%= (places[p].checkedin.length ? "(" + places[p].checkedin.length + " checked in)" : "")%>
+							</a>
+						</li>
+						<% } %>
+					</ul>
+				</li>
 				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/orgs/', text: "Orgs"}) %>
 			</ul>
 			<p class="navbar-text pull-right"><% if (user) {%>Logged in as <a href='<%= baseurl %>/people/profile/<%= user.slug %>'><%=user.login%></a>. <a href="<%= baseurl %>/logout">Log out</a><%} else { %>Not logged in. <a href="<%= baseurl %>/login?redirectTo=<%= url %>">Log in</a><%}%></p>
