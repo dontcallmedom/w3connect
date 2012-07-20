@@ -638,11 +638,11 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 
 app.get('/locations.:format?', function(req, res) {
     var counter=0;
-    for (p in places) {
+    for (var p in places) {
       People.find({"lastKnownPosition.shortname": places[p].shortname}, ['slug', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
          counter++;
          place.checkedin = people;
-         if (counter==places.length) {	     
+         if (counter==Object.keys(places).length) {	     
           switch (req.params.format) {
           // When json, generate suitable data
            case 'json':
