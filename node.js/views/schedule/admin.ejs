@@ -1,18 +1,17 @@
 <%- messages()%>
 <h2>Schedule</h2>
 <form action='' method='post'>
-<p><label>URI of JSON schedule: <input type="url" name="schedule"></label></p>
-<p><input type="submit" name="updateSchedule"></p>
+	<p><label>URI of JSON schedule: <input type="url" name="schedule"></label></p>
+	<p><input type="submit" name="updateSchedule"></p>
 </form>
 
-<h2>Events</h2>
-<h3>Add new event</h3>
-<form action='' method='post'>
+<h2>Add new event</h2>
+<form action='' method='post' class="form-horizontal">
 <%- partial('schedule/addEvent.ejs', {places: places, includeDetails: true}) %>
 </form>
 
-<h3>Update existing event</h3>
-<p>Pick the event you want to edit:</p>
-<dl id="accordion" class="list-accordion">
-<%- partial("schedule/full-schedule.ejs", {days: days, timeslots: timeslots, schedule:schedule, expanded: expanded}) %>
+<h2>Update existing event</h2>
+	<p>Pick the event you want to edit:</p>
+	<dl id="accordion" class="list-accordion">
+	<%- partial("schedule/full-schedule.ejs", {days: days, timeslots: timeslots, schedule:schedule, expanded: expanded}) %>
 </dl>

@@ -51,13 +51,14 @@ body > footer .container {
 	text-decoration: underline;
 }
 .mainList img {
-	margin-right: 3px;
+	margin: 5px 0;
+	float: left;
 }
-
 .mainList li {
 	margin: 0;
 	padding: 5px 0;
 	border-top: 1px solid lightgrey;
+	min-height: 48px;
 }
 
 .mainList li:first-child {
