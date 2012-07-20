@@ -83,10 +83,10 @@ everyauth.password
   .registerView('index.ejs') // @@@ need fixing
     .registerLocals(function (req, res, done) {
 	Status.find({})
-	    .desc('time')
+	    .sort('time', -1)
 	    .limit(20)
 	    .populate('author', ['given', 'family', 'slug', 'picture_thumb'])
-	    .run(function(err, statusupdates) { 
+	    .exec(function(err, statusupdates) { 
 		if (err) return done(err);
 		done(null, {statusupdates: statusupdates});
 	    });
@@ -305,7 +305,7 @@ function prepareEventsList(events) {
     var schedule = {};
     for (var i in events) {
 	events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
-	events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset,10));
+	events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10));
 	var day = events[i].timeStart.toDateString();
 	var timeslot = {timeStart: events[i].timeStart , timeEnd: events[i].timeEnd}; 
 	if (!schedule[day]) {
@@ -349,8 +349,8 @@ function addEvent(req, res, next, eventType, proposedBy) {
 	slug = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
 
 	var event = new Event(
-	    {timeStart: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
-	     timeEnd: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
+	    {timeStart: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.start.replace(":",""), 10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
+	     timeEnd: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""), 10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
 	     name: req.body.name,
 	     presenters: req.body.presenters,
 	     slug: slug,
@@ -568,7 +568,7 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
 		    req.flash("error", err);
 		    next();
 		} else {
-		    People.findOne({slug: req.params.id}).run( function(err, indiv) {
+		    People.findOne({slug: req.params.id}).exec( function(err, indiv) {
 			if (err) {
 			    next();
 			} else {
@@ -595,13 +595,13 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
 
 
 app.all('/people/profile/:id.:format?', function(req, res, next){
-    People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).run( function(err, indiv) {
+    People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).exec( function(err, indiv) {
 	if (indiv) {
 	    Event.find({})
 	    	.populate('proposedBy')
 		//.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
-	        .asc('timeStart')
-		.run(function(err, events) {
+	        .sort('timeStart', 1)
+		.exec(function(err, events) {
 		    var days, timeslots, schedule;
 		    var userEvents = [];
 		    if (events) {
@@ -617,9 +617,9 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 			schedule = data[2];
 		    }
 		    Status.find({"author": indiv})
-			.desc("time")
+			.sort("time", -1)
 			.limit(20)
-			.run(function(err, statusupdates) {
+			.exec(function(err, statusupdates) {
 			    switch (req.params.format) {
 				// When json, generate suitable data
 			    case 'json':
@@ -637,7 +637,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 });
 
 app.get('/locations.:format?', function(req, res) {
-  Place.find({}).asc('name').run( function (err, places) {
+  Place.find({}).sort('name', 1).exec( function (err, places) {
     var counter=0;
     for (p in places) {
       People.find({"lastKnownPosition.shortname": places[p].shortname}, ['slug', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
@@ -769,12 +769,12 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 
 
 app.all('/locations/:id.:format?', function(req, res) {
-  Place.find({}).asc('name').run( function (err, places) {
+  Place.find({}).sort('name', 1).exec( function (err, places) {
     places.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
     Place.findOne({shortname: req.params.id}, function(err, place) {
     if (place) {
 	People.find({"lastKnownPosition.shortname": place.shortname}, ['slug', 'given', 'family', 'picture_thumb', 'lastKnownPosition'])
-	    .run(function(err, people) {
+	    .exec(function(err, people) {
 	people.sort(function (a,b) { return (a.lastKnownPosition.time > b.lastKnownPosition.time ? -1 : (b.lastKnownPosition.time  > a.lastKnownPosition.time ? 1 : 0));});
 	  var current = new Date();
 	  if (req.query.datetime) {
@@ -787,7 +787,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 	      .where('timeStart').lte(current)
 	      .where('timeEnd').gte(current)
 	      .populate('proposedBy')
-		.run( 
+		.exec( 
 		    function(err, event) {	  
 
         switch (req.params.format) {
@@ -863,7 +863,7 @@ app.get('/people/:letter?.:format?', function (req, res, next){
       next();
   }
   var people = People.find({})
-		.run(function (err, people) {
+		.exec(function (err, people) {
     var activeLetters = {};
     var letterPeople = [];
     people.sort(function (a,b) { return (a.family > b.family ? 1 : (b.family > a.family ? -1 : 0));});	
@@ -891,7 +891,7 @@ app.get('/people/:letter?.:format?', function (req, res, next){
 app.get('/orgs.:format?', function (req, res){
   var orgs = Organization.find({})
 		.populate('employees', ['login'])
-		.run( function (err, orgs) {
+		.exec( function (err, orgs) {
     orgs.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
     switch (req.params.format) {
       // When json, generate suitable data
@@ -907,7 +907,7 @@ app.get('/orgs.:format?', function (req, res){
 app.get('/orgs/:id.:format?', function(req, res, next){
     Organization.findOne({slug: req.params.id})
         .populate('employees', ['login', 'slug', 'given', 'family', 'picture_thumb'])
-	.run( function(err, org) {
+	.exec( function(err, org) {
 	    if (org) {
 		var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
 		employees.sort(function (a,b) { return (a.family > b.family ? 1 : (b.family > a.family ? -1 : 0));});
@@ -1016,12 +1016,12 @@ app.post('/schedule/admin', function(req,res, next) {
 });
 
 app.all('/schedule/admin', function(req,res) {
-  Place.find({}).asc('name').run( function (err, places) {
+  Place.find({}).sort('name', 1).exec( function (err, places) {
     Event.find({})
-	        .asc('timeStart', 'name')
+	        .sort('timeStart', 1, 'name', 1)
 		.populate('room', ['shortname','name'])
 	  .populate('proposedBy')
-		.run( 
+		.exec( 
 	function(err, events) {
 	    var data = prepareEventsList(events);
 	    var days = data[0], timeslots = data[1], schedule = data[2];
@@ -1060,8 +1060,8 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	  if (err) {
 	      req.flash("error", "No known room with shortname" + req.body.room);
 	  }
-	  event.timeStart =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000'  + (parseInt(req.body.start.replace(":",""),10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00');
-	  event.timeEnd =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""),10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00');
+	  event.timeStart =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000'  + (parseInt(req.body.start.replace(":",""), 10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00');
+	  event.timeEnd =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""), 10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00');
 	  event.name= req.body.name;
 	  event.presenters= req.body.presenters;
 	  event.confidentiality = req.body.confidentiality;
@@ -1096,8 +1096,8 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 });
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
-  Place.find({}).asc('name').run( function (err, places) {
-      Event.findOne({slug: req.params.slug}).populate('room').populate('proposedBy').run(function(err, event) {
+  Place.find({}).sort('name', 1).exec( function (err, places) {
+      Event.findOne({slug: req.params.slug}).populate('room').populate('proposedBy').exec(function(err, event) {
 	if (err) {
 	    next();
 	}
@@ -1192,7 +1192,7 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
     Event.findOne({slug: req.params.slug})
 	.populate('room', ['shortname', 'name'])
 	    .populate('proposedBy')
-	.run(
+	.exec(
 	    function(err, event) {
 		if (err) {
 		    console.log("unknown event: " + err);
@@ -1227,12 +1227,12 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 	    next();
 	}
     }
-    Place.find({}).asc('name').run(function(err, places) {
+    Place.find({}).sort('name', 1).exec(function(err, places) {
     Event.find({})
 		.populate('room', ['shortname','name'])
-	    .asc('timeStart')
+	    .sort('timeStart', 1)
 	    .populate('proposedBy')
-		.run( 
+		.exec( 
 	function(err, events) {
 	    var days = [];
 	    var timeslots = [];
@@ -1244,7 +1244,7 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 	    events.sort(function (a,b) { return (a.timeStart > b.timeStart ? 1 : (b.timeStart > a.timeStart ? -1  : a.room.name > b.room.name ? 1 : (b.room.name > a.room.name ? -1 : 0)));});	    
 	    for (var i in events) {
 		events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
-		events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset,10));
+		events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10));
 		var day = events[i].timeStart.toDateString();
 		var timeslot = {timeStart: events[i].timeStart , timeEnd: events[i].timeEnd}; 
 		if (events[i].timeStart <= current && events[i].timeEnd >= current) {
