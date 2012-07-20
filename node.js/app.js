@@ -256,6 +256,11 @@ emitter.on("newevent", function(event) {
     }
 });
 
+emitter.on("newtwitteraccount", function(indiv) {
+    var status = new Status({author: indiv, time: Date.now(), statusType:"profile", contentHTML: " bound his/her profile to the <a href='" + sanitizer.escape('http://twitter.com/' + indiv.twitterAccount) + "'>Twitter account " + sanitizer.escape(indiv.twitterAccount) + "</a>"});
+    status.save();
+});
+
 
 emitter.on("tweet", function(tweet) {
     People.findOne(
@@ -575,6 +580,7 @@ app.post('/people/profile/:id.:format?', function(req, res, next){
 			} else {
 			    indiv.twitterAccount = {"name": twitterAccount, id: id};
 			    indiv.save(function(err) {
+				emitter.emit("newtwitteraccount", indiv);
 				// re-start twitter listener
 				emitter.emit("twitterListChange", id);
 				if (!err) {
