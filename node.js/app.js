@@ -49,7 +49,7 @@ var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
 var TaxiToAirport = require('./model.js').TaxiToAirport(db);
 var TwitterSettings = require('./model.js').TwitterSettings(db);
 
-var places;
+var places = {};
 
 // Authentication 
 // Session Store
