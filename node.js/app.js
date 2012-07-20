@@ -257,7 +257,7 @@ emitter.on("newevent", function(event) {
 });
 
 emitter.on("newtwitteraccount", function(indiv) {
-    var status = new Status({author: indiv, time: Date.now(), statusType:"profile", contentHTML: " bound his/her profile to the <a href='" + sanitizer.escape('http://twitter.com/' + indiv.twitterAccount) + "'>Twitter account " + sanitizer.escape(indiv.twitterAccount) + "</a>"});
+    var status = new Status({author: indiv, time: Date.now(), statusType:"profile", contentHTML: " bound his/her profile to the <a href='" + sanitizer.escape('http://twitter.com/' + indiv.twitterAccount.name) + "'>Twitter account " + sanitizer.escape(indiv.twitterAccount.name) + "</a>"});
     status.save();
 });
 
