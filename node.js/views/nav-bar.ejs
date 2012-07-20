@@ -8,7 +8,7 @@
 				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/schedule/', text: "Schedule"}) %>
 				<% var active = (url.match("^"+baseurl+'/locations/') == baseurl+'/locations/') ? "active" : ""; %>
 				<li class="dropdown <%= active %>">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="<%= baseurl + '/locations/' %>">Rooms<b class="caret"></b></a>
+					<a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="<%= baseurl + '/locations/' %>">Rooms<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<% for (var p in places) { %>
 						<% var className = (typeof userCheckin != "undefined" && userCheckin == places[p].shortname ? " youarehere" : ""); %>
