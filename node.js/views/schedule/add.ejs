@@ -1,4 +1,5 @@
 <h1>Add an event</h1>
+<% if (user) { %>
 <%- messages() %>
 <form action='#add' method='post' class="form-horizontal">
 	<fieldset>
@@ -6,3 +7,6 @@
 		<%- partial('schedule/addEvent.ejs', {places: places}) %>
 	</fieldset>
 </form>
+<% } else { <%
+<p><a href="<%= baseurl %>/login">Log in to add an event</a></p>
+<% } %>
