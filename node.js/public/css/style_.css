@@ -60,8 +60,10 @@ body > footer .container {
 	display: table-cell;
 	vertical-align: middle;
 	height: 58px;
-	position: relative;
-	padding-left: 46px;
+}
+.mainList li > div > div {
+    position: relative;
+    padding-left: 46px;
 }
 .mainList li a:first-child:hover {
 	text-decoration: none;
