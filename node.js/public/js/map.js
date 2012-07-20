@@ -46,6 +46,9 @@ var room_links = document.getElementsByTagNameNS(svgns, "a");
 // adding the counter
 for (var r =0 ;r < room_links.length ; r++) {
     var room = room_links[r].getElementsByTagNameNS(svgns, "rect")[0];
+    if (!room){
+	room = room_links[r].getElementsByTagNameNS(svgns, "path")[0];
+    }
     var bbox = room.getBBox();
     var backdrop = document.createElementNS(svgns, "rect");
     backdrop.setAttribute("id", room.getAttribute("id") + "-counter-backdrop");
