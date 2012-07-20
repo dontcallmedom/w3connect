@@ -63,7 +63,7 @@ body > footer .container {
 }
 .mainList li > div > div {
     position: relative;
-    padding-left: 46px;
+    padding-left: 5px;
 }
 .mainList li a:first-child:hover {
 	text-decoration: none;
@@ -71,14 +71,6 @@ body > footer .container {
 .mainList li a:first-child:hover span {
 	text-decoration: underline;
 }
-.mainList img {
-	margin: 5px 3px 5px 5px;
-	position: absolute;
-	top:0;
-	left:0;
-}
-
-
 .mainList li:first-child {
 	border-top: 1px solid lightgrey;
 }
