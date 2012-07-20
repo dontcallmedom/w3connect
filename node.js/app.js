@@ -425,6 +425,10 @@ app.get('/about', function(req, res){
 });
 
 app.post('/admin/', function(req, res, next){
+ var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
+ if (!isAdmin.test(req.user.login)) {
+	return res.render("403");
+  }    
   if (req.body.peopleUpdate !== undefined) {
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
@@ -433,10 +437,6 @@ app.post('/admin/', function(req, res, next){
 	// should find how to logout?
 	return res.redirect(everyauth.password.getLoginPath());
     }
-    var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
-    if (!isAdmin.test(req.user.login)) {
-	return res.render("403");
-    }    
       imports.importUserList(app.set("w3c_auth"), function(success, info, errors) {
 	  if (success) success.forEach(function(i) { req.flash('success',i);});
 	  if (info) info.forEach(function(i) { req.flash('info',i);});
