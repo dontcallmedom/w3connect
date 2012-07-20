@@ -709,8 +709,7 @@
              height="87.256027"
              width="59.334099"
              id="stclair1"
-             inkscape:label=""
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             inkscape:label="">
             <title
                id="title9692">Saint Clair 1</title>
           </rect>
@@ -742,8 +741,7 @@
              height="86.757423"
              width="53.849438"
              id="stclair2"
-             inkscape:label=""
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             inkscape:label="">
             <title
                id="title10305">Saint Clair 2</title>
           </rect>
@@ -775,8 +773,7 @@
              height="89.749054"
              width="57.83828"
              id="stclair3a"
-             inkscape:label=""
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             inkscape:label="">
             <title
                id="title10307">Saint Clair 3A</title>
           </rect>
@@ -808,8 +805,7 @@
              height="91.244873"
              width="48.364769"
              id="stclair3b"
-             inkscape:label=""
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             inkscape:label="">
             <title
                id="title10309">Saint Clair 3B</title>
           </rect>
@@ -841,8 +837,7 @@
              height="56.344879"
              width="65.843735"
              id="stclair4"
-             inkscape:label=""
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             inkscape:label="">
             <title
                id="title10311">Saint Clair 4</title>
           </rect>
@@ -890,8 +885,7 @@
              height="35.899624"
              width="45.871742"
              id="stclair5"
-             inkscape:label=""
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             inkscape:label="">
             <title
                id="title10313">Saint Clair 5</title>
           </rect>
@@ -1937,8 +1931,7 @@
              x="208.8094"
              height="97.850311"
              width="53.372902"
-             id="rhone3a"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="rhone3a">
             <title
                id="title64644-4">Rhône 3A</title>
           </rect>
@@ -1966,8 +1959,7 @@
              x="263.18585"
              height="97.850311"
              width="53.372902"
-             id="rhone3b"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+             id="rhone3b">
             <title
                id="title64646-6">Rhône 3B</title>
           </rect>
@@ -2538,7 +2530,7 @@
              height="56.342464"
              width="59.334099"
              id="rhone4"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+>
             <title
                id="title135541-2">Rhône 4</title>
           </rect>
@@ -2567,7 +2559,7 @@
              height="35.899624"
              width="45.871742"
              id="rhone5"
-             style="fill:#f4d9ff;stroke:#000000;stroke-width:2px">
+>
             <title
                id="title135543-1">Rhône 5</title>
           </rect>
