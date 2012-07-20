@@ -69,13 +69,15 @@ body > footer .container {
 	background: #eee;
 }
 
-.navbar .nav .active > a, .navbar .nav .active > a:hover {
+.navbar .nav li.active,
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover {
 	color: #fff;
 	background-color: #073965;
 }
 
 .navbar .nav > li > a {
-	color: #DCDCDC;
+	color: #AAA;
 }
 
 .navbar-text a,
