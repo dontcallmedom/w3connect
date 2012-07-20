@@ -3069,6 +3069,9 @@
     </g>
   </g>
   <script
+     xlink:href="../js/getscreenbbox.js"
+     id="script261" />
+  <script
      xlink:href="../js/map.js"
      id="script261" />
 </svg>
