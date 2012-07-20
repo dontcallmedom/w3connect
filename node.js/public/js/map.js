@@ -33,6 +33,18 @@ if (!Object.keys) {
   })()  ;
 };
 
+// Fallback if getScreenBBOx not implemented
+// from http://my.opera.com/MacDev_ed/blog/getting-screen-boundingboxes-in-svg
+if(!document.documentElement.getScreenBBox) {
+     // load the fallback js implementation if necessary
+    var s = document.createElementNS("http://www.w3.org/1999/xhtml", "script");
+    s.src = "getscreenbbox.js";
+    document.documentElement.appendChild(s);
+    SVGElement.prototype.getScreenBBox = function() {
+      return getScreenBBox_impl(this);	
+    };
+}
+
 var svgns = "http://www.w3.org/2000/svg";
 var xlinkns = "http://www.w3.org/1999/xlink";
 var xhtmlns = "http://www.w3.org/1999/xhtml";
@@ -53,7 +65,7 @@ function updateYouAreHere(entered, left) {
     var here = document.getElementById(entered);
    if (here) {
         here.setAttribute("class", "room youarehere");
-        var bbox = here.getBBox();
+        var bbox = here.getScreenBBox();
         youareherePoint.setAttribute( "cx", bbox.x + bbox.width/2);
         youareherePoint.setAttribute( "cy", bbox.y + bbox.height/2);
         if (!document.getElementById("you")) {
@@ -84,7 +96,7 @@ for (var r =0 ;r < room_links.length ; r++) {
     if (!room){
 	room = room_links[r].getElementsByTagNameNS(svgns, "path")[0];
     }
-    var bbox = room.getBBox();
+    var bbox = room.getScreenBBox();
     var backdrop = document.createElementNS(svgns, "rect");
     backdrop.setAttribute("id", room.getAttribute("id") + "-counter-backdrop");
     backdrop.setAttribute("x", bbox.x + bbox.width - 12);
@@ -148,7 +160,7 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 	var box = document.createElementNS(svgns, "foreignObject");
 	var animateFadein = document.createElementNS(svgns, "animate");
 	var animateFadeout = document.createElementNS(svgns, "animate");
-	var bbox = roomBox.getBBox();
+	var bbox = roomBox.getScreenBBox();
 	backbox.setAttribute("x", bbox.x + bbox.width / 2 - 5);
 	backbox.setAttribute("id", "tweet" + id);
 	backbox.setAttribute("y", bbox.y + bbox.height / 2 - 15 );
@@ -201,8 +213,8 @@ function displayTweet(text, screen_name, profile_image, id, room) {
 function moveUser (left, entered, user) {
     var avatarId = "avatar_" + user.login;
     var avatar = document.getElementById(avatarId);
-    var leftBox = document.getElementById(left).getBBox();
-    var enteredBox = document.getElementById(entered).getBBox();
+    var leftBox = document.getElementById(left).getScreenBBox();
+    var enteredBox = document.getElementById(entered).getScreenBBox();
 
     if (!avatar) {
 	var name = document.createTextNode(user.given + " " + user.family);
