@@ -21,9 +21,7 @@
 	<dt>Latest check-in</dt>
 	<dd>
 		<% if (indiv.lastKnownPosition && indiv.lastKnownPosition.shortname) { %>
-		<% var elapsedTime = Date.now() - indiv.lastKnownPosition.time ; %>
-		<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? 	Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
-		<a href="<%= baseurl %>/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> <span class="label label-warning"><%= nowString %></span>
+		<a href="<%= baseurl %>/locations/<%= indiv.lastKnownPosition.shortname %>"><%= indiv.lastKnownPosition.name %></a> <span class="label label-warning"><%= elapsedTime(indiv.lastKnownPosition.time) %></span>
 		<% } else {%>Unknown<% } %>
 	</dd>
 </dl>
@@ -50,10 +48,8 @@
 <h2>Recent activity</h2>
 <ul class="activities">
 <% for (var s=0; s<statusupdates.length; s++) { %>
-<% var elapsedTime = Date.now() - statusupdates[s].time ; %>
-<% var nowString = (elapsedTime > 24*3600*1000 ? Math.floor(elapsedTime / (24*3600*1000)).toString() + ' days ago' :  (elapsedTime > 3600*1000 ? Math.floor(elapsedTime / (3600*1000)).toString() + ' hours ago' : Math.floor(elapsedTime / (60*1000)).toString() + ' minutes ago')); %>
 	<li> 
-		<span class="label"><%= nowString %></span>
+		<span class="label"><%= elapsedTime(statusupdates[s].time) %></span>
 		<% if (statusupdates[s].contentHTML) { %>
 		<%- statusupdates[s].contentHTML %>
 		<% } else { %>
