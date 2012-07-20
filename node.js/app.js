@@ -49,6 +49,7 @@ var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
 var TaxiToAirport = require('./model.js').TaxiToAirport(db);
 var TwitterSettings = require('./model.js').TwitterSettings(db);
 
+var places;
 
 // Authentication 
 // Session Store
@@ -149,6 +150,16 @@ app.configure(function(){
  app.use(express.cookieParser()); 
   app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret}));
   app.use(everyauth.middleware());
+  // Loading up list of places
+  Place.find({}).sort('name', 1).exec( function(err, rooms) {
+      if (err) {
+	  console.log("No room known in the system");		     
+      } else {
+	for (i in rooms) {
+	    places[rooms[i].shortname] = rooms[i];
+	}	  
+      }
+  });
   // Loading up list of twitter users
   TwitterSettings.findOne(
       {}, 
@@ -336,37 +347,27 @@ function addEvent(req, res, next, eventType, proposedBy) {
 	req.flash("error", "Missing event end time");
 	next();
     } 
-    var places = {};
-    Place.find({}, function(err, rooms) {
-	if (err) {
-	    req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
-	    next();
-	}
-	for (i in rooms) {
-	    places[rooms[i].shortname] = rooms[i];
-	}
-	// uuid generation from http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
-	slug = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
-
-	var event = new Event(
-	    {timeStart: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.start.replace(":",""), 10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
-	     timeEnd: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""), 10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
-	     name: req.body.name,
-	     presenters: req.body.presenters,
-	     slug: slug,
-	     confidentiality: req.body.confidentiality,
-	     observers: req.body.observers,
-	     eventType: eventType
-	    });
-	if (proposedBy) {
-	    event.proposedBy = proposedBy._id;
-	}
-        if (places[req.body.room]) {
-	    event.room = places[req.body.room]._id;
-        } else {
-	    req.flash('error', 'Failed to locate event “' + event.name + '” as it is set for a room with unknown shortname ' + req.body.room);			
-        }
-	event.save(function (err) {
+    // uuid generation from http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+    var slug = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
+    var event = new Event(
+	{timeStart: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.start.replace(":",""), 10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
+	 timeEnd: parseDate(req.body.day + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""), 10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00'),
+	 name: req.body.name,
+	 presenters: req.body.presenters,
+	 slug: slug,
+	 confidentiality: req.body.confidentiality,
+	 observers: req.body.observers,
+	 eventType: eventType
+	});
+    if (proposedBy) {
+	event.proposedBy = proposedBy._id;
+    }
+    if (places[req.body.room]) {
+	event.room = places[req.body.room]._id;
+    } else {
+	req.flash('error', 'Failed to locate event “' + event.name + '” as it is set for a room with unknown shortname ' + req.body.room);			
+    }
+    event.save(function (err) {
 	    if (err) {
 		req.flash('error',err);
 	    } else {
@@ -376,7 +377,6 @@ function addEvent(req, res, next, eventType, proposedBy) {
 		req.flash('info', req.body.name + ' successfully added to schedule')	 ;
 		     }
 	    next();
-	});
     });
 }
 
@@ -637,7 +637,6 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 });
 
 app.get('/locations.:format?', function(req, res) {
-  Place.find({}).sort('name', 1).exec( function (err, places) {
     var counter=0;
     for (p in places) {
       People.find({"lastKnownPosition.shortname": places[p].shortname}, ['slug', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
@@ -655,8 +654,6 @@ app.get('/locations.:format?', function(req, res) {
 	 }
       };})(places[p]));
     }		    
-  });
-
 });
 
 app.get('/locations/stream', function(req, res) {
@@ -690,7 +687,7 @@ app.post('/locations/:id.:format?', function(req, res, next) {
     req.session.redirectTo = '/locations/' + req.params.id;
     return res.redirect(everyauth.password.getLoginPath());
   }
-    Place.findOne({shortname: req.params.id}, function(err, place) {
+    var place = places[req.params.id];
     if (place) {
 	if ((req.body.checkin !== undefined || req.body.checkout !== undefined) && req.user) {
 	    // the user is already checked in in that place
@@ -762,16 +759,12 @@ app.post('/locations/:id.:format?', function(req, res, next) {
    } else {
        next();
    }
-  });
-
 });
 
 
 
 app.all('/locations/:id.:format?', function(req, res) {
-  Place.find({}).sort('name', 1).exec( function (err, places) {
-    places.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
-    Place.findOne({shortname: req.params.id}, function(err, place) {
+    var place = places[req.params.id];
     if (place) {
 	People.find({"lastKnownPosition.shortname": place.shortname}, ['slug', 'given', 'family', 'picture_thumb', 'lastKnownPosition'])
 	    .exec(function(err, people) {
@@ -806,8 +799,6 @@ app.all('/locations/:id.:format?', function(req, res) {
     } else {
        res.render('locations/unknown.ejs', {locals: { shortname: req.params.id, title: 'Unknown location'}});
    }
-  });
-  });
 });
 
     app.post("/locations/:id/admin", function(req,res, next) {
@@ -816,12 +807,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 		req.flash("error", "Missing name of room to update");
 		next();
 	    }
-	    Place.findOne(
-		{shortname: req.params.id},
-		function (err, place) {
-		    if (err) {
-			req.flash("error", err);
-		    }
+	    var place = places[req.params.id];
 		    if (!place) {
 			req.flash("error", "No room found with shortname " + req.params.id);
 			next();
@@ -836,22 +822,18 @@ app.all('/locations/:id.:format?', function(req, res) {
 			    }
 			    next();
 			});
-		});
 	} else {
 	    next();
 	}
     });
 	    
     app.all("/locations/:id/admin", function(req,res, next) {
-	Place.findOne(
-	    {shortname: req.params.id},
-	    function (err, place) {
-		if (place) {
+	var place = places[req.params.id];
+	if (place) {
 		    res.render("locations/admin.ejs", {locals: {place: place}});
-		} else {
+	} else {
 		    next();
-		}
-	    });
+	}
     });
 
 app.get('/people/:letter?.:format?', function (req, res, next){
@@ -940,15 +922,6 @@ app.post('/schedule/admin', function(req,res, next) {
 	  req.flash("error", "Missing URL of schedule");
 	  next();
       }
-      var places = {};
-      Place.find({}, function(err, rooms) {
-	  if (err) {
-	      req.flash("error", "No room known in the system; load the list of rooms before loading the schedule");
-	      next();
-	  }
-	  for (i in rooms) {
-	      places[rooms[i].shortname] = rooms[i];
-	  }
       var http;
       var url = require("url").parse(req.body.schedule);
       if (url.protocol == "http:") {
@@ -1009,14 +982,12 @@ app.post('/schedule/admin', function(req,res, next) {
 	      });
 	  });
       }
-  });
  } else {
      next();
  }
 });
 
 app.all('/schedule/admin', function(req,res) {
-  Place.find({}).sort('name', 1).exec( function (err, places) {
     Event.find({})
 	        .sort('timeStart', 1, 'name', 1)
 		.populate('room', ['shortname','name'])
@@ -1027,7 +998,6 @@ app.all('/schedule/admin', function(req,res) {
 	    var days = data[0], timeslots = data[1], schedule = data[2];
         res.render("schedule/admin", { locals: {title: "Schedule update", places: places, days: days, timeslots: timeslots, schedule:schedule, expanded: true, interestMarker: false, admin: true}});
     });
-  });
 });
 
 app.post("/schedule/events/:slug/admin", function(req, res, next) {
@@ -1055,9 +1025,9 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
       } else if (!req.body.end) {
 	  req.flash("error", "Missing event end time");
 	  next();
-      } 
-      Place.findOne({shortname: req.body.room}, function(err, room) {
-	  if (err) {
+      }
+      var room = places[req.body.room];
+	  if (!room) {
 	      req.flash("error", "No known room with shortname" + req.body.room);
 	  }
 	  event.timeStart =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000'  + (parseInt(req.body.start.replace(":",""), 10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00');
@@ -1075,7 +1045,6 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	    }
 	    next();
           });
-    });
       } else if (req.body.deleteEvent !== undefined) {
 	  if (!req.body.confirm){
 	      req.flash("error", "If you really want to delete the event, you need to confirm so by checking the checkbox");
@@ -1096,14 +1065,12 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 });
 
 app.all("/schedule/events/:slug/admin", function(req, res, next) {
-  Place.find({}).sort('name', 1).exec( function (err, places) {
       Event.findOne({slug: req.params.slug}).populate('room').populate('proposedBy').exec(function(err, event) {
 	if (err) {
 	    next();
 	}
         res.render("schedule/event-admin", {locals: {title: "Update " + event.name, event: event, places: places, timezone_offset: parseInt(config.schedule.timezone_offset, 10)}});
     });
-  });
 });
 
 app.get('/schedule/stream', function(req, res) {
@@ -1227,7 +1194,6 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 	    next();
 	}
     }
-    Place.find({}).sort('name', 1).exec(function(err, places) {
     Event.find({})
 		.populate('room', ['shortname','name'])
 	    .sort('timeStart', 1)
@@ -1271,7 +1237,6 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 	    }
 	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, myEvents: myEvents, places: places, title: "Schedule", script:"/js/event-interest.js"}});
 	});
-    });
 });
 
 /*
@@ -1347,7 +1312,7 @@ app.all('/taxi/to', function (req, res) {
 });
 
 everyauth.helpExpress(app);
-app.helpers({baseurl: config.hosting.basepath, elapsedTime: elapsedTime});
+app.helpers({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
 app.dynamicHelpers({ messages: require('express-messages') , url: function(req, res) { return require("url").parse(req.url).pathname;}  });
 app.listen(  app.set('port'));
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
