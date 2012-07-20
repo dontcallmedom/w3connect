@@ -1011,14 +1011,18 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
     }
-    var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
-    if (!isAdmin.test(req.user.login)) {
-	return res.render("403");
-    }    
-    Event.findOne({slug: req.params.slug}, function(err, event) {
+    Event.findOne({slug: req.params.slug}).populate('proposedBy').exec(function(err, event) {
       if (err) {
 	 next();
       }
+      // only admin && event proposers can update
+      if (req.user.login !== event.proposedBy.login) {
+        var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
+        if (!isAdmin.test(req.user.login)) {
+	  return res.render("403");
+        }    
+      }
+
       if (req.body.updateEvent !== undefined){
       if (!req.body.name){
 	  req.flash("error", "Missing event name");
@@ -1076,7 +1080,15 @@ app.all("/schedule/events/:slug/admin", function(req, res, next) {
 	if (err) {
 	    next();
 	}
-        res.render("schedule/event-admin", {locals: {title: "Update " + event.name, event: event, places: places, timezone_offset: parseInt(config.schedule.timezone_offset, 10)}});
+      // only admin && event proposers can update
+      if (req.user.login !== event.proposedBy.login) {
+        var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
+        if (!isAdmin.test(req.user.login)) {
+	  return res.render("403");
+        }    
+      }
+
+      res.render("schedule/event-admin", {locals: {title: "Update " + event.name, event: event, places: places, timezone_offset: parseInt(config.schedule.timezone_offset, 10)}});
     });
 });
 
