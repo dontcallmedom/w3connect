@@ -425,14 +425,15 @@ app.get('/about', function(req, res){
 });
 
 app.post('/admin/', function(req, res, next){
+ if (! req.loggedIn) {
+   return res.redirect(everyauth.password.getLoginPath());
+ }
  var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
  if (!isAdmin.test(req.user.login)) {
 	return res.render("403");
   }    
   if (req.body.peopleUpdate !== undefined) {
-    if (! req.loggedIn) {
-      return res.redirect(everyauth.password.getLoginPath());
-    } else if (!app.set("w3c_auth")) {
+    if (!app.set("w3c_auth")) {
 	// in case user logged in a previous session
 	// should find how to logout?
 	return res.redirect(everyauth.password.getLoginPath());
