@@ -125,6 +125,7 @@
          inkscape:connector-curvature="0" />
     </marker>
   </defs>
+  <title>Floor Plans of Lyon Congress Center</title>
   <g
      class="room"
      id="g10324"
@@ -132,11 +133,10 @@
     <g
        inkscape:label="Calque 1"
        inkscape:groupmode="layer"
-       id="level0">
+       id="level0" class="level">
       <g
          transform="matrix(0.21544914,0,0,0.21544914,503.00275,687.25547)"
-         inkscape:label="Calque"
-         id="level0">
+         inkscape:label="Calque">
         <path
            inkscape:connector-curvature="0"
            id="path3099"
@@ -151,7 +151,6 @@
 
         <a
            xlink:href="../locations/terreauxhall"
-           id="a9088"
            title="Terreaux Hall"
            target="_parent">
           <rect
@@ -650,7 +649,7 @@
       </g>
       <g
          transform="matrix(0.21544914,0,0,0.21544914,475.91771,598.51869)"
-         id="level0.5"
+         id="level0.5" class="level"
          inkscape:label="Calque 1">
         <path
            inkscape:connector-curvature="0"
@@ -691,7 +690,7 @@
       </g>
       <g
          transform="matrix(0.21544914,0,0,0.21544914,510.42035,374.1052)"
-         id="level2"
+         id="level2" class="level"
          inkscape:label="Calque 1">
         <path
            inkscape:connector-curvature="0"
@@ -703,7 +702,7 @@
            title="Saint Clair 1"
            target="_parent"
            id="a9828">
-          <rect
+          <rect  class=" room youarehere"
              transform="matrix(0.99987036,-0.01610147,0.01610147,0.99987036,0,0)"
              y="512.94073"
              x="82.935364"
@@ -1278,7 +1277,7 @@
         </g>
       </g>
       <g
-         id="level3"
+         id="level3" class="level"
          transform="matrix(0.14739861,0,0,0.14739861,500.68018,326.96369)">
         <path
            style="fill:none;stroke:#000000;stroke-width:2.04064178;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
@@ -1805,7 +1804,7 @@
            x="634.18274"
            y="411.35367">Level Roseraie</tspan></text>
       <g
-         id="level1"
+         id="level1" class="level"
          transform="matrix(0.2133189,0,0,0.2133189,530.71554,454.4759)">
         <path
            inkscape:connector-curvature="0"
@@ -2591,7 +2590,7 @@
            x="634.18274"
            y="600.46057">Level Rhône</tspan></text>
       <g
-         id="level-2"
+         id="level-2" class="level"
          transform="matrix(0.21458562,0,0,0.21458562,759.43429,734.07606)">
         <path
            sodipodi:nodetypes="cccccccccc"
