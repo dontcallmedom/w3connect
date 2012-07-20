@@ -2,14 +2,14 @@
 <div class="control-group">
 	<label class="control-label" for="name">Name</label>
 	<div class="controls">
-		<input id="name" name="name" required>
+		<input id="name" name="name" class="input-xlarge" required>
 	</div>
 </div>
 
 <div class="control-group">
 	<label class="control-label" for="day">Day</label>
 	<div class="controls">
-		<select id="day" name='day'>
+		<select id="day" name='day' class="input-xlarge">
 			<option value='20121029'>Monday</option>
 			<option value='20121030'>Tuesday</option>
 			<option value='20121031'>Wednesday</option>
@@ -38,7 +38,7 @@
 <div class="control-group">
 	<label class="control-label" for="room">Room</label>
 	<div class="controls">
-		<select id="room" name='room'>
+		<select id="room" name='room' class="input-xlarge">
 			<option>Unknown</option>
 			<% for (var p  in places) { %> 
 			<option value="<%= places[p].shortname %>"><%= places[p].name %></option>
@@ -53,14 +53,14 @@
 <div class="control-group">
 	<label class="control-label" for="presenters">Presenters</label>
 	<div class="controls">
-		<input id="presenters" name='presenters'>
+		<input id="presenters" name='presenters' class="input-xlarge">
 	</div>
 </div>
 
 <div class="control-group">
 	<label class="control-label" for="confidentiality">Confidentiality</label>
 	<div class="controls">
-		<select id="confidentiality" name="confidentiality">
+		<select id="confidentiality" name="confidentiality" class="input-xlarge">
 			<option>public</option>
 			<option value="member">W3C Member-only</option>
 		</select>
@@ -70,7 +70,7 @@
 <div class="control-group">
 	<label class="control-label" for="observers">Observers</label>
 	<div class="controls">
-		<select id="observers" name="observers">
+		<select id="observers" name="observers" class="input-xlarge">
 			<option value="chairs">Allowed, to the Chairs discretion</option>
 			<option value="no">Not allowed</option>
 		</select>

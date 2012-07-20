@@ -43,6 +43,25 @@ body > footer .container {
 .mainList {
 	list-style-type: none;
 	margin: 0 0 5px;
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+}
+.mainList li {
+	margin: 0;
+	padding: 5px 0;
+	padding-left:36px;
+	border-top: 1px solid lightgrey;
+	min-height: 48px;
+	display:table-row;
+	
+}
+.mainList li > div {
+	display: table-cell;
+	vertical-align: middle;
+	height: 58px;
+	position: relative;
+	padding-left: 46px;
 }
 .mainList li a:first-child:hover {
 	text-decoration: none;
@@ -51,14 +70,12 @@ body > footer .container {
 	text-decoration: underline;
 }
 .mainList img {
-	margin-right: 3px;
+	margin: 5px 3px 5px 5px;
+	position: absolute;
+	top:0;
+	left:0;
 }
 
-.mainList li {
-	margin: 0;
-	padding: 5px 0;
-	border-top: 1px solid lightgrey;
-}
 
 .mainList li:first-child {
 	border-top: 1px solid lightgrey;
