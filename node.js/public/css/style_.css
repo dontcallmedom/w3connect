@@ -61,6 +61,7 @@ body > footer .container {
 	vertical-align: middle;
 	height: 58px;
 	position: relative;
+	padding-left: 46px;
 }
 .mainList li a:first-child:hover {
 	text-decoration: none;
