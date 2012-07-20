@@ -3,11 +3,15 @@
 	<li>
 		<a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/profile/<%= people[p].slug %>'>
 			<img src="<% if (people[p].picture_thumb) { %><%=people[p].picture_thumb%><% } else { %><%= baseurl %>/img/default-pic.png<% } %>" width='36' alt="Picture of <%= people[p].given + " " + people[p].family %>">
-			<span><%= people[p].family + ", " + people[p].given %></span>
 		</a>
-		<% if (typeof showCheckin != "undefined" && showCheckin && people[p].lastKnownPosition && people[p].lastKnownPosition.shortname) { %>
-		last checkin: <a class="supp" href="<%= baseurl %>/locations/<%= people[p].lastKnownPosition.shortname %>"><%= people[p].lastKnownPosition.name %></a> <span class="label label-warning"><%= elapsedTime(people[p].lastKnownPosition.time) %></span>
-		<% } %>
+		<span>
+			<a <% if(everyauth.user && people[p].login == everyauth.user.login) {%>class='me'<%}%> href='<%= baseurl %>/people/profile/<%= people[p].slug %>'>
+				<%= people[p].family + ", " + people[p].given %>
+			</a>
+			<% if (typeof showCheckin != "undefined" && showCheckin && people[p].lastKnownPosition && people[p].lastKnownPosition.shortname) { %>
+			last checkin: <a class="supp" href="<%= baseurl %>/locations/<%= people[p].lastKnownPosition.shortname %>"><%= people[p].lastKnownPosition.name %></a> <span class="label label-warning"><%= elapsedTime(people[p].lastKnownPosition.time) %></span>
+			<% } %>
+		</span>
 	</li>
 	<% } %>
 </ul>
