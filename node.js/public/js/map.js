@@ -37,9 +37,6 @@ if (!Object.keys) {
 // from http://my.opera.com/MacDev_ed/blog/getting-screen-boundingboxes-in-svg
 if(!document.documentElement.getScreenBBox) {
      // load the fallback js implementation if necessary
-    var s = document.createElementNS("http://www.w3.org/1999/xhtml", "script");
-    s.src = "getscreenbbox.js";
-    document.documentElement.appendChild(s);
     SVGElement.prototype.getScreenBBox = function() {
       return getScreenBBox_impl(this);	
     };
