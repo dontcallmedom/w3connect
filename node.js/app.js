@@ -1241,7 +1241,7 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 	    var nextEvents = [];
 	    var myEvents = [];
 	    var currentTimeEnd;
-	    events.sort(function (a,b) { return (a.timeStart > b.timeStart ? 1 : (b.timeStart > a.timeStart ? -1  : a.room.name > b.room.name ? 1 : (b.room.name > a.room.name ? -1 : 0)));});	    
+	    events.sort(function (a,b) { return (a.timeStart > b.timeStart ? 1 : (b.timeStart > a.timeStart ? -1  : (a.room && b.room ? (a.room.name > b.room.name ? 1 : (b.room.name > a.room.name ? -1 : 0)) : 0)));});	    
 	    for (var i in events) {
 		events[i].timeStart.setUTCHours(events[i].timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10));
 		events[i].timeEnd.setUTCHours(events[i].timeEnd.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10));
