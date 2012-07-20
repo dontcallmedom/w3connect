@@ -105,7 +105,7 @@ exports.importUserList = function(auth, callback)  {
 	    people.family = peopleData.family;
 	    people.email = peopleData.email;
 	    if (peopleData.w3cId > 0) {
-		people.slug = peopleData.w3cId;
+		people.slug = peopleData.login;
 		people.login = peopleData.login;
 		loadPeopleData(people.slug);
 		if (peopleData.organization && peopleData.organization.w3cId) {
