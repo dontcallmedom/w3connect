@@ -46,6 +46,7 @@ var svgns = "http://www.w3.org/2000/svg";
 var xlinkns = "http://www.w3.org/1999/xlink";
 var xhtmlns = "http://www.w3.org/1999/xhtml";
 var roomsCounter = {};
+var rooms = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
 youareherePoint.setAttribute( "r", "2px");
 youareherePoint.setAttribute( "id", "you");
@@ -112,14 +113,14 @@ var xhr = new XMLHttpRequest;
 xhr.open("GET","../locations.json", true);
 xhr.onreadystatechange = function() {
     if (4 == xhr.readyState) {
-        var json = JSON.parse(xhr.responseText);
+        rooms = JSON.parse(xhr.responseText);
         for ( var i = 0, len = Object.keys(json).length; len > i; i++ ) {
-	    if (json[i].checkedin.length) {
+	    if (rooms[i].checkedin.length) {
 		updateCounter( json[i].shortname, json[i].checkedin.length );
             } 
         }
     }
-}
+};
 xhr.send();   
 
 var tweetQueue = [];
