@@ -37,8 +37,8 @@ body > footer {
 }
 
 body > footer .container {
-	background: url("../img/w3-logo_h30.png") no-repeat right center;
-	padding: 10px;
+	background: url("../img/w3-logo-h30.png") no-repeat right center;
+	padding: 15px 10px;
 }
 
 body > footer p {
