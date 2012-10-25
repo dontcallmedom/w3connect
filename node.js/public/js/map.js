@@ -119,7 +119,7 @@ xhr.onreadystatechange = function() {
     if (4 == xhr.readyState) {
         rooms = JSON.parse(xhr.responseText);
         for (var roomShortname in rooms) {
-	    if (rooms[roomShortname].level) {
+	    if (rooms[roomShortname].level !== undefined) {
 		if (!floors[rooms[roomShortname].level]) {
 		    floors[rooms[roomShortname].level] = [];
 		    zoomedFloors[rooms[roomShortname].level] = document.getElementById("repl" + rooms[roomShortname].level);
