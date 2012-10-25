@@ -1016,7 +1016,7 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	 next();
       }
       // only admin && event proposers can update
-      if (req.user.login !== event.proposedBy.login) {
+      if (!event.proposedBy || req.user.login !== event.proposedBy.login) {
         var isAdmin = new RegExp("^" + config.admin.login.replace(",","|") + "$");
         if (!isAdmin.test(req.user.login)) {
 	  return res.render("403");
