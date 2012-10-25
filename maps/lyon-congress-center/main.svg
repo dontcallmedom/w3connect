@@ -647,9 +647,7 @@
   <g
      class="level"
      id="level0"
-     inkscape:groupmode="layer"
-     inkscape:label=""
-     transform="translate(-2.6071429,-353.54074)">
+      transform="translate(-2.6071429,-353.54074)">
     <title
        id="title8603">Level Terreaux (Ground level)</title>
     <g
@@ -2035,7 +2033,7 @@
   <g
      inkscape:label=""
      class="level"
-     id="level2"
+     id="level2" 
      transform="matrix(0.21544914,0,0,0.21544914,497.7406,19.541657)">
     <title
        id="title8609">Level St-Clair</title>
@@ -3140,6 +3138,13 @@
        x="647.45667"
        id="tspan6313-3"
        sodipodi:role="line">Level Roseraie</tspan></text>
+  <use id="repl-2" xlink:href="#level-2" visibility="hidden" x="0" y="0" transform="translate(-1400, -1450) scale(3)"></use>
+  <use id="repl0" xlink:href="#level0" x="0" y="0" transform="translate(-2000, -1520) scale(4)"></use>
+  <use id="repl0.5" xlink:href="#level0.5" visibility="hidden" x="0" y="0" transform="translate(-2000, -1080) scale(4)"></use>
+  <use id="repl1" xlink:href="#level1"  visibility="hidden" x="0" y="0" transform="translate(-2000, -720) scale(4)"></use>
+  <use id="repl2" xlink:href="#level2" visibility="hidden" x="0" y="0" transform="translate(-2000, -440) scale(4)"></use>
+  <use id="repl3" xlink:href="#level3" x="0" y="0" transform="translate(-2000, -100) scale(4)"></use>
+
   <script
      xlink:href="../js/getscreenbbox.js"
      id="script261" />
