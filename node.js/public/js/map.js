@@ -323,7 +323,8 @@ function updateCounter(roomid, counterIncrement) {
 
 function showFloor(floor) {
     if (!zoomedFloor) {
-	for(var zf in zoomedFloors) {
+	for(var i in zoomedFloors) {
+	    zf = zoomedFloors[i];
 	    if (zf.getAttribute("visibility") != "hidden") {
 		zoomedFloor = zf;
 		break;
