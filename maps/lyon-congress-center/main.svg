@@ -3138,12 +3138,12 @@
        x="647.45667"
        id="tspan6313-3"
        sodipodi:role="line">Level Roseraie</tspan></text>
-  <use id="repl-2" xlink:href="#level-2" visibility="hidden" x="0" y="0" transform="translate(-1400, -1450) scale(3)"></use>
-  <use id="repl0" xlink:href="#level0" x="0" y="0" transform="translate(-2000, -1520) scale(4)"></use>
-  <use id="repl0.5" xlink:href="#level0.5" visibility="hidden" x="0" y="0" transform="translate(-2000, -1080) scale(4)"></use>
-  <use id="repl1" xlink:href="#level1"  visibility="hidden" x="0" y="0" transform="translate(-2000, -720) scale(4)"></use>
-  <use id="repl2" xlink:href="#level2" visibility="hidden" x="0" y="0" transform="translate(-2000, -440) scale(4)"></use>
-  <use id="repl3" xlink:href="#level3" visibility="hidden" x="0" y="0" transform="translate(-2000, -100) scale(4)"></use>
+  <use class="zoomedFloor" id="repl-2" xlink:href="#level-2" visibility="hidden" x="0" y="0" transform="translate(-1400, -1450) scale(3)"></use>
+  <use class="zoomedFloor" id="repl0" xlink:href="#level0" x="0" y="0" transform="translate(-2000, -1520) scale(4)"></use>
+  <use class="zoomedFloor" id="repl0.5" xlink:href="#level0.5" visibility="hidden" x="0" y="0" transform="translate(-2000, -1080) scale(4)"></use>
+  <use class="zoomedFloor" id="repl1" xlink:href="#level1"  visibility="hidden" x="0" y="0" transform="translate(-2000, -720) scale(4)"></use>
+  <use class="zoomedFloor" id="repl2" xlink:href="#level2" visibility="hidden" x="0" y="0" transform="translate(-2000, -440) scale(4)"></use>
+  <use class="zoomedFloor" id="repl3" xlink:href="#level3" visibility="hidden" x="0" y="0" transform="translate(-2000, -100) scale(4)"></use>
 
   <script
      xlink:href="../js/getscreenbbox.js"
