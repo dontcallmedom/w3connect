@@ -18,7 +18,7 @@ function loadPeopleData(id) {
 	 
 		     try {
        peopleData = JSON.parse(peopleJSON);
-       People.findOne({slug: id}, function(err, people) {
+       People.findOne({slug: peopleData.login}, function(err, people) {
            if (people && peopleData.picture && people.picture != peopleData.picture) {
 	       people.picture = peopleData.picture;
 	       people.save(function(err) { console.log(err);});
