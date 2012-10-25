@@ -49,8 +49,8 @@ var roomsCounter = {};
 var rooms = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
 var floors = {};
-var zoomedFloor;
-var zoomedFloors = {};
+// @@@ too specific
+var zoomedFloor = document.getElementById("repl" + 0);
 
 youareherePoint.setAttribute( "r", "2px");
 youareherePoint.setAttribute( "id", "you");
@@ -88,6 +88,10 @@ if (window.location.hash) {
     if (currentLocation) {
 	updateYouAreHere(currentLocation, null);
     }
+    var currentFloor = window.location.hash.substring(1).split(',')[2];
+    if (currentFloor) {
+	showFloor(currentFloor);
+    }
 }
 
 // finding the rooms via their links to decorate them with a counter box
@@ -122,16 +126,12 @@ xhr.onreadystatechange = function() {
 	    if (rooms[roomShortname].level !== undefined) {
 		if (!floors[rooms[roomShortname].level]) {
 		    floors[rooms[roomShortname].level] = [];
-		    zoomedFloors[rooms[roomShortname].level] = document.getElementById("repl" + rooms[roomShortname].level);
 		}
 		floors[rooms[roomShortname].level].push(roomShortname)
 	    }
 	    if (rooms[roomShortname].checkedin.length) {
 		updateCounter( rooms[roomShortname].shortname, rooms[roomShortname].checkedin.length );
             } 
-	    if (rooms[id].level) {
-		showFloor(rooms[id].level);
-	    }
         }
     }
 };
@@ -322,16 +322,7 @@ function updateCounter(roomid, counterIncrement) {
 }
 
 function showFloor(floor) {
-    if (!zoomedFloor) {
-	for(var i in zoomedFloors) {
-	    zf = zoomedFloors[i];
-	    if (zf.getAttribute("visibility") != "hidden") {
-		zoomedFloor = zf;
-		break;
-	    }
-	}
-    }
     zoomedFloor.setAttribute("visibility", "hidden");
-    zoomedFloor = zoomedFloors[floor];
+    zoomedFloor = document.getElementById("repl" + floor);
     zoomedFloor.setAttribute("visibility", "visible");
 }
