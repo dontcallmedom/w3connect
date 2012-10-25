@@ -324,13 +324,13 @@ function updateCounter(roomid, counterIncrement) {
 function showFloor(floor) {
     if (!zoomedFloor) {
 	for(var zf in zoomedFloors) {
-	    if (zf.visibility != "hidden") {
+	    if (zf.getAttribute("visibility") != "hidden") {
 		zoomedFloor = zf;
 		break;
 	    }
 	}
     }
-    zoomedFloor.visibility = "hidden";
+    zoomedFloor.setAttribute("visibility", "hidden");
     zoomedFloor = zoomedFloors[floor];
-    zoomedFloor.visibility = "visible";
+    zoomedFloor.setAttribute("visibility", "visible");
 }
