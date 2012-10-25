@@ -899,7 +899,7 @@ app.get('/orgs/:id.:format?', function(req, res, next){
 	.exec( function(err, org) {
 	    if (org) {
 		var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
-		employees.sort(function (a,b) { return (a.family.toLowerCase().localeCompare(b.family.toLowerCase());});
+		employees.sort(function (a,b) { return a.family.toLowerCase().localeCompare(b.family.toLowerCase());});
 		switch (req.params.format) {
 		case 'json':
 		    res.send(org);
