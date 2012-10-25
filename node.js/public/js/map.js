@@ -125,12 +125,13 @@ xhr.onreadystatechange = function() {
 		    zoomedFloors[rooms[roomShortname].level] = document.getElementById("repl" + rooms[roomShortname].level);
 		}
 		floors[rooms[roomShortname].level].push(roomShortname)
+	    }
 	    if (rooms[roomShortname].checkedin.length) {
 		updateCounter( rooms[roomShortname].shortname, rooms[roomShortname].checkedin.length );
             } 
-		if (rooms[id].level) {
-		    showFloor(rooms[id].level);
-		}
+	    if (rooms[id].level) {
+		showFloor(rooms[id].level);
+	    }
         }
     }
 };
