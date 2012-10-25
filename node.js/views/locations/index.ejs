@@ -3,9 +3,10 @@
 <img style="max-width:100%" src="<%= baseurl %>/maps/main.png" alt="Floor plan">
 </object>
 </p>
-<ul class="inline">
+<div class="btn-toolbar">
+	<div class="btn-group">
 <%- partial("locations/places-list.ejs", {places:places, userCheckin: (everyauth.loggedIn  && user.lastKnownPosition ? user.lastKnownPosition.shortname : undefined)}) %>
-</ul>
+</div></div>
 
 <div id="messages">
 </div>
