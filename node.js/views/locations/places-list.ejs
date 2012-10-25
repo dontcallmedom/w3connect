@@ -1,6 +1,6 @@
 <% for (var p  in places) { %>
   <% var className = (typeof userCheckin != "undefined" && userCheckin == places[p].shortname ? " youarehere" : ""); %>
-  <a <% if (typeof place=="undefined" || place.shortname != places[p].shortname ) { %>  href='<%= baseurl %>/locations/<%= places[p].shortname %>' class='btn <% } else { %> class='self <% } %><%= className %>'>
+  <a <% if (typeof place=="undefined" || place.shortname != places[p].shortname ) { %>  href='<%= baseurl %>/locations/<%= places[p].shortname %>' class='btn <% } else { %> class='btn self <% } %><%= className %>'>
 <%= places[p].name %> <%= (places[p].checkedin.length ? "(" + places[p].checkedin.length + " checked in)" : "")%></a>
 <% } %>
 
