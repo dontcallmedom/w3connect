@@ -848,14 +848,14 @@ app.get('/people/:letter?.:format?', function (req, res, next){
   if (!letter) {
       letter = "a";
   } 
-  if  (!(letter=='all' || letter.match(/^[a-z]$/))) {
+  if  (!(letter=='all' || letter.match(/^.$/))) {
       next();
   }
   var people = People.find({})
 		.exec(function (err, people) {
     var activeLetters = {};
     var letterPeople = [];
-		    people.sort(function (a,b) { return (a.family.toLowerCase() > b.family.toLowerCase() ? 1 : (b.family.toLowerCase() > a.family.toLowerCase() ? -1 : 0));});	
+		    people.sort(function (a,b) { return a.family.toLowerCase().localeCompare(b.family.toLowerCase());});	
     for (var p in people) {
 	activeLetters[people[p].family[0].toUpperCase()]++;
 	if (letter != 'all' && people[p].family[0].toLowerCase() == letter.toLowerCase()) {
@@ -899,7 +899,7 @@ app.get('/orgs/:id.:format?', function(req, res, next){
 	.exec( function(err, org) {
 	    if (org) {
 		var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
-		employees.sort(function (a,b) { return (a.family.toLowerCase() > b.family.toLowerCase() ? 1 : (b.family.toLowerCase() > a.family.toLowerCase() ? -1 : 0));});
+		employees.sort(function (a,b) { return (a.family.toLowerCase().localeCompare(b.family.toLowerCase());});
 		switch (req.params.format) {
 		case 'json':
 		    res.send(org);
