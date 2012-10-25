@@ -91,6 +91,8 @@ if (window.location.hash) {
     var currentFloor = window.location.hash.substring(1).split(',')[2];
     if (currentFloor) {
 	showFloor(currentFloor);
+    } else {
+	showFloor(0);
     }
 }
 
