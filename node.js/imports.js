@@ -119,7 +119,7 @@ exports.importUserList = function(auth, callback)  {
 		}
 	    } else {
 		console.log("non W3C account: " + people.given + " " + people.family);
-		people.slug = people.w3cId;
+		people.slug = peopleData.w3cId;
 		people.login = peopleData.email;
 		people.save(addPeople(people));
 	    }
