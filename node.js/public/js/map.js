@@ -114,9 +114,9 @@ xhr.open("GET","../locations.json", true);
 xhr.onreadystatechange = function() {
     if (4 == xhr.readyState) {
         rooms = JSON.parse(xhr.responseText);
-        for ( var i = 0, len = Object.keys(rooms).length; len > i; i++ ) {
-	    if (rooms[i].checkedin.length) {
-		updateCounter( rooms[i].shortname, rooms[i].checkedin.length );
+        for (var roomShortname in rooms) {
+	    if (rooms[roomShortname].checkedin.length) {
+		updateCounter( rooms[roomShortname].shortname, rooms[roomShortname].checkedin.length );
             } 
         }
     }
