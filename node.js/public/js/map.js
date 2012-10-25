@@ -48,6 +48,10 @@ var xhtmlns = "http://www.w3.org/1999/xhtml";
 var roomsCounter = {};
 var rooms = {};
 var youareherePoint = document.createElementNS(svgns, "circle");
+var floors = {};
+var zoomedFloor;
+var zoomedFloors = {};
+
 youareherePoint.setAttribute( "r", "2px");
 youareherePoint.setAttribute( "id", "you");
 youareherePoint.setAttribute( "fill", "red");
@@ -115,9 +119,18 @@ xhr.onreadystatechange = function() {
     if (4 == xhr.readyState) {
         rooms = JSON.parse(xhr.responseText);
         for (var roomShortname in rooms) {
+	    if (rooms[roomShortname].level) {
+		if (!floors[rooms[roomShortname].level]) {
+		    floors[rooms[roomShortname].level] = [];
+		    zoomedFloors[rooms[roomShortname].level] = document.getElementById("repl" + rooms[roomShortname].level);
+		}
+		floors[rooms[roomShortname].level].push(roomShortname)
 	    if (rooms[roomShortname].checkedin.length) {
 		updateCounter( rooms[roomShortname].shortname, rooms[roomShortname].checkedin.length );
             } 
+		if (rooms[id].level) {
+		    showFloor(rooms[id].level);
+		}
         }
     }
 };
@@ -307,3 +320,16 @@ function updateCounter(roomid, counterIncrement) {
     }
 }
 
+function showFloor(floor) {
+    if (!zoomedFloor) {
+	for(var zf in zoomedFloors) {
+	    if (zf.visibility != "hidden") {
+		zoomedFloor = zf;
+		break;
+	    }
+	}
+    }
+    zoomedFloor.visibility = "hidden";
+    zoomedFloor = zoomedFloors[floor];
+    zoomedFloor.visibility = "visible";
+}
