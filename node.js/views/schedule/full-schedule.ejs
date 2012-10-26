@@ -1,21 +1,23 @@
 <% for (var d in days) { %>
 <% var day = days[d];%>
 <dt class="<%= (d == 0 && expanded ? "expanded" : "collapsed") %>"><span></span><strong><%= day %></strong></dt>
-<dd><dl>
+<dd><div class="accordion" id="acc-<%= day %>">
 <% for (var t in timeslots[day]) { %>
 <% var timeslot = timeslots[day][t]; %>
 <% var timeslotData = {timeStart: timeslot.timeStart, timeEnd: timeslot.timeEnd}; %>
 <% if (schedule[day][JSON.stringify(timeslot)].length == 1) { %>
-<dt><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %>
-— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %></dt>
+<div class="accordion-group"><div class="accordion-heading"><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %>
+— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %></div></div>
 <% } else { %>
-<dt title="tap/click to expand list of events at <%- partial("schedule/timeslot.ejs", timeslotData) %>" class="<%= (d == 0 && t==0 && expanded ? "expanded" : "collapsed") %>"><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %></dt>
+<div class="accordion-group"><div class="accordion-heading"><span></span><a class="accordion-toggle" data-toggle="collapse" data-parent="acc-<%= day %>" href="#acc-<%= day + JSON.stringify(timeslot) %>"><%- partial("schedule/timeslot.ejs", timeslotData) %></a></div>
+<div id="acc-<%= day + JSON.stringify(timeslot) %>" class="accordion-body collapse<%= (d == 0 && t==0 && expanded ? " in" : "") %>"><ul class="accordion-inner">
 <% for (var e in schedule[day][JSON.stringify(timeslot)]) {%>
 <% var event = schedule[day][JSON.stringify(timeslot)][e];%>
-<dd>
-<%- partial('schedule/event-desc.ejs', {event: event, interestMarker: interestMarker}) %>
-</dd>
+<li><%- partial('schedule/event-desc.ejs', {event: event, interestMarker: interestMarker}) %>
+</li>
 <% } %>
+</ul>
+</div></div>
 <% } %>
-<% } %></dl></dd>
+<% } %></div></dd>
 <% } %>
