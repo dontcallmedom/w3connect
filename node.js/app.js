@@ -118,7 +118,9 @@ everyauth.password
   .respondToLoginSucceed( function (res, user, data) {
       if (user && redirectTo) {
 	  this.redirect(res, redirectTo);
-      }   
+      } else {
+	  this.redirect(res, config.hosting.basepath + '/')
+      }
   })
   .authenticate( function (login, password) {
     var promise = this.Promise();  
