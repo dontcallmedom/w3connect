@@ -89,7 +89,7 @@ if (window.location.hash) {
 	updateYouAreHere(currentLocation, null);
     }
     var currentFloor = window.location.hash.substring(1).split(',')[2];
-    if (currentFloor) {
+    if (currentFloor !== undefined && currentFloor !== '') {
 	showFloor(currentFloor);
     } else {
 	showFloor(0);
