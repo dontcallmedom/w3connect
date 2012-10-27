@@ -75,11 +75,11 @@ everyauth.everymodule.findUserById( function (userId, callback) {
     });
 });
 
-everyauth.everymodule
+/* everyauth.everymodule
   .performRedirect( function (res, location) {
     res.redirect(location, 303);
   });
-
+*/
 // Adapted from everyauth ldap module
 everyauth.password
   .logoutRedirectPath(config.hosting.basepath + '/login')
