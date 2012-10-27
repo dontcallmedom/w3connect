@@ -1219,7 +1219,7 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
 
 app.all('/schedule/?(:datetime)?', function (req, res, next){
     var current = new Date();
-    current.setUTCHours(current.getUTCHours() + config.schedule.timezone_offset);
+    current.setUTCHours(current.getUTCHours() + parseInt(config.schedule.timezone_offset,10));
     if (req.params.datetime) {
 	current = parseDate(req.params.datetime);
 	// if the datetime param is not a valid date, pursue
