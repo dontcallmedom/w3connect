@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -96,17 +95,28 @@ everyauth.password
 		if (err) return done(err);
 		done(null, {statusupdates: statusupdates});
 	    });
+	var sess = req.session;
+	var redirectTo = (req.params.redirectTo ? req.params.redirectTo : (req.session.redirectTo ? req.session.redirectTo : null));
+	return {
+	    redirectTo: redirectTo
+	}
+
+    })
+    .loginLocals(function (req, res) {
+	var sess = req.session;
+	var redirectTo = (req.params.redirectTo ? req.params.redirectTo : (req.session.redirectTo ? req.session.redirectTo : null));
+	return {
+	    redirectTo: redirectTo
+	}
     })
 //  .loginSuccessRedirect(config.hosting.basepath + '/')
   .respondToRegistrationSucceed( function (res, user, data) {
-    this.redirect(res, data.session.redirectTo)
+      if (redirectTo) {
+	  this.redirect(res, redirectTo)
+      }
   })
   .respondToLoginSucceed( function (res, user, data) {
-    var redirectTo = config.hosting.basepath + "/";
-      if (data.session.redirectTo) {
-	  redirectTo = data.session.redirectTo;
-      }
-      if (user) {
+      if (user && redirectTo) {
 	  res.writeHead(303, {'Location': redirectTo});
 	  res.end();
       }   
