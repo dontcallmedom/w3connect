@@ -75,9 +75,14 @@ everyauth.everymodule.findUserById( function (userId, callback) {
     });
 });
 
+everyauth.everymodule
+  .performRedirect( function (res, location) {
+    res.redirect(location, 303);
+  });
+
 // Adapted from everyauth ldap module
 everyauth.password
-   .logoutRedirectPath(config.hosting.basepath + '/login')
+  .logoutRedirectPath(config.hosting.basepath + '/login')
   .getLoginPath(config.hosting.basepath + '/login')
   .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
@@ -92,17 +97,20 @@ everyauth.password
 		done(null, {statusupdates: statusupdates});
 	    });
     })
-  .loginSuccessRedirect(config.hosting.basepath + '/')
-/*  .respondToLoginSucceed( function (res, user, data) {
+//  .loginSuccessRedirect(config.hosting.basepath + '/')
+  .respondToRegistrationSucceed( function (res, user, data) {
+    this.redirect(res, data.session.redirectTo)
+  })
+  .respondToLoginSucceed( function (res, user, data) {
     var redirectTo = config.hosting.basepath + "/";
-      if (data.params.redirectTo) {
-	  redirectTo = data.params.redirectTo;
+      if (data.session.redirectTo) {
+	  redirectTo = data.session.redirectTo;
       }
       if (user) {
 	  res.writeHead(303, {'Location': redirectTo});
 	  res.end();
       }   
-  })*/
+  })
   .authenticate( function (login, password) {
     var promise = this.Promise();  
     var errors = [];
