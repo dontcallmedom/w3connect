@@ -96,7 +96,7 @@ everyauth.password
 		done(null, {statusupdates: statusupdates});
 	    });
 	var sess = req.session;
-	var redirectTo = (req.params.redirectTo ? req.params.redirectTo : (req.session.redirectTo ? req.session.redirectTo : null));
+	var redirectTo = (req.params.query["redirectTo"] ? req.params.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
 	return {
 	    redirectTo: redirectTo
 	}
@@ -104,7 +104,7 @@ everyauth.password
     })
     .loginLocals(function (req, res) {
 	var sess = req.session;
-	var redirectTo = (req.params.redirectTo ? req.params.redirectTo : (req.session.redirectTo ? req.session.redirectTo : null));
+	var redirectTo = (req.params.query["redirectTo"] ? req.params.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
 	return {
 	    redirectTo: redirectTo
 	}
@@ -706,15 +706,7 @@ app.get('/locations/stream', function(req, res) {
 });
 
 
-app.post('/locations/:id.:format?', function(req, res, next) {
-  setFormatOutput(req);
-  if (! req.loggedIn) {
-    req.session.redirectTo = '/locations/' + req.params.id;
-    return res.redirect(everyauth.password.getLoginPath());
-  }
-    var place = places[req.params.id];
-    if (place) {
-	if ((req.body.checkin !== undefined || req.body.checkout !== undefined) && req.user) {
+    function userCheckin(req, res, next, place) {
 	    // the user is already checked in in that place
 	    var actionNeeded = true;
 	    if (req.user.lastKnownPosition.shortname == place.shortname) {
@@ -778,6 +770,19 @@ app.post('/locations/:id.:format?', function(req, res, next) {
 	       }
 	   });
 	    }
+
+    }
+
+app.post('/locations/:id.:format?', function(req, res, next) {
+  setFormatOutput(req);
+  if (! req.loggedIn) {
+    req.session.redirectTo = '/locations/' + req.params.id;
+    return res.redirect(everyauth.password.getLoginPath());
+  }
+    var place = places[req.params.id];
+    if (place) {
+	if ((req.body.checkin !== undefined || req.body.checkout !== undefined) && req.user) {
+	    userCheckin(req, res, next, place)
 	} else {
 	    next();
 	}
@@ -816,6 +821,10 @@ app.all('/locations/:id.:format?', function(req, res) {
             res.send(placeData);
 	    break;
 	default:
+	    // auto-check-in if nfc is set in the query string
+	    if (req.loggedIn && req.query["nfc"]) {
+		userCheckin(req, res, next, place)		
+	    }
 	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places, event: event}});
 	}
       });
