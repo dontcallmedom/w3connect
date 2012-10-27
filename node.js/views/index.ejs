@@ -1,7 +1,7 @@
 <% if (!everyauth.loggedIn) {%>
-<p class="text-info">To share your whereabouts with other TPAC participants, please <a href="login">log in</a>, update your <a href="schedule/">schedule</a> for the week, and advertize your tweets (by setting your Twitter account in your profile).</p>
+<p class="lead text-info">To share your whereabouts with other TPAC participants, please <a href="login">log in</a>, update your <a href="schedule/">schedule</a> for the week, and advertize your tweets (by setting your Twitter account in your profile).</p>
 <% } else if (user && !(user.twitterAccount && user.twitterAccount.name)) { %>
-<p class="text-info">Do you have a <strong>Twitter account</strong>? <a href="people/profile/<%= user.slug %>">Update your profile</a> to share your tweets as part of your activity stream!</p>
+<p class="lead text-info">Do you have a <strong>Twitter account</strong>? <a href="people/profile/<%= user.slug %>">Update your profile</a> to share your tweets as part of your activity stream!</p>
 <% } %>
 <% if (typeof statusupdates != "undefined" && statusupdates && statusupdates.length > 0) { %>
 <h1>Recent Activity</h1>
