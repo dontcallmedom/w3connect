@@ -109,8 +109,8 @@ everyauth.password
 	    redirectTo: redirectTo
 	}
     })
-//  .loginSuccessRedirect(config.hosting.basepath + '/')
-  .respondToRegistrationSucceed( function (res, user, data) {
+  .loginSuccessRedirect(config.hosting.basepath + '/')
+/*  .respondToRegistrationSucceed( function (res, user, data) {
       if (redirectTo) {
 	  this.redirect(res, redirectTo)
       }
@@ -124,7 +124,7 @@ everyauth.password
       }
       res.end()
 
-  })
+  }) */
   .authenticate( function (login, password) {
     var promise = this.Promise();  
     var errors = [];
