@@ -96,7 +96,7 @@ everyauth.password
 		done(null, {statusupdates: statusupdates});
 	    });
 	var sess = req.session;
-	var redirectTo = (req.params.query["redirectTo"] ? req.params.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
+	var redirectTo = (req.query["redirectTo"] ? req.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
 	return {
 	    redirectTo: redirectTo
 	}
@@ -104,7 +104,7 @@ everyauth.password
     })
     .loginLocals(function (req, res) {
 	var sess = req.session;
-	var redirectTo = (req.params.query["redirectTo"] ? req.params.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
+	var redirectTo = (req.query["redirectTo"] ? req.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
 	return {
 	    redirectTo: redirectTo
 	}
