@@ -52,8 +52,7 @@
      fit-margin-right="0"
      fit-margin-bottom="0" />
   <style
-     type="text/css"
-     id="style9079">
+     type="text/css">
     .room.youarehere {
        stroke:red;
        stroke-width:4px;
