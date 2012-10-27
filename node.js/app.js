@@ -117,8 +117,7 @@ everyauth.password
   })
   .respondToLoginSucceed( function (res, user, data) {
       if (user && redirectTo) {
-	  res.writeHead(303, {'Location': redirectTo});
-	  res.end();
+	  this.redirect(res, redirectTo);
       }   
   })
   .authenticate( function (login, password) {
