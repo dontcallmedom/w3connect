@@ -410,14 +410,15 @@ function autoCheckout() {
 		if (err) {
 		    console.log("autocheckout query error: " + err);
 		} else {
-		for (p in people) {
-		    var indiv = people[p];
-		    indiv.lastKnownPosition = { shortname: null, name:null, time: Date.now()}
-		    indiv.save(function(err) {
-			if (err) {
-			    console.log("autocheckout error: " + err);
-			}
-		    });
+		    for (p in people) {
+			var indiv = people[p];
+			indiv.lastKnownPosition = { shortname: null, name:null, time: Date.now()};
+			indiv.save(function(err) {
+			    if (err) {
+				console.log("autocheckout error: " + err);
+			    }
+			});
+		    }
 		}
 	    });
 	}
