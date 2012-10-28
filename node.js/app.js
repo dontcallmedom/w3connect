@@ -693,6 +693,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 				res.send(indiv);
 				break;
 			    case 'ics':
+				res.header("Content-Type", "text/calendar");
 				var ical = new icalendar.iCalendar();
 				for (var i = 0 ; i < userEvents.length ; i++) {
 				    var  event = userEvents[i];
@@ -702,6 +703,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 				    ical.addComponent(icalEv);
 				}
 				res.send(ical.toString());
+				break;
 			    default:
 				res.render('people/indiv.ejs', { locals: { indiv: indiv, title: indiv.given + ' ' + indiv.family, days: days, timeslots: timeslots, schedule:schedule, statusupdates: statusupdates }});
 			    }
