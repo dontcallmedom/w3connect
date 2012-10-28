@@ -13,7 +13,7 @@
 	<% } %>
 </form>
 <% } else {%>
-	<p><a href='<%= baseurl %>/login'>Log in</a> to check in at <%= place.name %>.</p>
+	<p><a href='<%= baseurl %>/login?redirectTo=<%= url %>'>Log in</a> to check in at <%= place.name %>.</p>
 <%}%>
 
 <p><object type="image/svg+xml" data="<%= baseurl %>/maps/main.svg#<%= place.shortname + "," %><% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= user.lastKnownPosition.shortname%><% }%>,<% if (place.level) {%><%= place.level %><% } %>">
