@@ -4,28 +4,35 @@ function init() {
 }
 addEvent("onload",init);
 </script>
+
 <h1>Schedule</h1>
-<dl id="accordion" class="list-accordion">
+
+<% if (!user) { %>
+<p class="login"><a href="<%= baseurl %>/login">Log in to build your schedule</a></p>
+<% } %>
+
 <% if (currentEvents.length) {%>
-<dt class="expanded"><span></span><strong>Currently</strong></dt>
-<%- partial('schedule/event-list.ejs', {eventList: currentEvents}) %>
+<h2>Currently</h2>
+    <%- partial('schedule/event-list.ejs', {eventList: currentEvents}) %>
 <% } %>
+
 <% if (nextEvents.length) {%>
-<dt class="expanded"><span></span><strong>Next</strong></dt>
-<%- partial('schedule/event-list.ejs', {eventList: nextEvents}) %>
+<h2>Next</h2>
+    <%- partial('schedule/event-list.ejs', {eventList: nextEvents}) %>
 <% } %>
-<dt id="mySchedule" class="expanded"><span></span><strong>My schedule</strong></dt>
+
 <% if (user) { %>
-<dd class="placeholder">Star meetings below to have them appear in your schedule</dd>
-<% if (myEvents.length) {%>
-<%- partial('schedule/event-list.ejs', {eventList: myEvents, showTime: true, className: "mySchedule"}) %>
+<h2>My schedule</h2>
+    <p>Star meetings below to have them appear in your schedule</p>
+    <p><a href="<%= baseurl %>/schedule/add">Add an ad-hoc event</a></p>
+    <% if (myEvents.length) {%>
+    <%- partial('schedule/event-list.ejs', {eventList: myEvents, showTime: true, className: "mySchedule"}) %>
+    <% } %>
 <% } %>
-<dd><a href="<%= baseurl %>/schedule/add">Add an ad-hoc event</a></dd>
-<% } else { %>
-<dd class="placeholder"><a href="<%= baseurl %>/login">Log in to build your schedule</a></dd>
-<% } %>
+
 <% var expanded = !currentEvents.length; %>
 <% var interestMarker = true; %>
 <%- partial('schedule/full-schedule.ejs', {days: days, timeslots: timeslots, schedule:schedule, expanded: expanded, interestMarker: interestMarker}) %>
-</dl>
+
+
 

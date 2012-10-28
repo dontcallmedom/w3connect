@@ -1,23 +1,33 @@
+
 <% for (var d in days) { %>
-<% var day = days[d];%>
-<dt class="<%= (d == 0 && expanded ? "expanded" : "collapsed") %>"><span></span><strong><%= day %></strong></dt>
-<dd><div class="accordion" id="acc-<%= day %>">
-<% for (var t in timeslots[day]) { %>
-<% var timeslot = timeslots[day][t]; %>
-<% var timeslotData = {timeStart: timeslot.timeStart, timeEnd: timeslot.timeEnd}; %>
-<% if (schedule[day][JSON.stringify(timeslot)].length == 1) { %>
-<div class="accordion-group"><div class="accordion-heading"><span></span><%- partial("schedule/timeslot.ejs", timeslotData) %>
-— <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %></div></div>
-<% } else { %>
-<div class="accordion-group"><div class="accordion-heading"><span></span><a class="accordion-toggle" data-toggle="collapse" data-parent="acc-<%= day %>" href="#acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>"><%- partial("schedule/timeslot.ejs", timeslotData) %></a></div>
-<div id="acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>" class="accordion-body collapse<%= (d == 0 && t==0 && expanded ? " in" : "") %>"><ul class="accordion-inner">
-<% for (var e in schedule[day][JSON.stringify(timeslot)]) {%>
-<% var event = schedule[day][JSON.stringify(timeslot)][e];%>
-<li><%- partial('schedule/event-desc.ejs', {event: event, interestMarker: interestMarker}) %>
-</li>
-<% } %>
-</ul>
-</div></div>
-<% } %>
-<% } %></div></dd>
+    <% var day = days[d];%>
+    <h2><%= day %></h2>
+    <% for (var t in timeslots[day]) { %>
+        <% var timeslot = timeslots[day][t]; %>
+        <% var timeslotData = {timeStart: timeslot.timeStart, timeEnd: timeslot.timeEnd}; %>
+        <% if (schedule[day][JSON.stringify(timeslot)].length == 1) { %>
+            <p class="event">
+                <%- partial("schedule/timeslot.ejs", timeslotData) %>
+                — <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %>
+            </p>
+        <% } else { %>
+            <div class="accordion" id="acc-<%= t %>">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-<%= t %>" href="#acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>"><%- partial("schedule/timeslot.ejs", timeslotData) %></a>
+                    </div>
+                    <div id="acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>" class="accordion-body collapse <%= (d == 0 && t==0 && expanded ? "in" : "") %>">
+                        <% var eventList = schedule[day][JSON.stringify(timeslot)];%>
+                        <%- partial('schedule/event-list.ejs', {eventList: eventList, className: "accordion-inner"}) %>
+                        <!--<ul class="accordion-inner">
+                        <% for (var e in schedule[day][JSON.stringify(timeslot)]) {%>
+                            <% var event = schedule[day][JSON.stringify(timeslot)][e];%>
+                            <li class="event"><%- partial('schedule/event-desc.ejs', {event: event, interestMarker: interestMarker}) %></li>
+                        <% } %>
+                        </ul>-->
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
 <% } %>
