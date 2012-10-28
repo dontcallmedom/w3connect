@@ -31,7 +31,7 @@
 
 <% if (event.confidentiality && event.confidentiality == 'member') { %>
     <% var private = (event.observers && event.observers == 'no') ? "important" : "warning"; %>
-    <% var observers = (event.observers && event.observers == 'no') ? "No observers allowed" : "Observers allowed"; %>
+    <% var observers = (event.observers && event.observers == 'no') ? "No observers allowed" : "Observers are allowed"; %>
     <span class="member-only label label-<%= private %>" rel="tooltip" data-original-title="<%= observers %>">W3C Member-only</span>
 <% } %>
 

@@ -239,6 +239,10 @@ form.inline {
 	float: right;
 }
 
+.member-only, .counter {
+	cursor: default;
+}
+
 
 
 
