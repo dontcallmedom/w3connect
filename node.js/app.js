@@ -9,6 +9,8 @@ var everyauth = require('everyauth'),
 var imports = require("./imports.js"),
     twitter = require("./twitter.js");
 var sanitizer = require('sanitizer');
+var icalendar = require('icalendar');
+
 
 form = require("express-form"),
 filter = form.filter,
@@ -690,6 +692,16 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 			    case 'json':
 				res.send(indiv);
 				break;
+			    case 'ics':
+				var ical = new icalendar.iCalendar();
+				for (var i = 0 ; i < userEvents.length ; i++) {
+				    var  event = userEvents[i];
+				    var icalEv = new icalendar.VEvent(event.slug);
+				    icalEv.setSummary(event.name + ', in room ' + event.room.name);
+				    icalEv.setDate(event.timeStart,event.timeEnd);
+				    ical.addComponent(icalEv);
+				}
+				res.send(ical.toString());
 			    default:
 				res.render('people/indiv.ejs', { locals: { indiv: indiv, title: indiv.given + ' ' + indiv.family, days: days, timeslots: timeslots, schedule:schedule, statusupdates: statusupdates }});
 			    }
