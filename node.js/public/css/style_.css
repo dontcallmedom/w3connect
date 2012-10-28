@@ -163,7 +163,14 @@ form.inline {
 }
 
 .eventList li {
-	line-height: 1.6em;
+	padding: 3px 5px;
+	overflow: auto;
+}
+.eventList.accordion-inner {
+	padding: 6px 10px;
+}
+.eventList li:nth-child(2n) {
+	background: #F5F5F5;
 }
 
 .dayEvents > li > .event {
@@ -212,6 +219,7 @@ form.inline {
 .interest img {
 	height: 16px;
 	vertical-align: sub;
+	margin-right: 2px;
 }
 
 .room {
@@ -225,6 +233,10 @@ form.inline {
 
 .timeslot {
 	margin-right: 10px;
+}
+
+.member-only {
+	float: right;
 }
 
 

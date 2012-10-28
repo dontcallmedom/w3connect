@@ -38,6 +38,6 @@
 <% /*, no observers allowed*/ %>
 <% } %>
 
-<em class="interested" data-eventid="<%= event.slug %>"><% if (event.interested.length) { %>
- (<span class="counter"><%= event.interested.length %></span> interested to attend)
-<% } %></em>
+<span class="interested" data-eventid="<%= event.slug %>"><% if (event.interested.length) { %>
+    <span class="counter label"><%= event.interested.length %></span> <em>interested to attend</em>
+<% } %></span>
