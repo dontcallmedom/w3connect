@@ -157,6 +157,7 @@ form.inline {
 	list-style-type: none;
 	margin-left: 0;
 	margin-bottom: 0;
+	clear: both;
 }
 .dayEvents {
 	margin: 10px 0;
@@ -169,7 +170,7 @@ form.inline {
 .eventList.accordion-inner {
 	padding: 6px 10px;
 }
-.eventList li:nth-child(2n) {
+.eventList li:nth-child(2n+1) {
 	background: #F5F5F5;
 }
 
@@ -245,6 +246,19 @@ form.inline {
 
 .add-event {
 	float: right;
+	margin: 0;
+	position: relative;
+	top: -5px;
+}
+
+.eventDay {
+	display: none;
+	font-weight: bold;
+	margin-right: 3px;
+}
+
+.mySchedule .eventDay {
+	display: inline;
 }
 
 

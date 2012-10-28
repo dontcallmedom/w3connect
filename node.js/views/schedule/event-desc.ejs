@@ -3,10 +3,8 @@
     <a class="interest" href="<%= baseurl %>/schedule/events/<%= event.slug %>/" title="Toggle interest on event"><img src="<%= baseurl %>/img/star<%= ( isInterested.test(user._id) ?  "" : "-off" ) %>.png" alt="Not marked as interested"></a>
 <% } %>
 
-<% if (typeof showTime != "undefined" && showTime) { %>
     <% var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; %>
     <span class="eventDay"><%= days[event.timeStart.getDay()] %></span> <span class="timeslot"><%- partial("schedule/timeslot.ejs", {timeStart: event.timeStart, timeEnd: event.timeEnd}) %></span>
-<% } %>
 
 <% if (event.room && event.room.shortname) { %>
     <a href="<%= baseurl %>/locations/<%= event.room.shortname %>" class="room"><%= event.room.name %></a>

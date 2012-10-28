@@ -1,37 +1,32 @@
 jQuery(document).ready(function ($) {
 
     $("a.interest").live("click", function () {
-        var self = this,
+        var self = $(this),
             postData = {"_format": "json"};
 
-        if ($("img", $(self)).attr("src").indexOf("-off") !== -1) {
+        if ($("img", self).attr("src").indexOf("-off") !== -1) {
             postData.interested = "interested";
         } else {
             postData.uninterested = "uninterested";
         }
 
         $.post(
-            $(self).attr("href"),
+            self.attr("href"),
             postData,
             function (data) {
                 // data.error vs data.success
                 var result = JSON.parse(data);
                 if (result.success) {
                     if (postData.uninterested) {
-                        var img = $("img", "a.interest[href='" + $(self).attr("href") + "']");
-                        img.attr("src", $("img", $(self)).attr("src").replace(".png", "-off.png"));
+                        var img = $("img", ".interest[href='" + self.attr("href") + "']");
+                        img.attr("src", $("img", self).attr("src").replace(".png", "-off.png"));
                         img.attr("alt", "Not marked as interested");
-                        $("dd.mySchedule a[href='" + $(self).attr("href") + "']").parent().remove();
+                        $(".mySchedule .interest[href='" + self.attr("href") + "']").parent().remove();
                     } else {
-                        $("img", $(self)).attr("src", $("img", $(self)).attr("src").replace("-off.png", ".png"));
-                        $("img", $(self)).attr("alt", "Marked as interested");
-                        var event = $(self).parent().clone();
-                        event.addClass("mySchedule lastAdded");
-                        if ($("dd.mySchedule.lastAdded").length) {
-                            $("dd.mySchedule.lastAdded").removeClass("lastAdded").after(event);
-                        } else {
-                            $("#mySchedule + dd").after(event);
-                        }
+                        $("img", self).attr("src", $("img", self).attr("src").replace("-off.png", ".png"));
+                        $("img", self).attr("alt", "Marked as interested");
+                        var event = self.parent().clone();
+                        $(".mySchedule").append(event);
                     }
                 }
             }
