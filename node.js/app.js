@@ -699,7 +699,8 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 				for (var i = 0 ; i < userEvents.length ; i++) {
 				    var  event = userEvents[i];
 				    var icalEv = new icalendar.VEvent(event.slug);
-				    icalEv.setSummary(event.name + ', in room ' + event.room.name);
+				    icalEv.setSummary(event.name);
+				    icalEv.addProperty('LOCATION', event.room.name);
 				    icalEv.setDate(event.timeStart.setUTCHours(event.timeStart.getUTCHours() - parseInt(config.schedule.timezone_offset, 10)),new Date(event.timeEnd.setUTCHours(event.timeEnd.getUTCHours() - parseInt(config.schedule.timezone_offset, 10))));
 				    ical.addComponent(icalEv);
 				}
