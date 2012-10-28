@@ -765,7 +765,7 @@ app.get('/locations/stream', function(req, res) {
 		   } else {
 		       req.flash('error', err);
 		   }
-		   next();
+		   if (next) next();
 	       }
 	   });
 	    }
