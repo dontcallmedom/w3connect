@@ -152,6 +152,12 @@ form.inline {
 	line-height: 1.5em;
 }
 
+ul.accordion-inner {
+	list-style-type: none;
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
 @media (max-width: 979px) {
 .navbar-fixed-top {
 	margin-bottom: 0px !important;

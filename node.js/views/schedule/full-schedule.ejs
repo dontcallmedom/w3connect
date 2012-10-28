@@ -16,13 +16,15 @@
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-<%= t %>" href="#acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>"><%- partial("schedule/timeslot.ejs", timeslotData) %></a>
                     </div>
-                    <div id="acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>" class="accordion-body collapse<%= (d == 0 && t==0 && expanded ? " in" : "") %>">
-                        <ul class="accordion-inner">
+                    <div id="acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>" class="accordion-body collapse <%= (d == 0 && t==0 && expanded ? "in" : "") %>">
+                        <% var eventList = schedule[day][JSON.stringify(timeslot)];%>
+                        <%- partial('schedule/event-list.ejs', {eventList: eventList, className: "accordion-inner"}) %>
+                        <!--<ul class="accordion-inner">
                         <% for (var e in schedule[day][JSON.stringify(timeslot)]) {%>
                             <% var event = schedule[day][JSON.stringify(timeslot)][e];%>
-                            <li><%- partial('schedule/event-desc.ejs', {event: event, interestMarker: interestMarker}) %></li>
+                            <li class="event"><%- partial('schedule/event-desc.ejs', {event: event, interestMarker: interestMarker}) %></li>
                         <% } %>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
             </div>

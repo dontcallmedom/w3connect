@@ -1,3 +1,5 @@
+<ul class="eventList <%= (typeof className != "undefined" && className ? className: "") %>">
 <% for (var e in eventList) {%>
-<dd <%= (typeof className != "undefined" && className ? "class='" + className + (e == eventList.length - 1 ? " lastAdded" : "") + "'" : "") %>><%- partial('schedule/event-desc.ejs', {event: eventList[e], interestMarker:true}) %></dd>
+    <li class="event"><%- partial('schedule/event-desc.ejs', {event: eventList[e], interestMarker:true}) %></li>
 <% } %>
+</ul>
