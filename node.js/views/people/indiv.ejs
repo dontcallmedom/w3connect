@@ -38,7 +38,7 @@
 </form>
 <%}%>
 
-<h2>Schedule</h2>
+<h2>Schedule <% if (everyauth.loggedIn && user.login == indiv.login) { %><a href="<%= baseurl %>/people/profile/<%= user.slug %>.ics"><img src="http://www.w3.org/2008/site/images/icons/cal.gif" alt="icalendar feed"></a><% } %></h2>
 <p>Events that <%= indiv.given %> is interested in:</p>
 <dl>
 <%- partial("schedule/full-schedule.ejs", {days: days, timeslots: timeslots, schedule:schedule, expanded: true, interestMarker: false}) %>

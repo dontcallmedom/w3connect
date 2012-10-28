@@ -15,7 +15,7 @@
 <% } %>
 
 <% if (user) { %>
-<h2>My schedule</h2>
+<h2>My schedule <a href="<%= baseurl %>/people/profile/<%= user.slug %>.ics"><img src="http://www.w3.org/2008/site/images/icons/cal.gif" alt="icalendar feed"></a></h2>
     <p class="add-event"><a href="<%= baseurl %>/schedule/add" class="btn btn-success">Add an ad-hoc event</a></p>
     <p>Star meetings below to have them appear in your schedule</p>
     <%- partial('schedule/event-list.ejs', {eventList: myEvents, className: "mySchedule"}) %>
