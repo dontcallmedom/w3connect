@@ -700,7 +700,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 				    var  event = userEvents[i];
 				    var icalEv = new icalendar.VEvent(event.slug);
 				    icalEv.setSummary(event.name + ', in room ' + event.room.name);
-				    icalEv.setDate(event.timeStart.setUTCHours(event.timeStart.getUTCHours() + parseInt(config.schedule.timezone_offset, 10)),new Date(event.timeEnd.setUTCHours(event.timeEnd.getUTCHours() + parseInt(config.schedule.timezone_offset, 10))));
+				    icalEv.setDate(event.timeStart.setUTCHours(event.timeStart.getUTCHours() - parseInt(config.schedule.timezone_offset, 10)),new Date(event.timeEnd.setUTCHours(event.timeEnd.getUTCHours() - parseInt(config.schedule.timezone_offset, 10))));
 				    ical.addComponent(icalEv);
 				}
 				res.send(ical.toString());
