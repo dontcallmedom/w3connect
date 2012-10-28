@@ -86,7 +86,7 @@ everyauth.password
   .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
-    .registerLocals(function (req, res) {
+    .registerLocals(function (req, res, done) {
 	Status.find({})
 	    .sort('time', -1)
 	    .limit(20)
