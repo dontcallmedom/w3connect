@@ -81,7 +81,7 @@ body > footer p {
 }
 
 .navbar .nav > li > a {
-	color: #AAA;
+	color: #DDD;
 }
 
 .navbar-text a,
@@ -157,14 +157,37 @@ form.inline {
 	list-style-type: none;
 	margin-left: 0;
 	margin-bottom: 0;
+	clear: both;
+}
+.dayEvents {
+	margin: 10px 0;
 }
 
-.dayEvents > li > .event {
+.eventList li {
+	padding: 3px 5px;
+	overflow: auto;
+}
+.eventList.accordion-inner {
+	padding: 6px 10px;
+}
+
+
+
+
+.eventList li:nth-child(2n+1) {
+	background: #F5F5F5;
+}
+
+.dayEvents > .event {
 	padding: 8px 15px;
 	margin: 0;
 	border: 1px solid #E5E5E5;
 	border-bottom-width: 0;
 }
+.dayEvents > .event .timeslot {
+	float: left;
+}
+
 .dayEvents > li .accordion-group {
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
@@ -172,7 +195,7 @@ form.inline {
 	border-bottom-width: 0;
 }
 
-.dayEvents > li:first-child > .event,
+.dayEvents > .event:first-child,
 .dayEvents > li:first-child .accordion-group {
 	-webkit-border-top-left-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
@@ -184,7 +207,7 @@ form.inline {
 
 
 
-.dayEvents > li:last-child > .event,
+.dayEvents > .event:last-child ,
 .dayEvents > li:last-child .accordion-group {
 	-webkit-border-bottom-left-radius: 4px;
 	-webkit-border-bottom-right-radius: 4px;
@@ -201,6 +224,72 @@ form.inline {
 .dayEvents .accordion-group {
 	margin-bottom: 0;
 }
+
+.interest img {
+	height: 16px;
+	vertical-align: sub;
+	margin-right: 2px;
+}
+
+.room {
+	display: inline-block;
+	min-width: 7em;
+}
+
+.eventName {
+	font-weight: bold;
+}
+
+.timeslot {
+	margin-right: 10px;
+}
+
+.member-only {
+	float: right;
+}
+
+.member-only, .counter {
+	cursor: default;
+}
+
+.add-event {
+	float: right;
+	margin: 0;
+	position: relative;
+	top: -5px;
+}
+
+.eventDay {
+	display: none;
+	font-weight: bold;
+	margin-right: 3px;
+}
+
+.mySchedule .eventDay {
+	display: inline;
+}
+
+.eventList.accordion-inner .timeslot {
+	display: none;
+}
+
+.event {
+	overflow: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 979px) {
 .navbar-fixed-top {
