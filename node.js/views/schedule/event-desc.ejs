@@ -31,13 +31,10 @@
 
 <% if (event.confidentiality && event.confidentiality == 'member') { %>
     <% var private = (event.observers && event.observers == 'no') ? "important" : "warning"; %>
-    <span class="member-only label label-<%= private %>">W3C Member-only</span>
-<% } %>
-
-<% if (event.observers && event.observers == 'no') { %>
-<% /*, no observers allowed*/ %>
+    <% var observers = (event.observers && event.observers == 'no') ? "No observers allowed" : "Observers allowed"; %>
+    <span class="member-only label label-<%= private %>" rel="tooltip" data-original-title="<%= observers %>">W3C Member-only</span>
 <% } %>
 
 <span class="interested" data-eventid="<%= event.slug %>"><% if (event.interested.length) { %>
-    <span class="counter label"><%= event.interested.length %></span> <em>interested to attend</em>
+    <span class="counter label" rel="tooltip" data-original-title="<%= event.interested.length %> interested to attend"><%= event.interested.length %></span>
 <% } %></span>

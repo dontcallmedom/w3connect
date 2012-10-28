@@ -1,10 +1,3 @@
-<script type="text/javascript">
-function init() {
-  //var myAccordionList = new AccordionList("accordion");
-}
-addEvent("onload",init);
-</script>
-
 <h1>Schedule</h1>
 
 <% if (!user) { %>
@@ -33,6 +26,4 @@ addEvent("onload",init);
 <% var expanded = !currentEvents.length; %>
 <% var interestMarker = true; %>
 <%- partial('schedule/full-schedule.ejs', {days: days, timeslots: timeslots, schedule:schedule, expanded: expanded, interestMarker: interestMarker}) %>
-
-
 
