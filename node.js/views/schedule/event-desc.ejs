@@ -15,7 +15,7 @@
 <% if (typeof admin != "undefined" && admin) { %>
     <a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin" class="eventName"><%= event.name %></a>
 <% } else { %>
-    <span class="event"><%= event.name %></span>
+    <span class="eventName"><%= event.name %></span>
 <% }  %>
 
 <% if (event.presenters) { %> , by <%= event.presenters %> <% } %>
