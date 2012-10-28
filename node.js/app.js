@@ -402,6 +402,21 @@ function addEvent(req, res, next, eventType, proposedBy) {
     });
 }
 
+function autoCheckout() {
+    if (config.schedule.autocheckout) {
+	People.find({"lastKnownPosition.shortname": {$ne: null}}, [lastKnownPosition], function(err, people) {
+	    for (p in people) {
+		p.lastKnownPosition = { shortname: null, name:null, time: Date.now()}
+		p.save(function(err) {
+		    if (err) {
+			console.log("autocheckout error: " + err);
+		    }
+		});
+	    }
+	});
+    }
+}
+
 // Routes
 
 app.error(function(err, req, res, next){
@@ -570,7 +585,11 @@ app.post('/admin/', function(req, res, next){
 	      next();
 	  });
       });
-   } else {
+  } else if (req.body.autocheckout) {
+      autoCheckout();
+      req.flash("success", "Autocheckout triggered");
+      next();
+  } else {
       next();
   }
 });
