@@ -44,27 +44,32 @@ jQuery(document).ready(function ($) {
         evtSrc.addEventListener("interest", function (e) {
             var data = JSON.parse(e.data);
             $(".interested[data-eventid='" + data.event.slug + "']").each(function () {
-                var interested = $(this);
-                if (interested.text() !== "") {
-                    var counter = parseInt($("span", interested), 10) || 0;
-                    $("span", interested).text(counter + 1);
+                var interested = $(this),
+                    counterElem = $(".counter", interested);
+                if (counterElem.size() > 0) {
+                    var counter = parseInt(counterElem.text(), 10) || 0;
+                    counterElem.text(counter + 1);
                 } else {
-                    interested.text("(");
-                    interested.append($("<span></span>").text("1"));
-                    interested.append(" interested to attend)");
+                    counterElem = $('<span class="counter label" rel="tooltip"></span>');
+                    counterElem.attr('data-original-title', '1 interested to attend');
+                    counterElem.text('1');
+                    interested.append(counterElem);
+                    counterElem.tooltip();
                 }
             });
         }, false);
         evtSrc.addEventListener("uninterest", function (e) {
             var data = JSON.parse(e.data);
             $(".interested[data-eventid='" + data.event.slug + "']").each(function () {
-                var interested = $(this);
-                if (interested.text()) {
-                    var interestedCounter = parseInt($(".counter", interested), 10);
-                    if (interestedCounter > 1) {
-                        $("span", interested).text(interestedCounter - 1);
+                var interested = $(this),
+                    counterElem = $(".counter", interested);
+                if (counterElem.size() > 0) {
+                    var counter = parseInt(counterElem, 10);
+                    if (counter > 1) {
+                        counterElem.text(counter - 1);
+                        counterElem.attr('data-original-title', (counter - 1) + ' interested to attend');
                     } else {
-                        interested.text("");
+                        counterElem.remove();
                     }
                 }
             });
