@@ -5,15 +5,16 @@
   "dependencies": {
     "express": "2.4.2",
     "ejs": "0.4.3",
-    "mongoose": ">= 2.0.0",
+    "mongoose": "2.7.2",
     "everyauth": "0.2.23",
     "session-mongoose": "0.0.1",
-    "express-form":"0.6.1",
+    "express-form":">= 0.6.1",
     "express-messages":"0.0.2",
     "iniparser":"1.0.3",
     "optimist":"0.2.6",
-    "express-namespace":"0.0.4",
-    "sanitizer":">=0.0.15"
+    "express-namespace":">= 0.0.4",
+    "sanitizer":">=0.0.15",
+    "icalendar":">=0.6.3"
   },
   "devDependencies": {},
   "engines": {
