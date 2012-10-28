@@ -407,9 +407,13 @@ function autoCheckout() {
 	var now = new Date();
 	if (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) > parseInt(config.schedule.autocheckout, 10) / 100 || (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) == parseInt(config.schedule.autocheckout, 10) / 100 && now.getUTCMinutes() > parseInt(config.schedule.autocheckout,10) % 100)) {
 	    People.find({"lastKnownPosition.shortname": {$ne: null}}, ["lastKnownPosition"], function(err, people) {
+		if (err) {
+		    console.log("autocheckout query error: " + err);
+		} else {
 		for (p in people) {
-		    p.lastKnownPosition = { shortname: null, name:null, time: Date.now()}
-		    p.save(function(err) {
+		    var indiv = people[p];
+		    indiv.lastKnownPosition = { shortname: null, name:null, time: Date.now()}
+		    indiv.save(function(err) {
 			if (err) {
 			    console.log("autocheckout error: " + err);
 			}
