@@ -404,7 +404,7 @@ function addEvent(req, res, next, eventType, proposedBy) {
 
 function autoCheckout() {
     if (config.schedule.autocheckout) {
-	var now = Date;
+	var now = Date();
 	if (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) > parseInt(config.schedule.autocheckout, 10) / 100 || (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) == parseInt(config.schedule.autocheckout, 10) / 100 && now.getUTCMinutes() > parseInt(config.schedule.autocheckout,10) % 100)) {
 	    People.find({"lastKnownPosition.shortname": {$ne: null}}, ["lastKnownPosition"], function(err, people) {
 		for (p in people) {
