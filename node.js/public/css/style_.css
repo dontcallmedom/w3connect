@@ -152,6 +152,10 @@ form.inline {
 	line-height: 1.5em;
 }
 
+.dayEvents {
+	margin: 10px 0;
+}
+
 .eventList,
 .dayEvents {
 	list-style-type: none;
@@ -201,6 +205,24 @@ form.inline {
 .dayEvents .accordion-group {
 	margin-bottom: 0;
 }
+
+.interest img {
+	height: 16px;
+	vertical-align: sub;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 979px) {
 .navbar-fixed-top {

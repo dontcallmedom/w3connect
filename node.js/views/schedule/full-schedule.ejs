@@ -13,10 +13,10 @@
                 — <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %>
             </p>
         <% } else { %>
-            <div class="accordion" id="acc-<%= t %>">
+            <div class="accordion" id="acc-<%= d %>-<%= t %>">
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-<%= t %>" href="#acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>"><%- partial("schedule/timeslot.ejs", timeslotData) %></a>
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-<%= d %>-<%= t %>" href="#acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>"><%- partial("schedule/timeslot.ejs", timeslotData) %></a>
                     </div>
                     <div id="acc-<%= partial('schedule/timeslot-id.ejs', timeslotData) %>" class="accordion-body collapse <%= (d == 0 && t==0 && expanded ? "in" : "") %>">
                         <% var eventList = schedule[day][JSON.stringify(timeslot)];%>
