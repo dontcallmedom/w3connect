@@ -120,6 +120,7 @@ everyauth.password
   .respondToLoginSucceed( function (res, user, data) {
       console.log(user);
       if (user && redirectTo) {
+	  console.log("redirect " + redirectTo);
 	  res.writeHead(303, {'Location': redirectTo});
 
       } else {
