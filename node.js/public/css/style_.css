@@ -243,6 +243,10 @@ form.inline {
 	cursor: default;
 }
 
+.add-event {
+	float: right;
+}
+
 
 
 

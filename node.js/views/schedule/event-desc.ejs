@@ -5,7 +5,7 @@
 
 <% if (typeof showTime != "undefined" && showTime) { %>
     <% var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; %>
-    <%= days[event.timeStart.getDay()] %> <%- partial("schedule/timeslot.ejs", {timeStart: event.timeStart, timeEnd: event.timeEnd}) %>
+    <span class="eventDay"><%= days[event.timeStart.getDay()] %></span> <span class="timeslot"><%- partial("schedule/timeslot.ejs", {timeStart: event.timeStart, timeEnd: event.timeEnd}) %></span>
 <% } %>
 
 <% if (event.room && event.room.shortname) { %>
