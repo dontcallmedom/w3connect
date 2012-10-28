@@ -95,12 +95,6 @@ everyauth.password
 		if (err) return done(err);
 		done(null, {statusupdates: statusupdates});
 	    });
-	console.log("registerLocals");
-	var redirectTo = (req.query["redirectTo"] ? req.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
-	return {
-	    redirectTo: redirectTo
-	}
-
     })
     .loginLocals(function (req, res) {
 	console.log("loginLocals");
@@ -119,10 +113,10 @@ everyauth.password
   })
   .respondToLoginSucceed( function (res, user, data) {
       console.log(user);
-      console.log(redirectTo);
-      if (redirectTo && user) {
-	  console.log("redirect " + redirectTo);
-	  res.writeHead(303, {'Location': redirectTo});
+      console.log(data.session);
+      console.log(data.session.redirectTo);
+      if (data.session.redirectTo && user) {
+	  res.writeHead(303, {'Location': data.session.redirectTo});
 
       } else {
 	  console.log("no known redirect")
