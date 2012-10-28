@@ -232,7 +232,7 @@ app.configure(function(){
 	    autoCheckout();
 	    setInterval(autoCheckout, 3600 * 24 * 1000);
 	}, then - now);
-	console.log("Setting auto checkout " + ((then - now) / 1000) + " secondsfrom now");
+	console.log("Setting auto checkout " + ((then - now) / 1000) + " seconds from now");
     }
 });
 
