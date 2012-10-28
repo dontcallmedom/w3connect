@@ -114,7 +114,7 @@ everyauth.password
       console.log(data.session.redirectTo);
       if (data.session.redirectTo && user) {
 	  res.writeHead(303, {"Location":data.session.redirectTo});
-	  
+	  data.session.redirectTo = null;	  
       } else {
 	  res.writeHead(303, {"Location": config.hosting.basepath + '/'});
       }
