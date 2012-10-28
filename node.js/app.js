@@ -821,7 +821,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 	    break;
 	default:
 	    // auto-check-in if nfc is set in the query string
-	    if (req.loggedIn && req.query["nfc"]) {
+	    if (req.loggedIn && req.query["nfc"] === '') {
 		userCheckin(req, res, next, place)		
 	    }
 	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places, event: event}});
