@@ -113,6 +113,8 @@ everyauth.password
   .respondToRegistrationSucceed( function (res, user, data) {
       if (redirectTo) {
 	  this.redirect(res, redirectTo)
+      } else {
+	  this.redirect(res, config.hosting.basepath + '/');
       }
   })
   .respondToLoginSucceed( function (res, user, data) {
