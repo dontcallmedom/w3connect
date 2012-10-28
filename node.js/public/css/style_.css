@@ -152,15 +152,18 @@ form.inline {
 	line-height: 1.5em;
 }
 
-.dayEvents {
-	margin: 10px 0;
-}
-
 .eventList,
 .dayEvents {
 	list-style-type: none;
 	margin-left: 0;
 	margin-bottom: 0;
+}
+.dayEvents {
+	margin: 10px 0;
+}
+
+.eventList li {
+	line-height: 1.6em;
 }
 
 .dayEvents > li > .event {
@@ -209,6 +212,19 @@ form.inline {
 .interest img {
 	height: 16px;
 	vertical-align: sub;
+}
+
+.room {
+	display: inline-block;
+	min-width: 7em;
+}
+
+.eventName {
+	font-weight: bold;
+}
+
+.timeslot {
+	margin-right: 10px;
 }
 
 

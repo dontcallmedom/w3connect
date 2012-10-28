@@ -9,11 +9,11 @@
 <% } %>
 
 <% if (event.room && event.room.shortname) { %>
-    <a href="<%= baseurl %>/locations/<%= event.room.shortname %>" class="room"><%= event.room.name %></a>:
+    <a href="<%= baseurl %>/locations/<%= event.room.shortname %>" class="room"><%= event.room.name %></a>
 <% } %>
 
 <% if (typeof admin != "undefined" && admin) { %>
-    <a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin" class="event"><%= event.name %></a>
+    <a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin" class="eventName"><%= event.name %></a>
 <% } else { %>
     <span class="event"><%= event.name %></span>
 <% }  %>
@@ -30,8 +30,8 @@
 <% } %>
 
 <% if (event.confidentiality && event.confidentiality == 'member') { %>
-    <% var private = (event.observers && event.observers == 'no') ? "private" : ""; %>
-    <span class="member-only <%= private %>">W3C Member-only</span>
+    <% var private = (event.observers && event.observers == 'no') ? "important" : "warning"; %>
+    <span class="member-only label label-<%= private %>">W3C Member-only</span>
 <% } %>
 
 <% if (event.observers && event.observers == 'no') { %>

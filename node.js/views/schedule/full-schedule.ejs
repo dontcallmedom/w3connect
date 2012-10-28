@@ -9,8 +9,8 @@
         <% var timeslotData = {timeStart: timeslot.timeStart, timeEnd: timeslot.timeEnd}; %>
         <% if (schedule[day][JSON.stringify(timeslot)].length == 1) { %>
             <p class="event">
-                <%- partial("schedule/timeslot.ejs", timeslotData) %>
-                — <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %>
+                <span class="timeslot"><%- partial("schedule/timeslot.ejs", timeslotData) %></span>
+                <%- partial('schedule/event-desc.ejs', {event: schedule[day][JSON.stringify(timeslot)][0], interestMarker: interestMarker}) %>
             </p>
         <% } else { %>
             <div class="accordion" id="acc-<%= d %>-<%= t %>">
