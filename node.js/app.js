@@ -825,7 +825,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 	    };
 	    // auto-check-in if nfc is set in the query string
 	    if (req.loggedIn && req.query["nfc"] === '') {
-		req.body.checking = true;
+		req.body.checkin = true;
 		userCheckin(req, res, render, place)		
 	    } else {
 		render();
