@@ -220,6 +220,14 @@ app.configure(function(){
 	      }
 	  }
       });
+    if (config.schedule.autocheckout && config.schedule.autocheckout.match(/[0-9][0-9][0-9][0-9]?/)) {
+	var now = new Date();
+	var then = new Date();
+	then.setUTCHours(parseInt(config.schedule.autocheckout, 10) / 100 - parseInt(config.schedule.timezone_offset, 10));
+	then.setUTCMinutes(parseInt(config.schedule.autocheckout, 10) % 100);
+	setTimeout(autoCheckout, then - now);
+	console.log("Setting auto checkout " + ((then - now) / 1000) + " secondsfrom now");
+    }
 });
 
 app.configure('test', function(){
@@ -405,7 +413,7 @@ function addEvent(req, res, next, eventType, proposedBy) {
 function autoCheckout() {
     if (config.schedule.autocheckout) {
 	var now = new Date();
-	if (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) > parseInt(config.schedule.autocheckout, 10) / 100 || (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) == parseInt(config.schedule.autocheckout, 10) / 100 && now.getUTCMinutes() > parseInt(config.schedule.autocheckout,10) % 100)) {
+	if (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) > parseInt(config.schedule.autocheckout, 10) / 100 || (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) == parseInt(config.schedule.autocheckout, 10) / 100 && now.getUTCMinutes() >= parseInt(config.schedule.autocheckout,10) % 100)) {
 	    People.find({"lastKnownPosition.shortname": {$ne: null}}, ["lastKnownPosition"], function(err, people) {
 		if (err) {
 		    console.log("autocheckout query error: " + err);
