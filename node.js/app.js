@@ -79,7 +79,7 @@ everyauth.everymodule.findUserById( function (userId, callback) {
 */
 // Adapted from everyauth ldap module
 everyauth.password
-  .logoutPath(config.hosting.basepath + '/logout');
+  .logoutPath(config.hosting.basepath + '/logout')
   .logoutRedirectPath(config.hosting.basepath + '/login')
   .getLoginPath(config.hosting.basepath + '/login')
   .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
