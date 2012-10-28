@@ -95,6 +95,7 @@ everyauth.password
 		if (err) return done(err);
 		done(null, {statusupdates: statusupdates});
 	    });
+	console.log("registerLocals");
 	var redirectTo = (req.query["redirectTo"] ? req.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
 	return {
 	    redirectTo: redirectTo
@@ -102,6 +103,7 @@ everyauth.password
 
     })
     .loginLocals(function (req, res) {
+	console.log("loginLocals");
 	var redirectTo = (req.query["redirectTo"] ? req.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
 	return {
 	    redirectTo: redirectTo
