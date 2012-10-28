@@ -116,12 +116,12 @@ everyauth.password
       console.log(data.session);
       console.log(data.session.redirectTo);
       if (data.session.redirectTo && user) {
-	  this.redirect(res, data.session.redirectTo)
-
+	  res.writeHead(303, {"Location":data.session.redirectTo});
+	  
       } else {
-	  this.redirect(res, config.hosting.basepath + '/');
+	  res.writeHead(303, {"Location": config.hosting.basepath + '/'});
       }
-
+      res.end();
   }) 
   .authenticate( function (login, password) {
     var promise = this.Promise();  
