@@ -99,6 +99,7 @@ everyauth.password
     .loginLocals(function (req, res) {
 	console.log("loginLocals");
 	var redirectTo = (req.query["redirectTo"] ? req.query["redirectTo"] : (req.session.redirectTo ? req.session.redirectTo : null));
+	console.log(redirectTo);
 	return {
 	    redirectTo: redirectTo
 	}
