@@ -44,6 +44,8 @@ jQuery(document).ready(function ($) {
                 if (counterElem.size() > 0) {
                     var counter = parseInt(counterElem.text(), 10) || 0;
                     counterElem.text(counter + 1);
+                    counterElem.attr('data-original-title', (counter + 1) + ' interested to attend');
+                    counterElem.tooltip();
                 } else {
                     counterElem = $('<span class="counter label" rel="tooltip"></span>');
                     counterElem.attr('data-original-title', '1 interested to attend');
@@ -63,6 +65,7 @@ jQuery(document).ready(function ($) {
                     if (counter > 1) {
                         counterElem.text(counter - 1);
                         counterElem.attr('data-original-title', (counter - 1) + ' interested to attend');
+                        counterElem.tooltip();
                     } else {
                         counterElem.remove();
                     }
