@@ -58,8 +58,6 @@ var mongooseSessionStore = new SessionMongoose({
     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
 });
 
-everyauth.everymodule.logoutPath(config.hosting.basepath + '/logout');
-
 everyauth.everymodule.moduleTimeout(40000);
 
 everyauth.everymodule.findUserById( function (userId, callback) {
@@ -81,6 +79,7 @@ everyauth.everymodule.findUserById( function (userId, callback) {
 */
 // Adapted from everyauth ldap module
 everyauth.password
+  .logoutPath(config.hosting.basepath + '/logout');
   .logoutRedirectPath(config.hosting.basepath + '/login')
   .getLoginPath(config.hosting.basepath + '/login')
   .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
