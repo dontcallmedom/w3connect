@@ -225,7 +225,13 @@ app.configure(function(){
 	var then = new Date();
 	then.setUTCHours(parseInt(config.schedule.autocheckout, 10) / 100 - parseInt(config.schedule.timezone_offset, 10));
 	then.setUTCMinutes(parseInt(config.schedule.autocheckout, 10) % 100);
-	setTimeout(autoCheckout, then - now);
+	if (then < now) {
+	    then.setUTCDate(now.getUTCDate() + 1);
+	}
+	setTimeout(function() {
+	    autoCheckout();
+	    setInterval(autoCheckout, 3600 * 24 * 1000);
+	}, then - now);
 	console.log("Setting auto checkout " + ((then - now) / 1000) + " secondsfrom now");
     }
 });
