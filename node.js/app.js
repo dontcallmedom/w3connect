@@ -105,8 +105,8 @@ everyauth.password
     })
   //.loginSuccessRedirect(config.hosting.basepath + '/')
   .respondToRegistrationSucceed( function (res, user, data) {
-      if (redirectTo) {
-	  this.redirect(res, redirectTo)
+      if (data.session.redirectTo) {
+	  this.redirect(res, data.session.redirectTo)
       } else {
 	  this.redirect(res, config.hosting.basepath + '/');
       }
@@ -116,13 +116,11 @@ everyauth.password
       console.log(data.session);
       console.log(data.session.redirectTo);
       if (data.session.redirectTo && user) {
-	  res.writeHead(303, {'Location': data.session.redirectTo});
+	  this.redirect(res, data.session.redirectTo)
 
       } else {
-	  console.log("no known redirect")
-	  res.writeHead(303, {'Location': config.hosting.basepath + '/'});
+	  this.redirect(res, config.hosting.basepath + '/');
       }
-      res.end()
 
   }) 
   .authenticate( function (login, password) {
