@@ -273,6 +273,10 @@ form.inline {
 	display: none;
 }
 
+.event {
+	overflow: auto;
+}
+
 
 
 
