@@ -123,6 +123,7 @@ everyauth.password
 	  res.writeHead(303, {'Location': redirectTo});
 
       } else {
+	  console.log("no known redirect")
 	  res.writeHead(303, {'Location': config.hosting.basepath + '/'});
       }
       res.end()
