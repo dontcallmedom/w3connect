@@ -820,11 +820,15 @@ app.all('/locations/:id.:format?', function(req, res) {
             res.send(placeData);
 	    break;
 	default:
+	    var render = function () {
+		res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places, event: event}});
+	    };
 	    // auto-check-in if nfc is set in the query string
 	    if (req.loggedIn && req.query["nfc"] === '') {
-		userCheckin(req, res, null, place)		
+		userCheckin(req, res, render, place)		
+	    } else {
+		render();
 	    }
-	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places, event: event}});
 	}
       });
     });
