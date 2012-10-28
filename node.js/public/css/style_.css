@@ -170,16 +170,24 @@ form.inline {
 .eventList.accordion-inner {
 	padding: 6px 10px;
 }
+
+
+
+
 .eventList li:nth-child(2n+1) {
 	background: #F5F5F5;
 }
 
-.dayEvents > li > .event {
+.dayEvents > .event {
 	padding: 8px 15px;
 	margin: 0;
 	border: 1px solid #E5E5E5;
 	border-bottom-width: 0;
 }
+.dayEvents > .event .timeslot {
+	float: left;
+}
+
 .dayEvents > li .accordion-group {
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
@@ -260,6 +268,11 @@ form.inline {
 .mySchedule .eventDay {
 	display: inline;
 }
+
+.eventList.accordion-inner .timeslot {
+	display: none;
+}
+
 
 
 

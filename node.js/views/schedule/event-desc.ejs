@@ -4,7 +4,9 @@
 <% } %>
 
     <% var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; %>
-    <span class="eventDay"><%= days[event.timeStart.getDay()] %></span> <span class="timeslot"><%- partial("schedule/timeslot.ejs", {timeStart: event.timeStart, timeEnd: event.timeEnd}) %></span>
+    <span class="eventDay"><%= days[event.timeStart.getDay()] %></span>
+
+    <span class="timeslot"><%- partial("schedule/timeslot.ejs", {timeStart: event.timeStart, timeEnd: event.timeEnd}) %></span>
 
 <% if (event.room && event.room.shortname) { %>
     <a href="<%= baseurl %>/locations/<%= event.room.shortname %>" class="room"><%= event.room.name %></a>
