@@ -21,8 +21,8 @@ addEvent("onload",init);
     <%- partial('schedule/event-list.ejs', {eventList: nextEvents}) %>
 <% } %>
 
-<h2>My schedule</h2>
 <% if (user) { %>
+<h2>My schedule</h2>
     <p>Star meetings below to have them appear in your schedule</p>
     <p><a href="<%= baseurl %>/schedule/add">Add an ad-hoc event</a></p>
     <% if (myEvents.length) {%>
