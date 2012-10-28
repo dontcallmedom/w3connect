@@ -718,7 +718,7 @@ app.get('/locations/stream', function(req, res) {
 			break;
 		    default:
 			req.flash('info', "You’re already checked in at " + place.name);
-			next();
+			if (next) next();
 		    }
 		}
 	    } else {
@@ -731,7 +731,7 @@ app.get('/locations/stream', function(req, res) {
 			break;
 		    default:
 			req.flash('info', "You’re not checked in at " + place.name + ", so you can’t checkout from it");
-			next();
+			if (next) next();
 		    }
 		}
 	    }
@@ -822,7 +822,7 @@ app.all('/locations/:id.:format?', function(req, res) {
 	default:
 	    // auto-check-in if nfc is set in the query string
 	    if (req.loggedIn && req.query["nfc"] === '') {
-		userCheckin(req, res, next, place)		
+		userCheckin(req, res, null, place)		
 	    }
 	    res.render('locations/place.ejs', { locals: { place: place, people: people, title: place.name, places:places, event: event}});
 	}
