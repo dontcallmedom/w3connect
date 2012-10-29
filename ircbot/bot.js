@@ -66,7 +66,7 @@ client.addListener("message", function (from, to, message) {
 	var event;
 	for (var c in channelsMap[to]) {
 	    var ev = channelsMap[to][c];
-	    if (ev.timeStart < now && ev.timeEnd > now) {
+	    if (new Date(ev.timeStart) < now && new Date(ev.timeEnd) > now) {
 		event = ev;
 		break;
 	    }
