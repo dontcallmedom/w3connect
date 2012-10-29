@@ -3,7 +3,7 @@
 <% } else if (user) { %>
 <%   if (typeof scheduledEvents != "undefined" && scheduledEvents == 0) { %>
 <p class="lead text-info">Build your <a href='schedule/'>schedule for the week</a> and re-use it as an <a href="people/profile/<%= user.slug %>.ics">icalendar feed</a>.</p>
-<%   else if (!(user.twitterAccount && user.twitterAccount.name)) { %>
+<%   } else if (!(user.twitterAccount && user.twitterAccount.name)) { %>
 <p class="lead text-info">Do you have a <strong>Twitter account</strong>? <a href="people/profile/<%= user.slug %>">Update your profile</a> to share your tweets as part of your activity stream!</p>
 <% } %>
 <% } %>
