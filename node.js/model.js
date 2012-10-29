@@ -64,7 +64,8 @@ var Event  = new Schema({
     presenters: String,
     room: {type: Schema.ObjectId, ref: 'Place'},
     timeStart: Date,
-    timeEnd: Date
+    timeEnd: Date,
+    ircChannel: String
 });
 
 /*
