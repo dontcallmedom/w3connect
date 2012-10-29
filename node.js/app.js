@@ -477,6 +477,7 @@ app.get('/', function(req, res){
 	      });
 	  }
       } else {
+	  console.log("hello world");
 	  res.render('index');
       }
   });
