@@ -16,6 +16,7 @@
 </select></label></p>
 
 </label></p>
+<p><label>IRC channel: <input value="<%= event.ircChannel ? event.ircChannel : "" %>" name="ircchannel" /></label></p>
 <p><label>Confidentiality: <select name="confidentiality"><option>public</option><option <% if (event.confidentiality=="member") { %> selected <% } %>value="member">W3C Member-only</option></select></label></p>
 <p><label>Observers: <select name="observers"><option value="chairs">Allowed, to the Chairs discretion</option><option <% if (event.observers=="no") { %> selected<% } %> value="no">Not allowed</option></select></label></p>
 <p><input value="Update event" type="submit" name="updateEvent"></p>

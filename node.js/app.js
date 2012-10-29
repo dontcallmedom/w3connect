@@ -1134,6 +1134,9 @@ app.post("/schedule/events/:slug/admin", function(req, res, next) {
 	  }
 	  event.timeStart =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000'  + (parseInt(req.body.start.replace(":",""), 10) - 100* parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00');
 	  event.timeEnd =  parseDate(req.body.day.replace(/-/g,'') + 'T' + String('0000' + (parseInt(req.body.end.replace(":",""), 10) - 100 * parseInt(config.schedule.timezone_offset, 10))).slice(-4) + '00');
+	  if (req.body.ircchannel) {
+	      event.ircChannel = req.body.ircchannel;
+	  }
 	  event.name= req.body.name;
 	  event.presenters= req.body.presenters;
 	  event.confidentiality = req.body.confidentiality;
