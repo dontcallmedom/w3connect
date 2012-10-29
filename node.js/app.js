@@ -117,10 +117,11 @@ everyauth.password
       if (data.session.redirectTo && user) {
 	  res.writeHead(303, {"Location":data.session.redirectTo});
 	  data.session.redirectTo = null;	  
-      } else {
+	  res.end();
+      } else if (user){
 	  res.writeHead(303, {"Location": config.hosting.basepath + '/'});
+	  res.end();	  
       }
-      res.end();
   }) 
   .authenticate( function (login, password) {
     var promise = this.Promise();  
