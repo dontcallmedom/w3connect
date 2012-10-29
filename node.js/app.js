@@ -1308,6 +1308,22 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
     });
 
 
+    app.get('/schedule/list.json', function (req, res, next) {
+    Event.find({})
+	    .populate('room', ['shortname','name'])
+	    .sort('timeStart', 1)
+	    .populate('proposedBy')
+	    .exec( 
+		function(err, events) {
+		    res.setHeader("Content-Type", 'application/json');
+		    if (err) {
+			res.send(JSON.stringify({"error": err}));
+		    } else {
+			res.send(events);
+		    }
+		});
+    });
+
 app.all('/schedule/?(:datetime)?', function (req, res, next){
     var current = new Date();
     current.setUTCHours(current.getUTCHours() + parseInt(config.schedule.timezone_offset,10));
