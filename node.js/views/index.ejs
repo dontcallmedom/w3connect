@@ -12,11 +12,11 @@
 	<a href="<%= baseurl %>/people/profile/<%= statusupdates[s].author.slug %>">
 		<img src="<% if (statusupdates[s].author.picture_thumb) { %><%=statusupdates[s].author.picture_thumb%><% } else { %><%= baseurl %>/img/default-pic.png<% } %>" width='36' alt="Picture of <%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>">
 	</a>
-	<% } %>
 	<span>
 		<a href="<%= baseurl %>/people/profile/<%= statusupdates[s].author.slug %>">
 			<%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>
 		</a>
+	<% } %>
 		<% if (statusupdates[s].contentHTML) { %>
 		<%- statusupdates[s].contentHTML %>
 		<% } else { %>
