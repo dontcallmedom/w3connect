@@ -301,7 +301,7 @@ emitter.on("tweet", function(tweet) {
 	{"twitterAccount.id":tweet.user.id},
 	function(err, indiv) {
 	    if (indiv) {
-		var status = new Status({author: indiv, time: Date.now(), statusType: "tweet", contentHTML: /*indiv.given + " " + indiv.family + */" <a href='http://twitter.com/" + sanitizer.escape(indiv.twitterAccount.name)) + '/status/' + sanitizer.escape(tweet.id_str) + "'>tweeted</a>: “" + sanitizer.escape(tweet.text) + "” as <a href='http://twitter.com/" + sanitizer.escape(indiv.twitterAccount.name) + "'>" + sanitizer.escape(indiv.twitterAccount.name) + "</a>"});
+		var status = new Status({author: indiv, time: Date.now(), statusType: "tweet", contentHTML: /*indiv.given + " " + indiv.family + */" <a href='http://twitter.com/" + sanitizer.escape(indiv.twitterAccount.name) + '/status/' + sanitizer.escape(tweet.id_str) + "'>tweeted</a>: “" + sanitizer.escape(tweet.text) + "” as <a href='http://twitter.com/" + sanitizer.escape(indiv.twitterAccount.name) + "'>" + sanitizer.escape(indiv.twitterAccount.name) + "</a>"});
 		status.save();
 	    }
 	});
