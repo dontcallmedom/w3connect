@@ -76,10 +76,11 @@ client.addListener("message", function (from, to, message) {
 	if (event && topic) {
 	    var url = require("url").parse(config.w3connect.baseurl + "schedule/events/" + event.slug + "/updates");
 	    var post_data = querystring.stringify({"updateStatus":topic[1]});
-	    var updateStatus = http.post(
+	    var updateStatus = http.request(
 		{host: url.hostname, 
 		 port: url.port ,
 		 path: url.pathname,
+		 method: 'POST',
 		 headers: {
 		     'Content-Type': 'application/x-www-form-urlencoded',
 		     'Content-Length': post_data.length
