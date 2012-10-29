@@ -1098,6 +1098,17 @@ app.all('/schedule/admin', function(req,res) {
     });
 });
 
+app.post("/schedule/events/:slug/updates", function(req, res, next) {
+    Event.findOne({slug: req.params.slug}).exec(function(err, event) {
+      if (err) {
+	 next();
+      }
+      if (req.body.updateStatus !== undefined){    
+	  var status = new Status({time: Date.now(), statusType: "newtopic", content: "The topic “" + updateStatus.text+ "” has been taken up in " + event.name});
+		status.save();	  
+      })
+});
+
 app.post("/schedule/events/:slug/admin", function(req, res, next) {
     if (! req.loggedIn) {
       return res.redirect(everyauth.password.getLoginPath());
