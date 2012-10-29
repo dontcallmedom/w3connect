@@ -16,6 +16,8 @@
 		<a href="<%= baseurl %>/people/profile/<%= statusupdates[s].author.slug %>">
 			<%= statusupdates[s].author.given + " " + statusupdates[s].author.family %>
 		</a>
+	<% } else { %>
+	<span>
 	<% } %>
 		<% if (statusupdates[s].contentHTML) { %>
 		<%- statusupdates[s].contentHTML %>
