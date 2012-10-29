@@ -1,0 +1,20 @@
+{
+  "name": "w3connectbot",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "iniparser":"1.0.3",
+    "optimist":"0.2.6",
+    "irc":"0.3.4"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "Dominique Hazaël-Massieux <dom@w3.org> (http://www.w3.org/People/Dom/)",
+  "description": "IRC Bot that interacts with w3connect",
+  "repository": {
+    "url": ""
+  },
+  "main": "bot.js"
+}
