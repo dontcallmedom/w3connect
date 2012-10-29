@@ -94,7 +94,13 @@ everyauth.password
 	    .populate('author', ['given', 'family', 'slug', 'picture_thumb'])
 	    .exec(function(err, statusupdates) { 
 		if (err) return done(err);
-		done(null, {statusupdates: statusupdates});
+		if (req.user) {
+		    Event.count({"interested":req.user._id}, function(err, count) {
+			done(null, {statusupdates: statusupdates, scheduledEvents: count});
+		    });
+		} else {
+		    done(null, {statusupdates: statusupdates});
+		}
 	    });
     })
     .loginLocals(function (req, res) {
@@ -477,6 +483,7 @@ app.get('/', function(req, res){
 	      });
 	  }
       } else {
+	  console.log("hello world");
 	  res.render('index');
       }
   });
