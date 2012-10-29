@@ -1106,7 +1106,8 @@ app.post("/schedule/events/:slug/updates", function(req, res, next) {
       if (req.body.updateStatus !== undefined){    
 	  var status = new Status({time: Date.now(), statusType: "newtopic", content: "The topic “" + updateStatus.text+ "” has been taken up in " + event.name});
 		status.save();	  
-      })
+      }
+    })
 });
 
 app.post("/schedule/events/:slug/admin", function(req, res, next) {
