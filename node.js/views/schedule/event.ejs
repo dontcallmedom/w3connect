@@ -1,6 +1,7 @@
 <h1><%= event.name %></h1>
 <dl>
 <% if (event.proposedBy) { %>
+<dt>Proposed By</dt>
 <dd><%= event.proposedBy.given + " " + event.proposedBy.family %></dd>
 <% } %>
 <dt>Presenters</dt>
