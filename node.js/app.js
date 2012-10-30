@@ -1307,7 +1307,7 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
 		    res.send(event);
 		    break;
 		default:
-		    res.render("schedule/event.ejs", {event: event, title: event.name, proposedBy: event.proposedBy, people: interested});
+		    res.render("schedule/event.ejs", {event: event, title: event.name, proposedBy: event.proposedBy, people: event.interested});
 		}
 	    });
 });
