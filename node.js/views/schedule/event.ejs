@@ -1,5 +1,8 @@
 <h1><%= event.name %></h1>
 <dl>
+<% if (event.proposedBy) { %>
+<dd><%= event.proposedBy.given + " " + event.proposedBy.family %></dd>
+<% } %>
 <dt>Presenters</dt>
 <dd><%= event.presenter %></dd>
 <% if (event.room) { %>
@@ -9,4 +12,6 @@
 <dt>Description</dt>
 <dd><%= event.description %></dd>
 <% } %>
+<dt>Interested to attend</dt>
+<dd><%- partial('people/list.ejs') %></dd>
 </dl>
