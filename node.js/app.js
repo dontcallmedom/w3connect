@@ -174,7 +174,7 @@ app.configure(function(){
   app.use(config.hosting.basepath, express.static(__dirname + '/public', { maxAge: 86400000}));
   app.use(express.methodOverride());
  app.use(express.cookieParser()); 
-    app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: config.authentication.duration ? config.authentication.duration : 3600*24*1000 }));
+    app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: new Date(Date.now() + (config.authentication.duration ? config.authentication.duration : 3600*24*1000)) }));
   app.use(everyauth.middleware());
   // Loading up list of places
   Place.find({}).sort('name', 1).exec( function(err, rooms) {
