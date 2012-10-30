@@ -1294,7 +1294,8 @@ app.post("/schedule/events/:slug/", function(req, res, next) {
 app.all('/schedule/events/:slug.:format?', function(req, res, next) {
     Event.findOne({slug: req.params.slug})
 	.populate('room', ['shortname', 'name'])
-	    .populate('proposedBy')
+	.populate('proposedBy')
+        .populate('interested')
 	.exec(
 	    function(err, event) {
 		if (err) {
@@ -1306,7 +1307,7 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
 		    res.send(event);
 		    break;
 		default:
-		    res.render("schedule/event.ejs", {event: event, title: event.name});
+		    res.render("schedule/event.ejs", {event: event, title: event.name, proposedBy: proposedBy, people: interested});
 		}
 	    });
 });
