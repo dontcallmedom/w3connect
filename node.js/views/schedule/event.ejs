@@ -1,11 +1,10 @@
 <h1><%= event.name %></h1>
 <dl>
-<dt>Time</dt>
-<dd>    <% var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; %>
-    <span class="eventDay"><%= days[event.timeStart.getDay()] %></span>
+<!--<dt>Time</dt>
+<dd>    <% var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; %><%= days[event.timeStart.getDay()] %>
 
     <span class="timeslot"><%- partial("schedule/timeslot.ejs", {timeStart: event.timeStart, timeEnd: event.timeEnd}) %></span>
-</dd>
+</dd>-->
 <% if (event.proposedBy) { %>
 <dt>Proposed By</dt>
 <dd><%= event.proposedBy.given + " " + event.proposedBy.family %></dd>
