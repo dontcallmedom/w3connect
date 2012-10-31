@@ -36,5 +36,5 @@
 <% } %>
 
 <span class="interested" data-eventid="<%= event.slug %>"><% if (event.interested.length) { %>
-    <a href="<%= baseurl %>/schedule/events/<%= event.slug %>/"><span class="counter label" rel="tooltip" data-original-title="<%= event.interested.length %> interested to attend"><%= event.interested.length %></span></a>
+    <a href="<%= baseurl %>/schedule/events/<%= event.slug %>/"><span class="counter label" rel="tooltip" data-original-title="<%= event.interested.length %> interested to attend <%= event.name %>"><%= event.interested.length %></span></a>
 <% } %></span>
