@@ -277,7 +277,10 @@ form.inline {
 	overflow: auto;
 }
 
-
+#messages .icon-comment {
+	margin: 0 11px;
+	vertical-align: middle;
+}
 
 
 
