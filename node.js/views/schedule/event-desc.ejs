@@ -13,12 +13,10 @@
 <% } %>
 
 <% if (typeof admin != "undefined" && admin) { %>
-    <a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin" class="eventName"><%= event.name %></a>
+    <a href="<%= baseurl %>/schedule/events/<%= event.slug %>/admin" class="eventName"><%= event.name %></a><% if (event.presenters) { %>, by <%= event.presenters %> <% } %>
 <% } else { %>
-    <span class="eventName"><%= event.name %></span>
+    <span class="eventName"><%= event.name %></span><% if (event.presenters) { %>, by <%= event.presenters %> <% } %>
 <% }  %>
-
-<% if (event.presenters) { %> , by <%= event.presenters %> <% } %>
 
 <% if (event.eventType == 'adhoc') { %>
     <span class="ad-hoc">
