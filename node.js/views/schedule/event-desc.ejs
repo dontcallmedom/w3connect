@@ -18,7 +18,7 @@
     <span class="eventName"><%= event.name %></span><% if (event.presenters) { %>, by <%= event.presenters %> <% } %>
 <% }  %>
 <% if (event.ircChannel) { %>
- IRC channel: <a href="http://irc.w3.org/?channels=<%= event.ircChannel %>"><%= event.ircChannel %></a> 
+ <a href="http://irc.w3.org/?channels=<%= event.ircChannel %>" title="IRC channel: <%= event.ircChannel %>"><%= event.ircChannel %></a> 
 <% } %>
 <% if (event.eventType == 'adhoc') { %>
     <span class="ad-hoc">
