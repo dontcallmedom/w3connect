@@ -55,6 +55,11 @@ client.addListener('error', function(message) {
     console.log('error: ', message);
 });
 
+    client.addListener('invite', function(channel, from, message) {
+	client.join(channel);
+    });
+
+
 client.addListener("message", function (from, to, message) {
     if (to == config.server.nick) {
 	if (message.match(/^help/)) {
