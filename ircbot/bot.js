@@ -35,7 +35,7 @@ var request = http.get({host: url.hostname, port: url.port , path: url.pathname 
 	for (var i in scheduleData) {
 	    var event = scheduleData[i];
 
-	    if (event.ircChannel) {
+	    if (event.ircChannel && new Date(event.timeEnd) > new Date()) {
 		if (!channelsMap[event.ircChannel]) {
 		    channels.push(event.ircChannel);
 		    channelsMap[event.ircChannel] = [];
