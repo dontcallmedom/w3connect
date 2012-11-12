@@ -88,9 +88,18 @@ everyauth.password
   .loginView('login.ejs')
   .registerView('index.ejs') // @@@ need fixing
     .registerLocals(function (req, res, done) {
+	var until = new Date();
+	if (req.query["until"]) {
+	    until = parseDate(req.query.until);
+	}
+	var limit = 20;
+	if (until > 0) {
+	    limit = 1000;
+	}
 	Status.find({})
 	    .sort('time', -1)
-	    .limit(20)
+	    .limit(limit)
+	    .where('time').lte(until)
 	    .populate('author', ['given', 'family', 'slug', 'picture_thumb'])
 	    .exec(function(err, statusupdates) { 
 		if (err) return done(err);
