@@ -229,16 +229,16 @@ app.configure(function(){
 				      function (ids) {
 					  settings.ids = ids;
 					  settings.save();
-					  twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
+					  twitter.listenToTweets(emitter, settings.ids, app.get('twitter_auth'));
 				      });
 			      }
 			  } else {
 			      settings.save();
-			      twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
+			      twitter.listenToTweets(emitter, settings.ids, app.get('twitter_auth'));
 			  }
 		      });
 		  } else {
-		      twitter.listenToTweets(emitter, settings.ids, app.set('twitter_auth'));
+		      twitter.listenToTweets(emitter, settings.ids, app.get('twitter_auth'));
 		  }
 	      }
 	  }
@@ -266,22 +266,27 @@ app.configure('test', function(){
 
 
 app.configure('development', function(){
-  everyauth.debug = true;
-  app.use(express.logger());
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+    everyauth.debug = true;
+    app.use(express.logger());
+   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+    // Error handling
+    app.use(function(err, req, res, next) {
+	console.error(err.stack);
+	res.send(500, 'Something broke!');
+    });
 });
 
 app.configure('production', function(){
   app.use(express.logger());
   app.use(express.errorHandler()); 
   app.set('port', 80);
-});
-
-// Error handling
-app.use(function(err, req, res, next) {
+    // Error handling
+    app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.send(500, 'Something broke!');
 });
+});
+
 
 // update twitter search on registering new twitter id
 emitter.on("twitterListChange", function (id) {
@@ -292,7 +297,7 @@ emitter.on("twitterListChange", function (id) {
 		var ids = settings.ids;
 		ids.push(id);
 		settings.ids = ids;
-		twitter.listenToTweets(emitter, ids, app.set('twitter_auth'));
+		twitter.listenToTweets(emitter, ids, app.get('twitter_auth'));
 		settings.save();
 	    }
 	);
@@ -477,9 +482,14 @@ function setFormatOutput(req) {
    }    
 }
 
+app.get('/', function(req, res) {
+    res.send("hello");
+});
+
 app.namespace(config.hosting.basepath, function(){
 
 app.get('/', function(req, res){
+    console.log("hhh");
   // skipped by middleware at this point, need fixing @@@
   People.count({}, function(err, count) {
       if (!count) {
@@ -488,7 +498,7 @@ app.get('/', function(req, res){
 	      return res.redirect(everyauth.password.getLoginPath());
 	  } else {
 	      // Import basic data: people and rooms
-	      imports.importUserList(app.set("w3c_auth"), function(success, info, errors) {
+	      imports.importUserList(app.get("w3c_auth"), function(success, info, errors) {
 		  req.flash("info", "First run, importing registrants list");
 		  if (success) success.forEach(function(i) { req.flash('success',i);});
 		  if (info) info.forEach(function(i) { req.flash('info',i);});
@@ -516,19 +526,19 @@ app.post('/admin/', function(req, res, next){
 	return res.render("403");
   }    
   if (req.body.peopleUpdate !== undefined) {
-    if (!app.set("w3c_auth")) {
+    if (!app.get("w3c_auth")) {
 	// in case user logged in a previous session
 	// should find how to logout?
 	return res.redirect(everyauth.password.getLoginPath());
     }
-      imports.importUserList(app.set("w3c_auth"), function(success, info, errors) {
+      imports.importUserList(app.get("w3c_auth"), function(success, info, errors) {
 	  if (success) success.forEach(function(i) { req.flash('success',i);});
 	  if (info) info.forEach(function(i) { req.flash('info',i);});
 	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
 	  next();
       });
   } else if (req.body.registrationUpdate !== undefined) {
-      imports.importRegistrationData(app.set("w3c_auth"), function(success, info, errors) {
+      imports.importRegistrationData(app.get("w3c_auth"), function(success, info, errors) {
 	  if (success) success.forEach(function(i) { req.flash('success',i);});
 	  if (info) info.forEach(function(i) { req.flash('info',i);});
 	  if (errors) errors.forEach(function(i) { req.flash('error',i);});
@@ -1493,5 +1503,6 @@ app.all('/taxi/to', function (req, res) {
 });
 
 app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
-app.listen(  app.set('port'));
-console.log("Express server listening on port %d in %s mode", app.set('port'), app.settings.env);
+app.listen(  app.get('port'));
+console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
+
