@@ -3,9 +3,9 @@
 		<div class="container">
 			<!--<a class="brand" href="#">TPAC Web App</a>-->
 			<ul class="nav">
-				<%- partial("nav-link.ejs", {url: url, link: baseurl + "/", text: "Home"}) %>
-				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/people/', text: 'People'}) %>
-				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/schedule/', text: "Schedule"}) %>
+				<%- partial("nav-link", {url: url, link: baseurl + "/", text: "Home"}) %>
+				<%- partial("nav-link", {url: url, link: baseurl + '/people/', text: 'People'}) %>
+				<%- partial("nav-link", {url: url, link: baseurl + '/schedule/', text: "Schedule"}) %>
 				<% var active = (url.match("^"+baseurl+'/locations/') == baseurl+'/locations/') ? "active" : ""; %>
 				<li class="dropdown <%= active %>">
 					<a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="<%= baseurl + '/locations/' %>">Rooms<b class="caret"></b></a>
@@ -22,7 +22,7 @@
 						<% } %>
 					</ul>
 				</li>
-				<%- partial("nav-link.ejs", {url: url, link: baseurl + '/orgs/', text: "Orgs"}) %>
+				<%- partial("nav-link", {url: url, link: baseurl + '/orgs/', text: "Orgs"}) %>
 			</ul>
 			<p class="navbar-text pull-right"><% if (user) {%>Logged in as <a href='<%= baseurl %>/people/profile/<%= user.slug %>'><%=user.login%></a>. <a href="<%= baseurl %>/logout">Log out</a><%} else { %>Not logged in. <a href="<%= baseurl %>/login?redirectTo=<%= url %>">Log in</a><%}%></p>
 		</div>

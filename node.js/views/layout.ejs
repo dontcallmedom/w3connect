@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="<%= baseurl %>/js/script.js"></script>
 </head>
 <body>
-	<%- partial('nav-bar.ejs') %>
+	<%- partial("nav-bar") %>
 	<div class ="container">
 		<%- body %>
 	</div>
@@ -25,8 +25,8 @@
 	<script src="<%= baseurl %>/js/mylibs/forms.js"></script>
 	<script src="<%= baseurl %>/js/libs/bootstrap.js"></script>
     <script>$(".counter, .member-only").tooltip();</script>
-	<% if (typeof script !="undefined" && script) { %>
-	<script src="<%= baseurl %><%= script %>"></script>
+	<% if (typeof additionalScript !="undefined" && additionalScript) { %>
+	<script src="<%= baseurl %><%= additionalScript %>"></script>
 	<% } %>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<% layout('../layout') %>
 <h1>Places</h1>
 <p><object type="image/svg+xml" data="<%= baseurl %>/maps/main.svg#<% if (everyauth.loggedIn  && user.lastKnownPosition) {%><%= "," + user.lastKnownPosition.shortname%><% }%>">
 <img style="max-width:100%" src="<%= baseurl %>/maps/main.png" alt="Floor plan">
@@ -5,7 +6,7 @@
 </p>
 <div class="btn-toolbar">
 	<div class="btn-group">
-<%- partial("locations/places-list.ejs", {places:places, userCheckin: (everyauth.loggedIn  && user.lastKnownPosition ? user.lastKnownPosition.shortname : undefined)}) %>
+<%- partial("places-list.ejs", {places:places, userCheckin: (everyauth.loggedIn  && user.lastKnownPosition ? user.lastKnownPosition.shortname : undefined)}) %>
 </div></div>
 
 <div id="messages">

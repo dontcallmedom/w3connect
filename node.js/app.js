@@ -4,7 +4,8 @@
 
 var express = require('express');
 require("express-namespace");
-var partials = require('express-partials')
+var engine = require('ejs-locals'),
+flash = require("connect-flash");
 var everyauth = require('everyauth'),
     EventEmitter = require('events').EventEmitter;
 var imports = require("./imports.js"),
@@ -13,6 +14,7 @@ var sanitizer = require('sanitizer');
 var icalendar = require('icalendar');
 var https = require('https');
 var http = require('http');
+
 
 form = require("express-form"),
 filter = form.filter,
@@ -177,20 +179,23 @@ everyauth.password
 // Configuration
 app.configure(function(){
     emitter.setMaxListeners(0);
+    //  use ejs-locals for all ejs templates:
+    app.engine('ejs', engine);
     app.use(express.logger());
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
-    app.use(partials());
     app.set('port', config.hosting.hostname.split(":")[2] ? config.hosting.hostname.split(":")[2] : 3000);
     app.use(express.bodyParser());
     app.use(config.hosting.basepath, express.static(__dirname + '/public', { maxAge: 86400000}));
-    app.use(function(req, res, next) {
-	res.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
-	next();
-    });
+    app.use(flash());
     app.use(express.methodOverride());
     app.use(express.cookieParser());
     app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: new Date(Date.now() + (config.authentication.duration ? parseInt(config.authentication.duration,10) : 3600*24*1000)), path: config.hosting.basepath }}));
+    app.use(function(req, res, next) {
+	var url = 
+	    res.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places, messages: require("express-messages")(req, res) , url: require("url").parse(req.url).pathname});
+	next();
+    });
     app.use(everyauth.middleware(app));
 
     // Loading up list of places
@@ -1427,7 +1432,7 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
 		}
 		schedule[day][JSON.stringify(timeslot)].push(events[i]);
 	    }
-	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, myEvents: myEvents, places: places, title: "Schedule", script:"/js/event-interest.js"}});
+	    res.render('schedule.ejs', {locals: {days: days, timeslots: timeslots, schedule:schedule, currentEvents: currentEvents, nextEvents: nextEvents, myEvents: myEvents, places: places, title: "Schedule", additionalScript:"/js/event-interest.js"}});
 	});
 });
 

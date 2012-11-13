@@ -1,3 +1,4 @@
+<% layout('../layout') %>
 <h1 class="inline"><%= place.name %></h1>
 <!--<h2>Check in</h2>-->
 <%- messages()%>
@@ -22,12 +23,12 @@
 <div class="btn-toolbar">
 	<div class="btn-group">
 
-<%- partial("locations/places-list.ejs", {places:places, userCheckin: (everyauth.loggedIn  && user.lastKnownPosition ? user.lastKnownPosition.shortname : undefined)}) %>
+<%- partial("places-list.ejs", {places:places, userCheckin: (everyauth.loggedIn  && user.lastKnownPosition ? user.lastKnownPosition.shortname : undefined)}) %>
 </div></div>
 
 
 <h2>People whose last checkin was in <%= place.name %></h2>
-<%- partial('people/list.ejs', {showCheckin: true}) %>
+<%- partial('../people/list.ejs', {showCheckin: true}) %>
 <script>
 if (window.EventSource) {
 	  var evtSrc = new EventSource( "<%= baseurl %>/locations/stream" );
@@ -50,5 +51,5 @@ if (window.EventSource) {
 <% if (typeof event != undefined && event) { %>
 <dl class="list-accordion">
 <dt class="expanded">Currently</dt>
-<dd><%- partial("schedule/event-desc.ejs",  {event: event, interestMarker: true}) %></dd>
+<dd><%- partial("../schedule/event-desc.ejs",  {event: event, interestMarker: true}) %></dd>
 </dl><% } %>
