@@ -57,7 +57,7 @@ exports.importUserList = function(auth, callback)  {
 	    return function (err) {
 		// assume duplicate key errors
 	        if (err) {
-		    Organization.findOne({slug: people.affiliationId}, ["_id", "name"], function(err, org) {
+		    Organization.findOne({slug: people.affiliationId}, "_id name", function(err, org) {
 		    if (org) {
 			people.affiliation = org._id;
 		    }
@@ -168,7 +168,7 @@ exports.importRegistrationData = function(auth, callback)  {
 			for (var p in eventRegistration[eventSlug]) {
 			    var peopleSlug = eventRegistration[eventSlug][p];
 			    People.findOne(
-				{slug: peopleSlug}, ["_id"],
+				{slug: peopleSlug}, "_id",
 				function(err, people) {
 				    peopleCounter ++;
 				    if (people) {

@@ -177,6 +177,8 @@ everyauth.password
 // Configuration
 app.configure(function(){
     emitter.setMaxListeners(0);
+    app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
+
     app.use(express.logger());
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
@@ -453,7 +455,7 @@ function autoCheckout() {
     if (config.schedule.autocheckout) {
 	var now = new Date();
 	if (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) > parseInt(config.schedule.autocheckout, 10) / 100 || (now.getUTCHours() +  parseInt(config.schedule.timezone_offset, 10) == parseInt(config.schedule.autocheckout, 10) / 100 && now.getUTCMinutes() >= parseInt(config.schedule.autocheckout,10) % 100)) {
-	    People.find({"lastKnownPosition.shortname": {$ne: null}}, ["lastKnownPosition"], function(err, people) {
+	    People.find({"lastKnownPosition.shortname": {$ne: null}}, "lastKnownPosition", function(err, people) {
 		if (err) {
 		    console.log("autocheckout query error: " + err);
 		} else {
@@ -784,7 +786,7 @@ app.get('/locations/stream', function(req, res) {
     emitter.on("tweet", function(tweet) {
 	People.findOne(
 	    {"twitterAccount.id":tweet.user.id},
-	    ["lastKnownPosition"],
+	    "lastKnownPosition",
 	    function(err, indiv) {
 		res.write("event: tweet\n");
 		tweet.position = "";
@@ -1499,7 +1501,6 @@ app.all('/taxi/to', function (req, res) {
 });*/
 });
 
-app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
 app.set('port',3000);
 server.listen(  app.get('port'));
 console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
