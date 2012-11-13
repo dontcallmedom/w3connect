@@ -10,7 +10,8 @@ var imports = require("./imports.js"),
     twitter = require("./twitter.js");
 var sanitizer = require('sanitizer');
 var icalendar = require('icalendar');
-
+var https = require('https');
+var http = require('http');
 
 form = require("express-form"),
 filter = form.filter,
@@ -27,11 +28,12 @@ var argv = require("optimist")
 // Reading configuration file
 var config = require('iniparser').parseSync(argv.c);
 
-var app;
+var app = express();
+var server;
 if (config.https.key_file && config.https.certificate_file) {
-    app = express.createServer({key: fs.readFileSync(config.https.key_file), cert: fs.readFileSync(config.https.certificate_file)});
+    server = https.createServer({key: fs.readFileSync(config.https.key_file), cert: fs.readFileSync(config.https.certificate_file)}, app);
 } else {
-    app = express.createServer();
+    server = http.createServer(app);
 }
 module.exports = app;
 
@@ -39,7 +41,7 @@ var emitter = new EventEmitter();
 
 
 var mongoose = require('mongoose'),
-db = mongoose.connect('mongodb://' + config.mongo.host + '/' + config.mongo.dbname);
+db = mongoose.createConnection(config.mongo.host, config.mongo.dbname);
 var People = require('./model.js').People(db);
 
 var Organization = require('./model.js').Organization(db);
@@ -97,7 +99,7 @@ everyauth.password
 	    limit = 1000;
 	}
 	Status.find({})
-	    .sort('time', -1)
+	    .sort('-time')
 	    .limit(limit)
 	    .where('time').lte(until)
 	    .populate('author', ['given', 'family', 'slug', 'picture_thumb'])
@@ -174,19 +176,22 @@ everyauth.password
 // Configuration
 
 app.configure(function(){
-  emitter.setMaxListeners(0);
-  app.use(express.logger());
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
+    emitter.setMaxListeners(0);
+    app.use(express.logger());
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'ejs');
     app.set('port', config.hosting.hostname.split(":")[2] ? config.hosting.hostname.split(":")[2] : 3000);
-  app.use(express.bodyParser());
-  app.use(config.hosting.basepath, express.static(__dirname + '/public', { maxAge: 86400000}));
-  app.use(express.methodOverride());
- app.use(express.cookieParser()); 
+    app.use(express.bodyParser());
+    app.use(config.hosting.basepath, express.static(__dirname + '/public', { maxAge: 86400000}));
+    app.use(express.methodOverride());
+    app.use(express.cookieParser()); 
     app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: new Date(Date.now() + (config.authentication.duration ? parseInt(config.authentication.duration,10) : 3600*24*1000)), path: config.hosting.basepath }}));
-  app.use(everyauth.middleware());
-  // Loading up list of places
-  Place.find({}).sort('name', 1).exec( function(err, rooms) {
+    app.use(function(req, res, next) {
+	res.locals.messages= require('express-messages');
+	res.locals.url = require("url").parse(req.url).pathname;});
+    app.use(everyauth.middleware());
+    // Loading up list of places
+    Place.find({}).sort('name').exec( function(err, rooms) {
       if (err) {
 	  console.log("No room known in the system");		     
       } else {
@@ -272,6 +277,11 @@ app.configure('production', function(){
   app.set('port', 80);
 });
 
+// Error handling
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.send(500, 'Something broke!');
+});
 
 // update twitter search on registering new twitter id
 emitter.on("twitterListChange", function (id) {
@@ -458,11 +468,6 @@ function autoCheckout() {
 }
 
 // Routes
-
-app.error(function(err, req, res, next){
-  res.send(err.message, 500);
-});
-
 // Would be better in a post(/.*/) route but that breaks with express-namespace
 // cf https://github.com/visionmedia/express-namespace/issues/5
 function setFormatOutput(req) {
@@ -563,17 +568,17 @@ app.post('/admin/', function(req, res, next){
       );
   } else if (req.body.placesUpdate !== undefined) {
       var url = require("url").parse(config.map.rooms_json);
-      var http;
+      var http_client;
       if (url.protocol == "http:") {
-	  http = require('http');
+	  http_client = http;
       } else if (url.protocol == "https:") {
-	  http = require('https');
+	  http_client = https;
       } else {
 	  req.flash("error", "Unrecognized protocol for room descriptions: " + config.map.rooms_json);
 	  next();
       }
-      if (http) {
-	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
+      if (http_client) {
+	  var request = http_client.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
 	      response.setEncoding('utf8');
 	      var placesJSON = "", placesData;
 	      response.on('data', function (chunk) {
@@ -685,7 +690,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 	    	.populate('proposedBy')
 		.populate('room', ['name'])
 		//.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
-	        .sort('timeStart', 1)
+	        .sort('timeStart')
 		.exec(function(err, events) {
 		    var days, timeslots, schedule;
 		    var userEvents = [];
@@ -702,7 +707,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 			schedule = data[2];
 		    }
 		    Status.find({"author": indiv})
-			.sort("time", -1)
+			.sort("-time")
 			.limit(20)
 			.exec(function(err, statusupdates) {
 			    switch (req.params.format) {
@@ -1040,18 +1045,18 @@ app.post('/schedule/admin', function(req,res, next) {
 	  req.flash("error", "Missing URL of schedule");
 	  next();
       }
-      var http;
+      var http_client;
       var url = require("url").parse(req.body.schedule);
       if (url.protocol == "http:") {
-	  http = require('http');
+	  http_client = http;
       } else if (url.protocol == "https:") {
-	  http = require('https');
+	  http_client = https;
       } else {
 	  req.flash("error", "Unrecognized protocol for room descriptions: " + config.map.rooms_json);
 	  next();
       }
-      if (http) {
-	  var request = http.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
+      if (http_client) {
+	  var request = http_client.get({host: url.hostname, port: url.port , path: url.pathname + (url.search ? url.search : '') + (url.hash ? url.hash : '')}, function (response) {
 	      response.setEncoding('utf8');
 	      var scheduleJSON = "", events;
 	      response.on('data', function (chunk) {
@@ -1107,7 +1112,7 @@ app.post('/schedule/admin', function(req,res, next) {
 
 app.all('/schedule/admin', function(req,res) {
     Event.find({})
-	        .sort('timeStart', 1, 'name', 1)
+	        .sort('timeStart name')
 		.populate('room', ['shortname','name'])
 	  .populate('proposedBy')
 		.exec( 
@@ -1347,7 +1352,7 @@ app.all('/schedule/events/:slug.:format?', function(req, res, next) {
     app.get('/schedule/list.json', function (req, res, next) {
     Event.find({})
 	    .populate('room', ['shortname','name'])
-	    .sort('timeStart', 1)
+	    .sort('timeStart')
 	    .populate('proposedBy')
 	    .exec( 
 		function(err, events) {
@@ -1372,7 +1377,7 @@ app.all('/schedule/?(:datetime)?', function (req, res, next){
     }
     Event.find({})
 		.populate('room', ['shortname','name'])
-	    .sort('timeStart', 1)
+	    .sort('timeStart')
 	    .populate('proposedBy')
 		.exec( 
 	function(err, events) {
@@ -1487,8 +1492,6 @@ app.all('/taxi/to', function (req, res) {
 });*/
 });
 
-everyauth.helpExpress(app);
-app.helpers({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
-app.dynamicHelpers({ messages: require('express-messages') , url: function(req, res) { return require("url").parse(req.url).pathname;}  });
+app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
 app.listen(  app.set('port'));
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+console.log("Express server listening on port %d in %s mode", app.set('port'), app.settings.env);
