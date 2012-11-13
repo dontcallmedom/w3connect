@@ -179,6 +179,7 @@ app.configure(function(){
     emitter.setMaxListeners(0);
     //  use ejs-locals for all ejs templates:
     app.engine('ejs', engine);
+    app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
     app.use(express.logger());
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
