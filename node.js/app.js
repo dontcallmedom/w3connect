@@ -4,6 +4,7 @@
 
 var express = require('express');
 require("express-namespace");
+var partials = require('express-partials')
 var everyauth = require('everyauth'),
     EventEmitter = require('events').EventEmitter;
 var imports = require("./imports.js"),
@@ -174,22 +175,20 @@ everyauth.password
 
 
 // Configuration
-
 app.configure(function(){
     emitter.setMaxListeners(0);
     app.use(express.logger());
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
+    app.use(partials());
     app.set('port', config.hosting.hostname.split(":")[2] ? config.hosting.hostname.split(":")[2] : 3000);
     app.use(express.bodyParser());
     app.use(config.hosting.basepath, express.static(__dirname + '/public', { maxAge: 86400000}));
     app.use(express.methodOverride());
-    app.use(express.cookieParser()); 
+    app.use(express.cookieParser());
     app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: new Date(Date.now() + (config.authentication.duration ? parseInt(config.authentication.duration,10) : 3600*24*1000)), path: config.hosting.basepath }}));
-    app.use(function(req, res, next) {
-	res.locals.messages= require('express-messages');
-	res.locals.url = require("url").parse(req.url).pathname;});
-    app.use(everyauth.middleware());
+    app.use(everyauth.middleware(app));
+
     // Loading up list of places
     Place.find({}).sort('name').exec( function(err, rooms) {
       if (err) {
@@ -258,6 +257,7 @@ app.configure(function(){
 	console.log("Setting auto checkout " + ((then - now) / 1000) + " seconds from now");
     }
 });
+
 
 app.configure('test', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
@@ -482,9 +482,6 @@ function setFormatOutput(req) {
    }    
 }
 
-app.get('/', function(req, res) {
-    res.send("hello");
-});
 
 app.namespace(config.hosting.basepath, function(){
 
@@ -726,7 +723,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 				res.send(indiv);
 				break;
 			    case 'ics':
-				res.header("Content-Type", "text/calendar");
+				res.set("Content-Type", "text/calendar");
 				var ical = new icalendar.iCalendar();
 				for (var i = 0 ; i < userEvents.length ; i++) {
 				    var  event = userEvents[i];
@@ -1503,6 +1500,7 @@ app.all('/taxi/to', function (req, res) {
 });
 
 app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
-app.listen(  app.get('port'));
+app.set('port',3000);
+server.listen(  app.get('port'));
 console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 
