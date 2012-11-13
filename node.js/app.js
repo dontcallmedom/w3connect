@@ -177,8 +177,6 @@ everyauth.password
 // Configuration
 app.configure(function(){
     emitter.setMaxListeners(0);
-    app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
-
     app.use(express.logger());
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
@@ -186,6 +184,10 @@ app.configure(function(){
     app.set('port', config.hosting.hostname.split(":")[2] ? config.hosting.hostname.split(":")[2] : 3000);
     app.use(express.bodyParser());
     app.use(config.hosting.basepath, express.static(__dirname + '/public', { maxAge: 86400000}));
+    app.use(function(req, res, next) {
+	res.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
+	next();
+    });
     app.use(express.methodOverride());
     app.use(express.cookieParser());
     app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: new Date(Date.now() + (config.authentication.duration ? parseInt(config.authentication.duration,10) : 3600*24*1000)), path: config.hosting.basepath }}));
