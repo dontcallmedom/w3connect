@@ -31,6 +31,7 @@ var argv = require("optimist")
 // Reading configuration file
 var config = require('iniparser').parseSync(argv.c);
 
+// Setting up server (http or https depending on configuration file)
 var app = express();
 var server;
 if (config.https.key_file && config.https.certificate_file) {
@@ -42,22 +43,23 @@ module.exports = app;
 
 var emitter = new EventEmitter();
 
-
+// Connecting to Mongo database
 var mongoose = require('mongoose'),
 db = mongoose.createConnection(config.mongo.host, config.mongo.dbname);
-var People = require('./model.js').People(db);
 
+// and loading schemas for it
+var People = require('./model.js').People(db);
 var Organization = require('./model.js').Organization(db);
 var Place = require('./model.js').Place(db);
 var Event = require('./model.js').Event(db);
 var Status = require('./model.js').StatusUpdate(db);
-var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
-var TaxiToAirport = require('./model.js').TaxiToAirport(db);
+//var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
+//var TaxiToAirport = require('./model.js').TaxiToAirport(db);
 var TwitterSettings = require('./model.js').TwitterSettings(db);
 
+// hash array of known places in the system
 var places = {};
 
-// Authentication 
 // Session Store
 var SessionMongoose = require("session-mongoose");
 var mongooseSessionStore = new SessionMongoose({
@@ -65,6 +67,7 @@ var mongooseSessionStore = new SessionMongoose({
     interval: 120000 // expiration check worker run interval in millisec (default: 60000)
 });
 
+// Authentication 
 everyauth.everymodule.moduleTimeout(40000);
 
 everyauth.everymodule.findUserById( function (userId, callback) {
@@ -91,45 +94,28 @@ everyauth.password
     .getLoginPath(config.hosting.basepath + '/login')
     .postLoginPath(config.hosting.basepath + '/login') // Uri path that your login form POSTs to
     .loginView('login.ejs')
-    .registerView('index.ejs') // @@@ need fixing
-    .registerLocals(function (req, res, done) {
-	var until = new Date();
-	if (req.query["until"]) {
-	    until = parseDate(req.query.until);
-	}
-	var limit = 20;
-	if (until > 0) {
-	    limit = 1000;
-	}
-	Status.find({})
-	    .sort('-time')
-	    .limit(limit)
-	    .where('time').lte(until)
-	    .populate('author', ['given', 'family', 'slug', 'picture_thumb'])
-	    .exec(function(err, statusupdates) { 
-		if (err) return done(err);
-		if (req.user) {
-		    Event.count({"interested":req.user._id}, function(err, count) {
-			done(null, {statusupdates: statusupdates, scheduledEvents: count, user: req.user});
-		    });
-		} else {
-		    done(null, {statusupdates: statusupdates, user: req.user});
-		}
-	    });
+    // We assume pre-registered people
+    // so we use bogus values for register paths
+    .getRegisterPath('/dev/null')
+    .postRegisterPath('/dev/null')
+     // and we nullify the registerUser step
+    .registerUser(function() {
+	return null;
     })
     .loginLocals(function (req, res) {
+	// if the redirectTo query string param was set
+	// we record in the session to redirect the user after successful login
 	if (req.query["redirectTo"]) {
 	    req.session.redirectTo = req.query["redirectTo"];
 	}
     })
-//.loginSuccessRedirect(config.hosting.basepath + '/')
-    .respondToRegistrationSucceed( function (res, user, data) {
+/*    .respondToRegistrationSucceed( function (res, user, data) {
 	if (data.session.redirectTo) {
 	    this.redirect(res, data.session.redirectTo)
 	} else {
 	    this.redirect(res, config.hosting.basepath + '/');
 	}
-    })
+    })*/
     .respondToLoginSucceed( function (res, user, data) {
 	console.log(user);
 	console.log(data.session);
@@ -166,11 +152,6 @@ everyauth.password
 	    }
 	});
 	return promise;
-    })
-    .getRegisterPath(config.hosting.basepath + '/')
-    .postRegisterPath(config.hosting.basepath + '/')
-    .registerUser(function() {
-	return null;
     });
 
 
@@ -494,9 +475,8 @@ function setFormatOutput(req) {
 
 
 app.namespace(config.hosting.basepath, function(){
-
+    
     app.get('/', function(req, res){
-	// skipped by middleware at this point, need fixing @@@
 	People.count({}, function(err, count) {
 	    if (!count) {
 		// no user, need to import data
@@ -513,7 +493,31 @@ app.namespace(config.hosting.basepath, function(){
 		    });
 		}
 	    } else {
-		res.render('index');
+		// parameter to load list of status updates until the said date
+		var until = new Date();
+		if (req.query["until"]) {
+		    until = parseDate(req.query.until);
+		}
+		var limit = 20;
+		if (until > 0) {
+		    limit = 1000;
+		}
+		Status.find({})
+		    .sort('-time')
+		    .limit(limit)
+		    .where('time').lte(until)
+		    .populate('author', ['given', 'family', 'slug', 'picture_thumb'])
+		    .exec(function(err, statusupdates) { 
+			if (err) return done(err);
+			if (req.user) {
+			    Event.count({"interested":req.user._id}, function(err, count) {
+				res.render('index', {locals: {statusupdates: statusupdates, scheduledEvents: count, user: req.user}});
+			    });
+			} else {
+			    res.render('index', {locals:  {statusupdates: statusupdates, user: req.user}});
+			}
+		    });
+		     
 	    }
 	});
     });
