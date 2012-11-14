@@ -110,10 +110,10 @@ everyauth.password
 		if (err) return done(err);
 		if (req.user) {
 		    Event.count({"interested":req.user._id}, function(err, count) {
-			done(null, {statusupdates: statusupdates, scheduledEvents: count});
+			done(null, {statusupdates: statusupdates, scheduledEvents: count, user: req.user});
 		    });
 		} else {
-		    done(null, {statusupdates: statusupdates});
+		    done(null, {statusupdates: statusupdates, user: req.user});
 		}
 	    });
     })
@@ -150,8 +150,6 @@ everyauth.password
       if (!password) errors.push('Missing password');
       if (errors.length) return errors;
       var ldap = require('./ldapauth');
-      // modified version of ldapauth that takes an additional scheme parameter available from https://github.com/dontcallmedom/node-ldapauth
-      console.log(config.ldap);
       ldap.authenticate(config.ldap.scheme, config.ldap.host, parseInt(config.ldap.port),'uid=' + login + ',' + config.ldap.dn_realm , password, function(err, result) {
         if (err) {
           return promise.fail(err);
@@ -192,11 +190,14 @@ app.configure(function(){
     app.use(express.cookieParser());
     app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: new Date(Date.now() + (config.authentication.duration ? parseInt(config.authentication.duration,10) : 3600*24*1000)), path: config.hosting.basepath }}));
     app.use(function(req, res, next) {
-	var url = 
-	    res.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places, messages: require("express-messages")(req, res) , url: require("url").parse(req.url).pathname});
+	res.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places, messages: require("express-messages")(req, res) , url: require("url").parse(req.url).pathname});
 	next();
     });
     app.use(everyauth.middleware(app));
+    app.use(function(req, res, next) {
+	res.locals({user: req.user});
+	next();
+    });
 
     // Loading up list of places
     Place.find({}).sort('name').exec( function(err, rooms) {
@@ -495,7 +496,6 @@ function setFormatOutput(req) {
 app.namespace(config.hosting.basepath, function(){
 
 app.get('/', function(req, res){
-    console.log("hhh");
   // skipped by middleware at this point, need fixing @@@
   People.count({}, function(err, count) {
       if (!count) {
@@ -513,7 +513,6 @@ app.get('/', function(req, res){
 	      });
 	  }
       } else {
-	  console.log("hello world");
 	  res.render('index');
       }
   });
@@ -760,8 +759,7 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 app.get('/locations.:format?', function(req, res) {
     var counter=0;
     if (Object.keys(places).length == 0) {
-        res.render('locations/index.ejs', { locals: { places: places, title: 'Rooms'}});
-	return;
+        return res.render('locations/index.ejs', { locals: { places: places, title: 'Rooms'}});
     }
     for (var p in places) {
       People.find({"lastKnownPosition.shortname": places[p].shortname}, ['slug', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
