@@ -10,52 +10,50 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="398.28717"
-   height="375.08405"
+   width="392.57288"
+   height="369.36978"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="nfc.svg">
+   sodipodi:docname="nfc.svg"
+   inkscape:export-filename="/home/dom/github.com/w3connect/maps/nfc.png"
+   inkscape:export-xdpi="114.63"
+   inkscape:export-ydpi="114.63">
   <defs
-     id="defs4"><inkscape:perspective
-   id="perspective11752"
-   inkscape:persp3d-origin="113.385 : 132.28334 : 1"
-   inkscape:vp_z="226.77 : 198.425 : 1"
-   inkscape:vp_y="0 : 1000 : 0"
-   inkscape:vp_x="0 : 198.425 : 1"
-   sodipodi:type="inkscape:persp3d" />
-
-	<linearGradient
-   y2="365.8613"
-   x2="115.2539"
-   y1="397.2822"
-   x1="115.2539"
-   gradientUnits="userSpaceOnUse"
-   id="SVGID_2_">
-		<stop
-   id="stop11710"
-   style="stop-color:#FFFFFF"
-   offset="0" />
-
-		<stop
-   id="stop11712"
-   style="stop-color:#000000"
-   offset="1" />
-
-	</linearGradient>
-
-	
-	
-<linearGradient
-   inkscape:collect="always"
-   xlink:href="#SVGID_2_"
-   id="linearGradient3321"
-   gradientUnits="userSpaceOnUse"
-   x1="115.2539"
-   y1="397.2822"
-   x2="115.2539"
-   y2="365.8613" />
-</defs>
+     id="defs4">
+    <inkscape:perspective
+       id="perspective11752"
+       inkscape:persp3d-origin="113.385 : 132.28334 : 1"
+       inkscape:vp_z="226.77 : 198.425 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 198.425 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="365.8613"
+       x2="115.2539"
+       y1="397.2822"
+       x1="115.2539"
+       gradientUnits="userSpaceOnUse"
+       id="SVGID_2_">
+      <stop
+         id="stop11710"
+         style="stop-color:#FFFFFF"
+         offset="0" />
+      <stop
+         id="stop11712"
+         style="stop-color:#000000"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#SVGID_2_"
+       id="linearGradient3321"
+       gradientUnits="userSpaceOnUse"
+       x1="115.2539"
+       y1="397.2822"
+       x2="115.2539"
+       y2="365.8613" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -64,7 +62,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="242.72292"
+     inkscape:cx="237.00863"
      inkscape:cy="245.43558"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -94,7 +92,7 @@
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-104.49999,-416.14788)">
+     transform="translate(-110.21428,-421.86216)">
     <path
        transform="matrix(1.238262,0,0,1.238262,-58.985376,-130.58584)"
        sodipodi:type="arc"
@@ -104,7 +102,7 @@
        sodipodi:cy="548.07648"
        sodipodi:rx="101.42857"
        sodipodi:ry="101.42857"
-       d="m 340,548.07648 a 101.42857,101.42857 0 1 1 -202.85715,0 101.42857,101.42857 0 1 1 202.85715,0 z" />
+       d="m 340,548.07648 c 0,56.01745 -45.41112,101.42857 -101.42857,101.42857 -56.01746,0 -101.42858,-45.41112 -101.42858,-101.42857 0,-56.01746 45.41112,-101.42858 101.42858,-101.42858 C 294.58888,446.6479 340,492.05902 340,548.07648 z" />
     <path
        sodipodi:type="arc"
        style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
@@ -123,7 +121,7 @@
        sodipodi:cy="548.07648"
        sodipodi:rx="101.42857"
        sodipodi:ry="101.42857"
-       d="m 340,548.07648 a 101.42857,101.42857 0 1 1 -202.85715,0 101.42857,101.42857 0 1 1 202.85715,0 z"
+       d="m 340,548.07648 c 0,56.01745 -45.41112,101.42857 -101.42857,101.42857 -56.01746,0 -101.42858,-45.41112 -101.42858,-101.42857 0,-56.01746 45.41112,-101.42858 101.42858,-101.42858 C 294.58888,446.6479 340,492.05902 340,548.07648 z"
        transform="matrix(0.77571955,0,0,0.78955412,51.364036,115.3404)" />
     <path
        sodipodi:type="arc"
