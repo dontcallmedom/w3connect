@@ -738,6 +738,10 @@ app.all('/people/profile/:id.:format?', function(req, res, next){
 
 app.get('/locations.:format?', function(req, res) {
     var counter=0;
+    if (Object.keys(places).length == 0) {
+        res.render('locations/index.ejs', { locals: { places: places, title: 'Rooms'}});
+	return;
+    }
     for (var p in places) {
       People.find({"lastKnownPosition.shortname": places[p].shortname}, ['slug', 'given', 'family', 'picture_thumb'],  (function(place) { return function(err, people) {
          counter++;
