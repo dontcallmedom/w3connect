@@ -179,7 +179,6 @@ app.configure(function(){
     emitter.setMaxListeners(0);
     //  use ejs-locals for all ejs templates:
     app.engine('ejs', engine);
-    app.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places});
     app.use(express.logger());
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
@@ -191,7 +190,12 @@ app.configure(function(){
     app.use(express.cookieParser());
     app.use(express.session({store: mongooseSessionStore, secret:config.authentication.session_secret, cookie: {maxAge: new Date(Date.now() + (config.authentication.duration ? parseInt(config.authentication.duration,10) : 3600*24*1000)), path: config.hosting.basepath }}));
     app.use(function(req, res, next) {
+<<<<<<< HEAD
 	res.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places, messages: require("express-messages")(req, res) , url: require("url").parse(req.url).pathname});
+=======
+	var url = 
+	    res.locals({baseurl: config.hosting.basepath, elapsedTime: elapsedTime, places: places, messages: require("express-messages")(req, res) , url: require("url").parse(req.url).pathname});
+>>>>>>> using ejs-locals for partials support
 	next();
     });
     app.use(everyauth.middleware(app));
