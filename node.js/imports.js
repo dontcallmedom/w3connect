@@ -102,6 +102,7 @@ exports.importUserList = function(auth, callback)  {
 		    info.push('No new data to import');
 		}
 		callback(success, info, errors);
+		   return;
 	       }
 	     };
         }
