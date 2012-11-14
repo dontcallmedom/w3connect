@@ -49,7 +49,14 @@ exports.importUserList = function(auth, callback)  {
        registrantsJSON = registrantsJSON + chunk;
      });
      response.on('end', function () {
-        registrantsData = JSON.parse(registrantsJSON);
+	 try {
+             registrantsData = JSON.parse(registrantsJSON);
+	 } catch (x) {
+	     console.log("Loading registrants data as JSON failed: " + x);
+	     console.log(registrantsJSON);
+	     callback(success, info, [x]);
+	     return;
+	 }
         var additions = {orgs:[],people:[]}, errors;
         var counter = 0, counterAdded = 0;
 	
