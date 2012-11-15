@@ -1,10 +1,10 @@
 // should get it from elsewhere
-var mongoose = require('mongoose'),
-db = mongoose.connect('mongodb://localhost/tpac');
+var mongoose = require('mongoose');
+//db = mongoose.connect('mongodb://localhost/tpac');
 
-var People = require('./model.js').People(db);
-var Event = require('./model.js').Event(db);
-var Organization = require('./model.js').Organization(db);
+var People = require('./model.js').People();
+var Event = require('./model.js').Event();
+var Organization = require('./model.js').Organization();
 
 function loadPeopleData(id) {
    var http = require('http');

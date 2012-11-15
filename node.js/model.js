@@ -112,44 +112,44 @@ mongoose.model('Event', Event);
 mongoose.model('StatusUpdate', StatusUpdate);
 mongoose.model('TaxiToAirport', TaxiToAirport);
 mongoose.model('TwitterSettings', TwitterSettings);
-exports.People = function(db) {
-  return db.model('People');
+exports.People = function() {
+  return mongoose.model('People');
 };
 
-exports.Organization = function(db) {
-  return db.model('Organization');
+exports.Organization = function() {
+  return mongoose.model('Organization');
 };
 
-exports.Group = function(db) {
-  return db.model('Group');
+exports.Group = function() {
+  return mongoose.model('Group');
 };
 
-exports.Place = function(db) {
-  return db.model('Place');
+exports.Place = function() {
+  return mongoose.model('Place');
 };
 
-exports.StatusUpdate = function(db) {
-  return db.model('StatusUpdate');
+exports.StatusUpdate = function() {
+  return mongoose.model('StatusUpdate');
 };
 
 
-exports.Event = function(db) {
-  return db.model('Event');
+exports.Event = function() {
+  return mongoose.model('Event');
 };
 
 /*
-exports.EventRating = function(db) {
-  return db.model('EventRating');
+exports.EventRating = function() {
+  return mongoose.model('EventRating');
 };*/
 
-exports.TaxiToAirport = function(db) {
-  return db.model('TaxiToAirport');
+exports.TaxiToAirport = function() {
+  return mongoose.model('TaxiToAirport');
 };
 
-exports.TaxiFromAirport = function(db) {
-  return db.model('TaxiFromAirport');
+exports.TaxiFromAirport = function() {
+  return mongoose.model('TaxiFromAirport');
 };
 
-exports.TwitterSettings = function(db) {
-  return db.model('TwitterSettings');
+exports.TwitterSettings = function() {
+  return mongoose.model('TwitterSettings');
 };

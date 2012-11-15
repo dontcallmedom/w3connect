@@ -45,17 +45,17 @@ var emitter = new EventEmitter();
 
 // Connecting to Mongo database
 var mongoose = require('mongoose'),
-db = mongoose.createConnection(config.mongo.host, config.mongo.dbname);
+db = mongoose.connect(config.mongo.host, config.mongo.dbname);
 
 // and loading schemas for it
-var People = require('./model.js').People(db);
-var Organization = require('./model.js').Organization(db);
-var Place = require('./model.js').Place(db);
-var Event = require('./model.js').Event(db);
-var Status = require('./model.js').StatusUpdate(db);
-//var TaxiFromAirport = require('./model.js').TaxiFromAirport(db);
-//var TaxiToAirport = require('./model.js').TaxiToAirport(db);
-var TwitterSettings = require('./model.js').TwitterSettings(db);
+var People = require('./model.js').People();
+var Organization = require('./model.js').Organization();
+var Place = require('./model.js').Place();
+var Event = require('./model.js').Event();
+var Status = require('./model.js').StatusUpdate();
+//var TaxiFromAirport = require('./model.js').TaxiFromAirport();
+//var TaxiToAirport = require('./model.js').TaxiToAirport();
+var TwitterSettings = require('./model.js').TwitterSettings();
 
 // hash array of known places in the system
 var places = {};
