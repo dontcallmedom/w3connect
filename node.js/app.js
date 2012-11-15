@@ -506,7 +506,7 @@ app.namespace(config.hosting.basepath, function(){
 		    .sort('-time')
 		    .limit(limit)
 		    .where('time').lte(until)
-		    .populate('author', ['given', 'family', 'slug', 'picture_thumb'])
+		    .populate('author', 'given family slug picture_thumb')
 		    .exec(function(err, statusupdates) { 
 			if (err) return done(err);
 			if (req.user) {
@@ -703,11 +703,11 @@ app.namespace(config.hosting.basepath, function(){
 
 
     app.all('/people/profile/:id.:format?', function(req, res, next){
-	People.findOne({slug: req.params.id}).populate('affiliation', ['slug', 'name']).exec( function(err, indiv) {
+	People.findOne({slug: req.params.id}).populate('affiliation', 'slug name').exec( function(err, indiv) {
 	    if (indiv) {
 		Event.find({})
 	    	    .populate('proposedBy')
-		    .populate('room', ['name'])
+		    .populate('room', 'name')
 		//.$where('RegExp("^" + this.interested.join("|") + "$").test(' + indiv._id + ')')
 	            .sort('timeStart')
 		    .exec(function(err, events) {
@@ -1013,7 +1013,7 @@ app.namespace(config.hosting.basepath, function(){
 
     app.get('/orgs.:format?', function (req, res){
 	var orgs = Organization.find({})
-	    .populate('employees', ['login'])
+	    .populate('employees', 'login')
 	    .exec( function (err, orgs) {
 		orgs.sort(function (a,b) { return (a.name > b.name ? 1 : (b.name > a.name ? -1 : 0));});
 		switch (req.params.format) {
@@ -1029,7 +1029,7 @@ app.namespace(config.hosting.basepath, function(){
 
     app.get('/orgs/:id.:format?', function(req, res, next){
 	Organization.findOne({slug: req.params.id})
-            .populate('employees', ['login', 'slug', 'given', 'family', 'picture_thumb'])
+            .populate('employees', 'login slug given family picture_thumb')
 	    .exec( function(err, org) {
 		if (org) {
 		    var employees = org.employees.slice(0); // slice(0) to work around bug in populating arrays
@@ -1131,7 +1131,7 @@ app.namespace(config.hosting.basepath, function(){
     app.all('/schedule/admin', function(req,res) {
 	Event.find({})
 	    .sort('timeStart name')
-	    .populate('room', ['shortname','name'])
+	    .populate('room', 'shortname name')
 	    .populate('proposedBy')
 	    .exec( 
 		function(err, events) {
@@ -1329,7 +1329,7 @@ app.namespace(config.hosting.basepath, function(){
 
     app.all('/schedule/events/:slug.:format?', function(req, res, next) {
 	Event.findOne({slug: req.params.slug})
-	    .populate('room', ['shortname', 'name'])
+	    .populate('room', 'shortname name')
 	    .populate('proposedBy')
             .populate('interested')
 	    .exec(
@@ -1369,7 +1369,7 @@ app.namespace(config.hosting.basepath, function(){
 
     app.get('/schedule/list.json', function (req, res, next) {
 	Event.find({})
-	    .populate('room', ['shortname','name'])
+	    .populate('room', 'shortname name')
 	    .sort('timeStart')
 	    .populate('proposedBy')
 	    .exec( 
@@ -1394,7 +1394,7 @@ app.namespace(config.hosting.basepath, function(){
 	    }
 	}
 	Event.find({})
-	    .populate('room', ['shortname','name'])
+	    .populate('room', 'shortname name')
 	    .sort('timeStart')
 	    .populate('proposedBy')
 	    .exec( 
