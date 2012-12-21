@@ -33,18 +33,20 @@ var config = require('iniparser').parseSync(argv.c);
 
 // Setting up server (http or https depending on configuration file)
 var app = express();
+
 var server;
 if (config.https.key_file && config.https.certificate_file) {
     server = https.createServer({key: fs.readFileSync(config.https.key_file), cert: fs.readFileSync(config.https.certificate_file)}, app);
 } else {
     server = http.createServer(app);
 }
-module.exports = app;
+module.exports.app = app;
 
 var emitter = new EventEmitter();
 
 // Connecting to Mongo database
-var mongoose = require('mongoose'),
+var mongoose = require('mongoose');
+module.exports.db = mongoose;
 db = mongoose.connect(config.mongo.host, config.mongo.dbname);
 
 // and loading schemas for it
@@ -1510,7 +1512,7 @@ app.namespace(config.hosting.basepath, function(){
       });*/
 });
 
-app.set('port',3000);
-server.listen(  app.get('port'));
-console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
-
+if (require.main === module) {
+    server.listen(  app.get('port'));
+    console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
+}

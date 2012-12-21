@@ -18,7 +18,9 @@
     "sanitizer":">=0.0.15",
     "icalendar":">=0.6.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha":">= 1.7.4",
+    "supertest":">= 0.5.1"},
   "engines": {
     "node": "*"
   },

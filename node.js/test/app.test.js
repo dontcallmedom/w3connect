@@ -1,42 +1,82 @@
-// Note: expresso doesn't support https as of now, see 
-// https://github.com/visionmedia/expresso/issues/129
-// need to fudge in the code in the meantime
+var assert = require("assert");
+var request = require("supertest");
+var app = require("../app.js").app;
+var mongoose = require("../app.js").db;
 
-process.env.NODE_ENV = 'test';
-var app = require('../app'),  assert = require('assert');
-module.exports = {
-'GET /': function() {
-    assert.response(app,
-      { url: '/' },
-      { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }},
-      function(res) {
-        assert.includes(res.body, '<title>W3Connect</title>');
-      });
-},
-    'GET /locations' : function() {
-    assert.response(app,
-      { url: '/locations' },
-		    { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }},
-	function(res) {
-	    assert.includes("<h1>Places</h1>");
-	});
-    }, 
+var dom = { login: "dom", email: "dom@w3.org", given: "Dominique", family: "Hazael-Massieux", slug: "dom"};
 
-    'GET /people' : function() {
-    assert.response(app,
-      { url: '/people' },
-		    { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }},
-	function(res) {
-	    assert.includes("<h1>People</h1>");
-	});
-    }, 
-'GET /people.json': function() {
-    assert.response(app,
-      { url: '/people.json' },
-      { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8' }},
-      function(res) {
-        var people = JSON.parse(res.body);
-        assert.type(people, 'object');
-      });
+function createUser(done) {
+    mongoose.connection.collections["peoples"].save(dom, done);
 }
-};
+
+describe('GET /test/namespace/', function(){
+    before(function(done) {
+	mongoose.connection.db.dropDatabase();
+	createUser(done);
+    });
+    it('should return HTML with 200 status', function(done){
+	request(app)
+	    .get('/test/namespace/')
+	    .expect('Content-Type', /html/)
+	    .expect(200)
+	    .end(function(err, res){
+		if (err) return done(err);
+		    done();
+	    });
+    });
+});
+
+describe('GET /test/namespace/locations/', function(){
+    it('should return HTML with 200 status', function(done){
+	request(app)
+	    .get('/test/namespace/locations/')
+	    .expect('Content-Type', /html/)
+	    .expect(200, /<h1>Places<\/h1>/)
+	    .end(function(err, res){
+		if (err) return done(err);
+		    done();
+	    });
+    });
+});
+
+describe('GET /test/namespace/people/', function(){
+    it('should return HTML with 200 status', function(done){
+	request(app)
+	    .get('/test/namespace/people/')
+	    .expect('Content-Type', /html/)
+	    .expect(200, /<h1>People<\/h1>/)
+	    .end(function(err, res){
+		if (err) return done(err);
+		    done();
+	    });
+    });
+});
+
+describe('GET /test/namespace/people.json', function(){
+    before(createUser);
+    it('should return JSON with 200 status', function(done){
+	request(app)
+	    .get('/test/namespace/people/all.json')
+	    .expect('Content-Type', /json/)
+	    .expect(200)
+	    .end(function(err, res){
+		if (err) return done(err);
+		var people = res.body;
+		assert.equal(people[0].login, 'dom');
+		done();
+	    });
+    });
+});
+
+describe('GET /test/namespace/orgs', function(){
+    it('should return HTML with 200 status', function(done){
+	request(app)
+	    .get('/test/namespace/orgs/')
+	    .expect('Content-Type', /html/)
+	    .expect(200, /<h1>Organizations<\/h1>/)
+	    .end(function(err, res){
+		if (err) return done(err);
+		    done();
+	    });
+    });
+});
